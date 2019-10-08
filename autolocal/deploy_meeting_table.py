@@ -1,5 +1,3 @@
-
-import random
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -9,7 +7,7 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 
 # read data
-example_data_path = 'example_data.csv'
+example_data_path = '../data/meeting_database/example_meeting_database.csv'
 date_cols = ['Date']
 raw_df = pd.read_csv(example_data_path, parse_dates=date_cols)
 column_dtypes = {'Committee': 'category'}
