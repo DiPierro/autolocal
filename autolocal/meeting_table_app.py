@@ -21,8 +21,6 @@ for c in [categorical_col]:
 datetime_col = 'Date'
 datetime_range = (raw_df.loc[:,datetime_col].min(), raw_df.loc[:,datetime_col].max())
 
-sample_df = raw_df
-
 filter_columns = [
     'City',
     'Date',
@@ -36,26 +34,33 @@ hyperlink_columns = [
 
 disp_columns = filter_columns + hyperlink_columns
 
-def format_table(df, id='table', className='fl-table', **kwargs):
-    header = html.Tr([html.Th(c) for c in disp_columns])
+def format_table(df, **kwargs):
+    header = html.Tr([html.Th(c) for c in hyperlink_columns])
     rows = []
     for r in range(len(df)):
-        row = []
+        row = {}
         for c in disp_columns:
             value = df.iloc[r][c]
             if c in hyperlink_columns and not pd.isnull(value):
-                cell_content = html.A('PDF', href=value, target="_blank")
-            elif c==datetime_col:
-                cell_content = value.strftime('%B %d, %Y')
+                row.append(html.Td(html.A('Link', href=value)))
             else:
-                cell_content = value
-            row.append(html.Td(cell_content))
+                row.append(html.Td(value))            
         rows.append(html.Tr(row))
-    table = html.Table(
-        [html.Thead(header), html.Tbody(rows)],
-        className=className,
-        **kwargs)
+    table = html.Table([header] + rows, **kwargs)
     return table
+
+sample_df = make_hyperlinked_columns(raw_df)
+
+# sample_df = pd.DataFrame({
+#     'int': [random.randint(1, 100) for i in range(20)],
+#     'float': [random.random() * x for x in random.choices(range(100), k=20)],
+#     'str(object)': ['one', 'one two', 'one two three', 'four'] * 5,
+#     'category': random.choices(['Sat', 'Sun', 'Mon', 'Tue', 'Wed','Thu', 'Fri'], k=20),
+#     'datetime': pd.date_range('2019-05-01', periods=20),
+#     'bool': random.choices([True, False], k=20),
+# })
+# sample_df['category'] = sample_df['category'].astype('category')
+
 
 def get_str_dtype(df, col):
     """Return dtype of col in df"""
@@ -116,18 +121,13 @@ app.layout = html.Div([
         ], id='container_date_filter'
         ),
     ]),
-    html.Div(
-        format_table(sample_df),
-        id='table_container',
-        className='table-wrapper',
-    )
-    # DataTable(
-    #     id='table',
-    #     sort_action='native',
-    #     sort_mode='multi',
-    #     columns=[{"name": _, "id": _} for _ in sample_df.columns],
-    #     style_cell={'maxWidth': '400px', 'whiteSpace': 'normal'},
-    #     data=sample_df.to_dict("rows"))
+    DataTable(
+        id='table',
+        sort_action='native',
+        sort_mode='multi',
+        columns=[{"name": _, "id": _} for _ in sample_df.columns],
+        style_cell={'maxWidth': '400px', 'whiteSpace': 'normal'},
+        data=sample_df.to_dict("rows"))
 ])
 
 
@@ -187,7 +187,7 @@ def set_rng_slider_max_min_val(column):
 
 
 @app.callback(
-    Output('table_container', 'children'),
+    Output('table', 'data'),
     [
         Input('col_select', 'value'),
         Input('cat_filter', 'value'),
@@ -205,14 +205,16 @@ def filter_table(
             col, categories, string, start_date, end_date]]):
         raise PreventUpdate
     elif categories and (get_str_dtype(sample_df, col) == 'category'):
-        df = sample_df[sample_df.loc[:,col].isin(categories)]        
+        df = sample_df[sample_df.loc[:,col].isin(categories)]
+        return df.to_dict('rows')    
     elif string and get_str_dtype(sample_df, col) == 'object':
         df = sample_df[sample_df.loc[:,col].str.contains(string, case=False)]
+        return df.to_dict('rows')
     elif start_date and end_date and (get_str_dtype(sample_df, col) == 'datetime'):
         df = sample_df[sample_df.loc[:,col].between(start_date, end_date)]
+        return df.to_dict('rows')
     else:
-        df = sample_df
-    return format_table(df)
+        return sample_df.to_dict('rows')
 
 if __name__ == '__main__':
     app.run_server(debug=True)
