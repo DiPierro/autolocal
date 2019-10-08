@@ -5,8 +5,13 @@ from dash.dependencies import Input, Output
 from dash_table import DataTable
 from dash.exceptions import PreventUpdate
 import pandas as pd
+import pdf2txt
+
+import os
+import urllib
 
 # read data
+data_dir = '../data/'
 example_data_path = '../data/meeting_database/example_meeting_database.csv'
 date_cols = ['Date']
 raw_df = pd.read_csv(example_data_path, parse_dates=date_cols)
@@ -21,7 +26,37 @@ for c in [categorical_col]:
 datetime_col = 'Date'
 datetime_range = (raw_df.loc[:,datetime_col].min(), raw_df.loc[:,datetime_col].max())
 
-sample_df = raw_df
+def process_pdf_url(pdf_url, city):
+    # city = df["City"]
+    # pdf_url = df["Agendas"]
+    if not isinstance(pdf_url, str):
+        return ""
+    citydir = os.path.join(data_dir, city)
+    pdfdir = os.path.join(citydir, "pdf")
+    txtdir = os.path.join(citydir, 'txt')
+    pdfname = os.path.basename(pdf_url)
+    local_pdf_path = os.path.join(pdfdir, pdfname)
+    txtname = pdfname[:-4] + '.txt'
+    txt_path = os.path.join(txtdir, txtname)
+    if not os.path.exists(local_pdf_path):
+        if not os.path.exists(citydir):
+            os.mkdir(citydir)
+        if not os.path.exists(pdfdir):
+            os.mkdir(pdfdir)
+        urllib.request.urlretrieve(pdf_url.replace(" ", "%20"), local_pdf_path)
+    if not os.path.exists(txt_path):
+        if not os.path.exists(txtdir):
+            os.mkdir(txtdir)
+        args = [local_pdf_path, '-o', txt_path]
+        pdf2txt.main(args)
+    with open(txt_path, 'r') as f:
+        return f.read()
+
+def add_text_column(df):
+    df["txt"] = df.apply(lambda x: process_pdf_url(x.Agendas, x.City), axis=1)
+    return df
+
+sample_df = add_text_column(raw_df)
 
 filter_columns = [
     'City',
@@ -75,17 +110,22 @@ app = dash.Dash(__name__)
 app.layout = html.Div([
     html.Div([
         html.Div(
-            id='container_col_select',
-            children=dcc.Dropdown(
-                id='col_select',
-                options=[
-                    {
-                        'label': c.replace('_', ' ').title(),
-                        'value': c
-                    } for c in filter_columns
-                ]
+            [
+                dcc.Dropdown(
+                    id='col_select',
+                    options=[
+                        {
+                            'label': c.replace('_', ' ').title(),
+                            'value': c
+                        } for c in filter_columns
+                    ]
                 ),
-             style={'display': 'inline-block', 'width': '30%', 'margin-left': '7%'}
+                html.Div(
+                    id='container_keyword_query', children=dcc.Input(id='keyword_query')
+                )
+            ],
+            id='container_col_select',
+            style={'display': 'inline-block', 'width': '30%', 'margin-left': '7%'}
         ),
         html.Div(
             [
@@ -193,14 +233,16 @@ def set_rng_slider_max_min_val(column):
         Input('cat_filter', 'value'),
         Input('str_filter', 'value'),
         Input('date_filter', 'start_date'),
-        Input('date_filter', 'end_date')
+        Input('date_filter', 'end_date'),
+        Input('keyword_query', 'value')
     ])
 def filter_table(
     col,
     categories,
     string,
     start_date,
-    end_date):
+    end_date,
+    keyword_query):
     if all([param is None for param in [
             col, categories, string, start_date, end_date]]):
         raise PreventUpdate
@@ -210,6 +252,11 @@ def filter_table(
         df = sample_df[sample_df.loc[:,col].str.contains(string, case=False)]
     elif start_date and end_date and (get_str_dtype(sample_df, col) == 'datetime'):
         df = sample_df[sample_df.loc[:,col].between(start_date, end_date)]
+    elif keyword_query:
+        print(keyword_query)
+        print(sample_df.loc[:,'txt'])
+        print(sample_df.loc[:,'txt'].str.contains(keyword_query, case=False, na=False))
+        df = sample_df[sample_df.loc[:,'txt'].str.contains(keyword_query, case=False, na=False)]
     else:
         df = sample_df
     return format_table(df)
