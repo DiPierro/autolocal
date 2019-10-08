@@ -4,5 +4,7 @@ A collection of tools for scraping, collecting, organizing, viewing, and analyzi
 
 ## Directory structure:
 `notebooks` - Jupyter notebooks for data analysis/exploratory stuff
+
 `autolocal` - code
+
 `data` - some sample data for exploration
