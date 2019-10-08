@@ -116,7 +116,7 @@ app.layout = html.Div(
                         multi=True,
                         options=[{'label': _, 'value': _} for _ in categorical_vals['City']]
                     )
-                ) 
+                )    
             ]
         ),
         html.Div(
