@@ -195,7 +195,7 @@ def filter_table(
     keyword_query):
     
     # don't update if there's nothing to do
-    all_params = [committee, city, start_date, end_date]
+    all_params = [committee, city, start_date, end_date, keyword_query]
     if all([param is None for param in all_params]):
         raise PreventUpdate
     
