@@ -7,54 +7,13 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 from datetime import datetime
 
-import pdf2txt
-import os
-import urllib
+from flask import Flask
+from document_manager import DocumentManager
 
-data_dir = '../data/'
+# instantiate DocumentManager
+documents = DocumentManager()
+table_data = documents.metadata
 
-# load data
-example_data_path = '../data/meeting_database/example_meeting_database.csv'
-datetime_cols = ['Date']
-categorical_vars = ['Committee', 'City']
-column_dtypes = {v: 'category' for v in categorical_vars}
-data = pd.read_csv(example_data_path, parse_dates=datetime_cols, dtype=column_dtypes)
-
-# get range of values of each column
-categorical_vals = {v: data.loc[:,v].dropna().unique() for v in categorical_vars}
-datetime_range = (data.loc[:,'Date'].min(), datetime.now())
-
-def process_pdf_url(pdf_url, city):
-    # city = df["City"]
-    # pdf_url = df["Agendas"]
-    if not isinstance(pdf_url, str):
-        return ""
-    citydir = os.path.join(data_dir, city)
-    pdfdir = os.path.join(citydir, "pdf")
-    txtdir = os.path.join(citydir, 'txt')
-    pdfname = os.path.basename(pdf_url)
-    local_pdf_path = os.path.join(pdfdir, pdfname)
-    txtname = pdfname[:-4] + '.txt'
-    txt_path = os.path.join(txtdir, txtname)
-    if not os.path.exists(local_pdf_path):
-        if not os.path.exists(citydir):
-            os.mkdir(citydir)
-        if not os.path.exists(pdfdir):
-            os.mkdir(pdfdir)
-        urllib.request.urlretrieve(pdf_url.replace(" ", "%20"), local_pdf_path)
-    if not os.path.exists(txt_path):
-        if not os.path.exists(txtdir):
-            os.mkdir(txtdir)
-        args = [local_pdf_path, '-o', txt_path]
-        pdf2txt.main(args)
-    with open(txt_path, 'r') as f:
-        return f.read()
-
-def add_text_column(df):
-    df["txt"] = df.apply(lambda x: process_pdf_url(x.Agendas, x.City), axis=1)
-    return df
-
-sample_df = add_text_column(data)
 
 # set columns to filter
 filter_columns = [
@@ -73,7 +32,11 @@ hyperlink_columns = [
 disp_columns = filter_columns + hyperlink_columns
 
 # initialize app
-app = dash.Dash(__name__)
+server = Flask(__name__)
+app = dash.Dash(__name__, server=server)
+
+app.scripts.config.serve_locally = True
+
 app.title = 'City Meeting Database'
 
 # function for formatting the dataframe into an HTML table
@@ -177,7 +140,6 @@ app.layout = html.Div(
 )
 
 
-
 @app.callback(
     Output('table_container', 'children'),
     [
@@ -193,25 +155,42 @@ def filter_table(
     start_date,
     end_date,
     keyword_query):
+
     
     # don't update if there's nothing to do
-    all_params = [committee, city, start_date, end_date]
+    all_params = [committee, city, start_date, end_date, keyword_query]
     if all([param is None for param in all_params]):
         raise PreventUpdate
-    
+
     # initially select all rows
-    idx = pd.Series([True]*len(data), dtype=bool)
+    idx = pd.Series([True]*len(table_data), dtype=bool)
+
+    # # intersect selection with index queries
+    # index_queries =  {
+    #     'Committee': committee,
+    #     'City': city,
+    #     'Keyword': keyword
+    # }
+    # for index_var, query in index_queries.items():
+    #     if query:
+    #         idx = idx & documents.index[index_var][query]
     
+    # # intersect selection with date query
+    # if start_date and end_date:
+    #     idx = idx & table_data.loc[:,'Date'].between(start_date, end_date)
+    # df = table_data.loc[idx,:]
+
     # winnow down rows based on selections
     if committee:
         idx = idx & data.loc[:,'Committee'].isin(committee)
     if city:
-            idx = idx & data.loc[:,'City'].isin(city)
+        idx = idx & data.loc[:,'City'].isin(city)
     if start_date and end_date:
         idx = idx & data.loc[:,'Date'].between(start_date, end_date)
     if keyword_query:
-        idx = idx & data.loc[:,'txt'].str.contains(keyword_query, case=False, na=False)
+        idx = idx & (documents.get_count_vector('Keyword', keyword_query) > 0)
     df = data.loc[idx,:]
+
     return format_table(df)
 
 if __name__ == '__main__':
