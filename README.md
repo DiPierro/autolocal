@@ -19,6 +19,8 @@ This works with the following packages/versions:
 
 `pdfminer` 20181108
 
+`pandas` 0.24.2
+
 ## Usage
 
 From the `autolocal` directory, run `python deploy_meeting_table.py`, then go to `localhost:8050` in your web browser. This should pull up the meeting table web application.
