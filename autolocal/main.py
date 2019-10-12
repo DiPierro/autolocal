@@ -1,15 +1,19 @@
 from threading import Thread
-from document_manager import DocumentManager
-from scraper import Scraper
-from webapp import WebApp
+
+from autolocal import WebApp, Scraper, DocumentManager
 
 # load document manager
 documents = DocumentManager()
 
+# just for testing - load some documents
+if len(documents.metadata)==0:
+    print('loading documents:')
+    documents.add_docs_from_csv('../data/misc/meeting_table_prototype_v3.csv')
+
 # run scraper in its own thread
 scraper = Scraper(documents)
 scraper_thread = Thread(
-    scraper.run,
+    target=scraper.scrape,
     daemon=True
     )
 scraper_thread.start()
@@ -17,6 +21,6 @@ scraper_thread.start()
 # run webapp in its own thread
 webapp = WebApp(documents)
 webapp_thread = Thread(
-    webapp.run,
+    target=webapp.run,
     )
-webbapp_thread.start()
+webapp_thread.start()

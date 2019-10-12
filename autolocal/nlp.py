@@ -15,6 +15,7 @@ class Tokenizer(object):
         pass
 
     def tokenize(
+        self,
         string
         ):
         return self.tokenizer.findall(string)

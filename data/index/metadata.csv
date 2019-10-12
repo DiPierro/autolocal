@@ -1,0 +1,10 @@
+,city,committee,date,doc_type,url,local_path_pdf,local_path_txt,meeting_type,cancelled
+0,Live Oak,Planning Commission,2019-10-15,Agenda,,,,Regular,True
+1,Live Oak,Planning Commission,2019-10-15,Minutes,,,,Regular,True
+2,Biggs,City Council,2019-10-08,Revised Agenda,https://www.biggs-ca.gov/documents/Government/Agendas--Minutes/2019-Agendas-Minutes/10-8-19 Revised Regular Mtg Agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/biggs/pdf/Biggs_2019-10-08_City-Council_Revised-Agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/biggs/txt/Biggs_2019-10-08_City-Council_Revised-Agenda.txt,Regular,
+3,Biggs,City Council,2019-10-08,Agenda,https://www.biggs-ca.gov/documents/Government/Agendas--Minutes/2019-Agendas-Minutes/10-8-19 Regular Mtg Agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/biggs/pdf/Biggs_2019-10-08_City-Council_Agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/biggs/txt/Biggs_2019-10-08_City-Council_Agenda.txt,Regular,
+4,Biggs,City Council,2019-10-08,Minutes,,,,Regular,
+5,Gridley,City Council,2019-10-07,Agenda,http://gridley.ca.us/public/uploads/pdfs/10-7-19_agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/gridley/pdf/Gridley_2019-10-07_City-Council_Agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/gridley/txt/Gridley_2019-10-07_City-Council_Agenda.txt,Regular,
+6,Gridley,City Council,2019-10-07,Minutes,,,,Regular,
+7,Live Oak,City Council,2019-10-02,Agenda,http://liveoakca.iqm2.com/Citizens/FileOpen.aspx?Type=1&ID=1137&Inline=True,/Users/chris/Dropbox/projects/autolocal/data/docs/live-oak/pdf/Live-Oak_2019-10-02_City-Council_Agenda.pdf,/Users/chris/Dropbox/projects/autolocal/data/docs/live-oak/txt/Live-Oak_2019-10-02_City-Council_Agenda.txt,Regular,
+8,Live Oak,City Council,2019-10-02,Minutes,,,,Regular,

@@ -94,7 +94,7 @@ def maketheparser():
 # main
 
 
-def main(args=None):
+def pdf2txt(args=None):
 
     P = maketheparser()
     A = P.parse_args(args=args)
