@@ -11,7 +11,7 @@ if len(documents.metadata)==0:
     documents.add_docs_from_csv('../data/misc/meeting_table_prototype_v3.csv')
 
 # run scraper in its own thread
-scraper_list = scrapers.init_scrapers()
+scraper_list = scrapers.init_scrapers(documents)
 
 # scraper = Scraper(documents)
 for scraper in scraper_list:

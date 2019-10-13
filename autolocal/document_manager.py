@@ -83,11 +83,10 @@ class DocumentManager(object):
         ):
         # add a document to the database.
         # new_doc must be a dict (or row of dataframe) with fields:
-        # self, city, committee, doc_type, date,
+        # city, committee, doc_type, date,
         # and optionally, if you want to download and index the document, 
         # url 
         
-        # create dict for doc
         doc = {k: np.nan for k in self.metadata_vars}
         doc.update(new_doc)
         doc['date'] = pd.to_datetime(doc['date'])

@@ -7,7 +7,8 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 class Scraper(object): 
-    def __init__ (self, site_url, table_url, mtg_type = None):
+    def __init__ (self, documents, site_url, table_url, mtg_type = None):
+        self.documents = documents
         self.site_url = site_url
         self.table_url = table_url
         self.mtg_type = mtg_type
@@ -34,10 +35,9 @@ class Scraper(object):
         # on a loop
         self.scrape()
         self.update_files()
-        pass
     
     def update_files(self):
-        pass
+        self.data.apply(lambda df: self.documents.add_doc(df.to_dict()), axis=1)
         
     def read_table_page(self):
         with urllib.request.urlopen(self.table_url) as f:
@@ -83,13 +83,6 @@ class GridleyScraper(Scraper):
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
         return new_df
 
-gridley_cc_scraper = GridleyScraper(
-    site_url = "http://gridley.ca.us",
-    mtg_type = "City Council",
-    table_url = "http://gridley.ca.us/government-and-departments/city-council/")
-gridley_cc_scraper.run()
-gridley_cc_scraper.data
-
 
 class BiggsScraper(Scraper): 
         
@@ -113,7 +106,7 @@ class BiggsScraper(Scraper):
                     element = elements[i]
                     table_data[h].append(element)
             else:
-                print("next url to lookup: ", self.build_url(elements[0]))
+                # print("next url to lookup: ", self.build_url(elements[0]))
                 self.next_table_url = self.build_url(elements[0])
         self.table_data = pd.DataFrame(table_data)
 
@@ -208,22 +201,26 @@ class LiveOaksScraper(Scraper):
 
 # TODO: RL give it url for a town, its action space is to follow a link or add a record or stop
 
-def init_srapers():
+def init_scrapers(documents):
     return [
         GridleyScraper(
+            documents = documents,
             site_url = "http://gridley.ca.us",
             mtg_type = "City Council",
             table_url = "http://gridley.ca.us/government-and-departments/city-council/"),
         GridleyScraper(
+            documents = documents,
             site_url = "http://gridley.ca.us",
             mtg_type = "Planning Commission",
             table_url = "http://gridley.ca.us/government-and-departments/planning-commission/"),
         BiggsScraper(
+            documents = documents,
             site_url = "https://www.biggs-ca.gov/",
             table_url = "https://www.biggs-ca.gov/Government/Agendas--Minutes/index.html"),
 #             table_url = "https://www.biggs-ca.gov/Government/Agendas--Minutes/2009-Agendas--Minutes/index.html")
          LiveOaksScraper(
-            site_url = "http://liveoakca.iqm2.com/Citizens/",
+            documents = documents,
+            site_url = "http://liveoakca.iqm2.com/",
             table_url = "http://liveoakca.iqm2.com/Citizens/Calendar.aspx?From=1/1/1900&To=12/31/9999")
     ]
 
