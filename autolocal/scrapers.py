@@ -22,7 +22,7 @@ def init_scrapers(documents):
             documents = documents,
             site_url = "https://www.biggs-ca.gov/",
             table_url = "https://www.biggs-ca.gov/Government/Agendas--Minutes/index.html"),
-        LiveOaksScraper(
+        LiveOakScraper(
             documents = documents,
             site_url = "http://liveoakca.iqm2.com/",
             table_url = "http://liveoakca.iqm2.com/Citizens/Calendar.aspx?From=1/1/1900&To=12/31/9999")
@@ -92,7 +92,7 @@ class GridleyScraper(Scraper):
         def parse_table_row(df):
             date_and_name = df["Date"].text
             meeting_date, meeting_type = split_date_and_name(date_and_name)
-            cancelled = "cancel" in meeting_type
+            cancelled = "cancel" in meeting_type.lower()
             agenda_elem = df["Agenda"]
             minutes_elem = df["Minutes"]
             doc_types = ["Agenda", "Minutes"]
@@ -161,7 +161,7 @@ class BiggsScraper(Scraper):
         return new_df
 
 
-class LiveOaksScraper(Scraper):
+class LiveOakScraper(Scraper):
             
     def parse_table_html(self):
         table_data = []
@@ -208,7 +208,7 @@ class LiveOaksScraper(Scraper):
             minutes = None
             links = df["Links"]
             mtg_data = {
-                "city": "Live Oaks",
+                "city": "Live Oak",
                 "committee": df["Type"],
                 "date": df["Date"],
                 "month": df["Month"],

@@ -91,13 +91,13 @@ class DocumentManager(object):
         doc['date'] = pd.to_datetime(doc['date'])
 
         # don't add the document if we already have it
-        # try:
-        doc_id = self._get_doc_id(doc)
-        # except:
-        #     print('could not add document')
-            # return
+        try:
+            doc_id = self._get_doc_id(doc)
+        except:
+            print('warning: could not add document')
+            return
         if doc_id in self.metadata.index:
-            print('document already in index: {}'.format(doc_id))
+            print('document already added: {}'.format(doc_id))
             return
 
         # convert non-url
@@ -120,6 +120,8 @@ class DocumentManager(object):
         # if isinstance(doc['url'], str):
         self._add_doc_to_index(doc_id, doc, to_file=to_file)
 
+        print('added document: {}'.format(doc_id))
+        
         pass
 
     def add_docs_from_csv(
@@ -287,6 +289,8 @@ class DocumentManager(object):
             return            
         if not (url and local_path):
             return
+        if os.path.exists(local_path):
+            return
 
         # make directories if they don't yet exist
         os.makedirs(os.path.split(local_path)[0], exist_ok=True)
@@ -303,6 +307,8 @@ class DocumentManager(object):
         except KeyError:
             return
         if not (pdf_path and txt_path):
+            return
+        if os.path.exists(txt_path):
             return
 
 
