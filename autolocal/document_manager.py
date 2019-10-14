@@ -75,7 +75,6 @@ class DocumentManager(object):
         with self.metadata_lock:
             return self.metadata
 
-
     def add_doc(
         self,
         new_doc,     
@@ -83,7 +82,7 @@ class DocumentManager(object):
         ):
         # add a document to the database.
         # new_doc must be a dict (or row of dataframe) with fields:
-        # self, city, committee, doc_type, date,
+        # city, committee, doc_type, date,
         # and optionally, if you want to download and index the document, 
         # url 
         
@@ -92,23 +91,35 @@ class DocumentManager(object):
         doc.update(new_doc)
         doc['date'] = pd.to_datetime(doc['date'])
 
-        # if url exists, download and process document
-        if isinstance(doc['url'], str):
-            # get local paths to document
-            doc_paths = self._write_doc_paths(doc)
-            doc.update(doc_paths)
+        # don't add the document if we already have it
+        # try:
+        doc_id = self._get_doc_id(doc)
+        # except:
+        #     print('could not add document')
+            # return
+        if doc_id in self.metadata.index:
+            print('document already in index: {}'.format(doc_id))
+            return
 
-            # download doc from url
-            self._download_doc(doc)
+        # convert non-url
+        if not isinstance(doc['url'], str):
+            doc['url'] = ''
+
+        # get local paths to document        
+        doc_paths = self._get_doc_paths(doc)
+        doc.update(doc_paths)
+
+        # download doc from url
+        self._download_doc(doc)
             
-            # convert to txt
-            self._convert_doc(doc)
+        # convert to txt
+        self._convert_doc(doc)
 
         # add to metadata and index
-        doc_id = self._add_doc_to_metadata(doc)
+        self._add_doc_to_metadata(doc_id, doc, to_file)
 
-        if isinstance(doc['url'], str):
-            self._add_doc_to_index(doc_id, doc)
+        # if isinstance(doc['url'], str):
+        self._add_doc_to_index(doc_id, doc, to_file=to_file)
 
         pass
 
@@ -116,11 +127,12 @@ class DocumentManager(object):
         self,
         csv_path,
         pass_fields=None,
+        **kwargs
         ):
         # downloads documents specified in csv_path
         # csv must contain fields: city, date, committee, doc_type
         # csv should also contain field `url` in order to download anything        
-        docs = pd.read_csv(csv_path)
+        docs = pd.read_csv(csv_path, **kwargs)
         for _, row in tqdm(docs.iterrows()):
             self.add_doc(row)
         pass
@@ -128,26 +140,31 @@ class DocumentManager(object):
     def get_count_vector(
         self,        
         key,
-        index_var='keyword',        
+        index_var='keyword',
         ):
         # for a given index_var and key, gets a list of (doc_id, count) pairs 
-        # and converts to vector of counts with len of metadata
+        # and converts to dict of counts with len of metadata
 
         # initialize vector with same length as metadata
         with self.metadata_lock:
             with self.index_lock:
-                counts = np.zeros(len(self.metadata), dtype=int)
+                #counts = #np.zeros(len(self.metadata), dtype=int)
+                counts = pd.DataFrame(
+                    np.array(np.zeros(len(self.metadata), dtype=int)),
+                    index=self.metadata.index
+                    )
 
                 # see if the key is in the index; if not, return zero vector
                 try:
                     values = self.index[index_var][key.upper()]
                 except KeyError:            
-                    return counts
+                    return np.array(counts.loc[:,0])
 
-                # if key is in index, return the vector of counts across documents
+                # if key is in index, return the dataframe of counts across documents
                 for doc_id, count in values:
-                    counts[doc_id] = count
-                return counts
+                    counts.loc[doc_id,0] = count
+                return np.array(counts.loc[:,0])
+
 
     """
     Helper functions
@@ -162,7 +179,11 @@ class DocumentManager(object):
             except:
                 if os.path.exists(self.metadata_path):
                     with self.metadata_lock:
-                        self.metadata = pd.read_csv(self.metadata_path)
+                        self.metadata = pd.read_csv(
+                            self.metadata_path,
+                            index_col=0,
+                            parse_dates=['date']
+                            )
                         return            
         self._init_metadata()
         return
@@ -173,22 +194,21 @@ class DocumentManager(object):
         self._save_metadata(metadata)
         pass
 
-    def _save_metadata(self, metadata):
+    def _save_metadata(self, metadata, to_file=True):
         with self.metadata_lock:
             self.metadata = metadata
-            self.metadata.to_csv(self.metadata_path)
+            if to_file:
+                self.metadata.to_csv(self.metadata_path)
         pass    
     
-    def _add_doc_to_metadata(self, doc, to_file=True,):
+    def _add_doc_to_metadata(self, doc_id, doc, to_file=True,):
         # add a single document to the metadata file
         # doc is the record in self.metadata (i.e. one row of the dataframe)
         self._load_metadata()        
         with self.metadata_lock:
-            doc_id = len(self.metadata)
             doc_df = pd.DataFrame(doc, index=[doc_id])
             metadata = self.metadata.append(doc_df, sort=False)
-            self._save_metadata(metadata)        
-        return doc_id
+            self._save_metadata(metadata, to_file)
 
     def _load_index(self, force_build_index):
     # if necessary, load index from disk or initialize it
@@ -215,13 +235,14 @@ class DocumentManager(object):
             for doc_id, doc in self.metadata.iterrows():
                 self._add_doc_to_index(doc_id, doc, to_file=False)
         self._save_index()
+        return
 
     def _save_index(self):
         # save the index to file if called to do so.       
         with open(self.index_path, 'wb') as f:
             with self.index_lock:
                 pkl.dump(self.index, f, pkl.HIGHEST_PROTOCOL)
-        pass
+        return
 
     def _add_item_to_index(self, index_var, key, value):
         # add a single item to the index
@@ -230,16 +251,23 @@ class DocumentManager(object):
                 self.index[index_var][key].append(value)
             except KeyError:
                 self.index[index_var][key] = [value]
-            pass
+            return
 
     def _add_doc_to_index(self, doc_id, doc, doc_txt=None, to_file=True,):
         # add a single document to the index file
         # doc_id is the row number of the record in self.metadata 
         # doc is the record in self.metadata (i.e. one row of the dataframe)
+        try:
+            local_path = doc['local_path_txt']
+        except:
+            return
+        if not local_path:
+            return
+
         for index_var in self.index_vars:
             if index_var=='keyword':
                 if doc_txt is None:
-                    with open(doc['local_path_txt'], 'r') as f:
+                    with open(local_path, 'r') as f:
                         doc_txt = f.read()
                 tokens = self.tokenizer.tokenize(doc_txt)
                 tokens = [t.upper() for t in tokens]
@@ -248,28 +276,49 @@ class DocumentManager(object):
                     self._add_item_to_index(index_var, token, (doc_id, count))        
         if to_file:
             self._save_index()
+        return
 
     def _download_doc(self, doc):
         # download a document from given url to designated local location
-        local_path = doc['local_path_pdf']
+        
+        try:
+            local_path = doc['local_path_pdf']
+            url = doc['url']
+        except KeyError:
+            return            
+        if not (url and local_path):
+            return
+
+        # make directories if they don't yet exist
         os.makedirs(os.path.split(local_path)[0], exist_ok=True)
-        url = doc['url'].replace(' ', '%20')
-        urlretrieve(url, local_path)            
-        pass
+
+        # download pdf
+        urlretrieve(url.replace(' ', '%20'), local_path)
+        return
 
     def _convert_doc(self, doc):
         # convert a pdf to txt and save in designated location
-        pdf_path = doc['local_path_pdf']
-        txt_path = doc['local_path_txt']
+        try:
+            pdf_path = doc['local_path_pdf']
+            txt_path = doc['local_path_txt']
+        except KeyError:
+            return
+        if not (pdf_path and txt_path):
+            return
+
+
+        # make directories if they don't yet exist
         os.makedirs(os.path.split(txt_path)[0], exist_ok=True)
+        
+        # convert pdf
         args = [pdf_path, '-o', txt_path]
         pdf2txt(args)
-        pass
+        return
 
 
-    def _write_doc_fname(self, doc):
+    def _get_doc_id(self, doc):
         # produce the file name which the document will be known by locally.
-        # `doc` variable must contain fields:  city, date, committee
+        # `doc` variable must contain fields:  city, date, committee        
         date = doc['date'].strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
@@ -277,9 +326,8 @@ class DocumentManager(object):
         return '{}_{}_{}_{}'.format(city, date, committee, doc_type)        
 
 
-    def _parse_doc_fname(self, fname):
+    def _parse_doc_id(self, doc_id):
         # given a file name, extract the document properties
-        fname = fname[:-4]
         city, date, committee, doc_type = fname.split('_')
         city = city.replace('-', ' ')
         committee = committee.replace('-', ' ')
@@ -288,7 +336,7 @@ class DocumentManager(object):
         return city, date, committee, doc_type
 
 
-    def _write_city_dir(self, doc):
+    def _get_city_dir(self, doc):
         # return a file-structure friendly form of a city name
         return doc['city'].lower().replace(' ', '-')
 
@@ -298,138 +346,17 @@ class DocumentManager(object):
         return city_dir.replace('-', ' ').title()
 
 
-    def _write_doc_paths(self, doc):
-        doc_paths = {}
-        for s in ['pdf', 'txt']:
-            k = 'local_path_' + s
-            doc_paths[k] = os.path.abspath(
-                os.path.join(
-                    self.document_dir,
-                    self._write_city_dir(doc),
-                    s,
-                    '{}.{}'.format(self._write_doc_fname(doc), s)
-                )
-            ) 
+    def _get_doc_paths(self, doc):
+        formats = ['pdf', 'txt']
+        doc_paths = {'local_path_' + s: '' for s in formats}
+        if doc['url']:
+            for s in formats:
+                k = 'local_path_' + s
+                doc_paths[k] = os.path.abspath(
+                    os.path.join(
+                        self.document_dir,
+                        self._get_city_dir(doc),
+                        '{}.{}'.format(self._get_doc_id(doc), s)
+                    )
+                ) 
         return doc_paths
-
-    # def process_pdf_url(pdf_url, city):
-    #     # city = df["City"]
-    #     # pdf_url = df["Agendas"]
-    #     if not isinstance(pdf_url, str):
-    #         return ""
-    #     citydir = os.path.join(data_dir, city)
-    #     pdfdir = os.path.join(citydir, "pdf")
-    #     txtdir = os.path.join(citydir, 'txt')
-    #     pdfname = os.path.basename(pdf_url)
-    #     local_pdf_path = os.path.join(pdfdir, pdfname)
-    #     txtname = pdfname[:-4] + '.txt'
-    #     txt_path = os.path.join(txtdir, txtname)
-    #     if not os.path.exists(local_pdf_path):
-    #         if not os.path.exists(citydir):
-    #             os.mkdir(citydir)
-    #         if not os.path.exists(pdfdir):
-    #             os.mkdir(pdfdir)
-            
-    #     if not os.path.exists(txt_path):
-    #         if not os.path.exists(txtdir):
-    #             os.mkdir(txtdir)
-    #         args = [local_pdf_path, '-o', txt_path]
-    #         pdf2txt(args)
-    #     with open(txt_path, 'r') as f:
-    #         return f.read()
-
-
-    # load data
-    # example_data_path = '../data/meeting_database/example_meeting_database.csv'
-    # datetime_cols = ['Date']
-    # categorical_vars = ['Committee', 'City']
-    # column_dtypes = {v: 'category' for v in categorical_vars}
-    # data = pd.read_csv(example_data_path, parse_dates=datetime_cols, dtype=column_dtypes)
-
-    # get range of values of each column
-    
-        # metadata file (minimally) has columns:
-        # city
-        # committee
-        # date
-        # local_path_txt,
-        # local_path_pdf
-        # url
-
-        # # traverse file structure
-        # self.cities = []
-        # self.files = []
-        # with os.scandir(self.document_dir) as city_dirs:                                    
-        #     for entry in city_dirs:                
-        #         if entry.is_dir():                    
-        #             self.cities.append(self._parse_city_dir(entry.name))
-        #             if os.path.exists(os.path.join(entry.path, 'pdf')):
-        #                 files = os.listdir(os.path.join(entry.path, 'pdf'))                        
-        #                 self.files.extend(files)
-        # import pdb;pdb.set_trace()
-
-        # # build text files and save metadata
-        # for fi in self.files:     
-        #     city, date, committee, doc_type = self._parse_doc_fname(os.path.split(fi)[0])            
-        #     d = {
-        #         'city': city,
-        #         'date': date,
-        #         'committee': committee,
-        #         'doc_type': doc_type,
-        #         'local_path_pdf': fi,
-        #         'local_path_txt': None
-        #     }
-        #     metadata = pd.DataFrame(d, columns=self.metadata_vars)
-        # else:   
-
-
-
-    # def add_doc_from_url(
-    #     self,
-    #     city,
-    #     committee,
-    #     doc_type,
-    #     date,
-    #     url,
-    #     addl_fields=None
-    #     ):
-    #     # downloads a document from URL to appropriate local path
-    #     # runs pdfminer and gets txt version
-    #     # updates document list and index accordingly
-    #     # addl_fields contains any additional information to include with the record
-
-    #     doc = {
-    #         'city': city,
-    #         'committee': committee,
-    #         'date': date,
-    #         'doc_type': doc_type,
-    #         'url': url,
-    #         'local_path_pdf': None,
-    #         'local_path_txt': None,
-    #     }
-    #     doc.update(addl_fields)
-
-    #     # calculate local paths
-
-
-    #     self._add_doc_to_metadata(doc)
-    #     self._add_doc_to_index(doc)
-
-    #     pass
-
-    """
-    Interface for reading from document database.
-    """
-    # def _load_metadata(
-    #     self,
-    #     force_build_metadata=True
-    #     ):
-    #     self.metadata = self.build_metadata(**kwargs)
-    #     pass
-
-    # def _load_index(
-    #     self,
-    #     force_build_index=True
-    #     ):
-    #     self.index = self.build_index(**kwargs)
-    #     pass

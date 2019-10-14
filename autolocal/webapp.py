@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pandas as pd
+import numpy as np
 from flask import Flask
 import dash
 import dash_core_components as dcc
@@ -61,9 +62,9 @@ class WebApp(object):
 
         pass
 
-    def run(self):
+    def run(self, **kwargs):
         # function to launch webapp
-        self.app.run_server()
+        self.app.run_server(**kwargs)
         pass
     
     def _generate_page_layout(self):
@@ -226,19 +227,20 @@ class WebApp(object):
             self.table_data = self.documents.get_metadata()
 
             # initially select all rows
-            idx = pd.Series([True]*len(self.table_data), dtype=bool)
+            idx = np.array([True]*len(self.table_data), dtype=bool)
 
             # winnow down rows based on selections
             if committee:
-                idx = idx & self.table_data.loc[:,'committee'].isin(committee)
+                idx = idx & np.array(self.table_data.loc[:,'committee'].isin(committee))
             if city:
-                idx = idx & self.table_data.loc[:,'city'].isin(city)
+                idx = idx & np.array(self.table_data.loc[:,'city'].isin(city))
             if doc_type:
-                idx = idx & self.table_data.loc[:,'doc_type'].isin(doc_type)
+                idx = idx & np.array(self.table_data.loc[:,'doc_type'].isin(doc_type))
             if start_date and end_date:
-                idx = idx & self.table_data.loc[:,'date'].between(start_date, end_date)
+                idx = idx & np.array(self.table_data.loc[:,'date'].between(start_date, end_date))
             if keyword:
                 idx = idx & (self.documents.get_count_vector(keyword, 'keyword') > 0)
+            print(idx)
             df = self.table_data.loc[idx,:]
 
             res = (
@@ -250,87 +252,5 @@ class WebApp(object):
 
             return res
 
-            # # intersect selection with index queries
-            # index_queries =  {
-            #     'Committee': committee,
-            #     'City': city,
-            #     'Keyword': keyword
-            # }
-            # for index_var, query in index_queries.items():
-            #     if query:
-            #         idx = idx & documents.index[index_var][query]
-            
-            # # intersect selection with date query
-            # if start_date and end_date:
-            #     idx = idx & table_data.loc[:,'Date'].between(start_date, end_date)
-            # df = table_data.loc[idx,:]
-
-
 if __name__ == '__main__':    
     WebApp().run(debug=True)
-
-
-                # html.Div(
-                #     className='filter_container',            
-                #     children=[
-                #         html.Div(
-                #             className='filter_label',
-                #             children='City:'
-                #         ),
-                #         html.Div(
-                #             id='container_city_filter',
-                #                 children=dcc.Dropdown(
-                #                 id='city_filter',
-                #                 multi=True,
-                #                 options=self._calc_data_ranges('City')
-                #             )
-                #         )    
-                #     ]
-                # ),
-                # html.Div(
-                #     className='filter_container',            
-                #     children=[
-                #         html.Div(
-                #             className='filter_label',
-                #             children='Committee:'
-                #         ),
-                #         html.Div(
-                #             id='container_committee_filter',
-                #             children=dcc.Dropdown(
-                #                 id='committee_filter',
-                #                 multi=True,
-                #                 options=self._calc_data_ranges('Committee')
-                #             )
-                #         )
-                #     ]
-                # ),
-                # html.Div(
-                #     className='filter_container',
-                #     children=[
-                #         html.Div(
-                #             className='filter_label',
-                #             children='Date range:'
-                #         ),    
-                #         html.Div(
-                #             id='container_date_filter',
-                #             children=dcc.DatePickerRange(
-                #                 id='date_filter',
-                #                 start_date=self._calc_data_ranges('Date')[0],
-                #                 end_date=self._calc_data_ranges('Date')[1],
-                #                 initial_visible_month=self._calc_data_ranges('Date')[1],
-                #             )         
-                #         ),
-                #     ]
-                # ),
-                # html.Div(
-                #     className='filter_container',            
-                #     children=[
-                #         html.Div(
-                #             className='filter_label',
-                #             children='Keywords:'
-                #         ),
-                #         html.Div(
-                #             id='container_keyword_query', children=dcc.Input(id='keyword_filter')
-                #         )
-                #     ]
-                # ),
