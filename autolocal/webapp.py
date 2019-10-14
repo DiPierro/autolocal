@@ -83,8 +83,11 @@ class WebApp(object):
             children=[
                 html.Div(
                     className='input-wrapper',
-                    children=self._generate_filters(),
-                    ),                
+                    children=[
+                        self._generate_title(),
+                        *self._generate_filters(),
+                    ]
+                ),                
                 html.Div(        
                     id='table_container',
                     className='table-wrapper',
@@ -94,9 +97,15 @@ class WebApp(object):
         )
         pass
 
-    def _generate_filters(
-        self
-        ):
+    def _generate_title(self):
+        layout = html.Div(
+            id='title-wrapper',
+            children=html.H2('Big Local Documents')
+            # children='Big Local Documents'
+            )
+        return layout
+
+    def _generate_filters(self):
         # Function to generate the HTML for the input portion of the app
 
         filter_layouts = {
