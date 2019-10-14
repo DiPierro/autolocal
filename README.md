@@ -21,6 +21,8 @@ This works with the following packages/versions:
 
 `pandas` 0.24.2
 
+`beautifulsoup` 4.8.0
+
 ## Usage
 
 From the `autolocal` directory, run `python deploy_meeting_table.py`, then go to `localhost:8050` in your web browser. This should pull up the meeting table web application.
