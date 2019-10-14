@@ -86,7 +86,6 @@ class DocumentManager(object):
         # and optionally, if you want to download and index the document, 
         # url 
         
-        # create dict for doc
         doc = {k: np.nan for k in self.metadata_vars}
         doc.update(new_doc)
         doc['date'] = pd.to_datetime(doc['date'])
