@@ -2,5 +2,6 @@
 *.pdf
 *.txt
 *.pyc
+data/index/*
 autolocal/__pycache__/*
 notebooks/.ipynb_checkpoints/*

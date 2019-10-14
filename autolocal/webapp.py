@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import time
 
 import pandas as pd
 import numpy as np
@@ -12,10 +13,12 @@ from dash.exceptions import PreventUpdate
 from autolocal import DocumentManager
 
 DATETIME_VARS = ['date']
-CATEGORICAL_VARS = ['city', 'committee', 'doc_type']
+CATEGORICAL_VARS = ['city', 'committee', 'doc_type', 'keyword']
 HYPERLINK_VARS = ['url']
+DISP_VARS = ['date', 'city', 'committee', 'doc_type', 'url']
 
-FILTER_LABELS = ['City', 'Committee', 'Date', 'Document Type', 'Keywords']
+
+FILTER_LABELS = ['Keywords', 'City', 'Committee', 'Document Type', 'Date']
 PAGE_TITLE = 'City Meeting Database'
 
 class WebApp(object):
@@ -29,7 +32,7 @@ class WebApp(object):
         categorical_vars=CATEGORICAL_VARS,
         datetime_vars=DATETIME_VARS,
         hyperlink_columns=HYPERLINK_VARS,
-        disp_columns=DATETIME_VARS + CATEGORICAL_VARS + HYPERLINK_VARS,
+        disp_columns=DISP_VARS,
         filter_labels=FILTER_LABELS,
         page_title=PAGE_TITLE,
         ):
@@ -54,6 +57,12 @@ class WebApp(object):
         self.app.scripts.config.serve_locally = True
         self.app.title = page_title
 
+        # initialize keyword options
+        self.all_keywords = list(self.documents.get_index()['keyword'].keys())
+        self.all_keywords.sort()
+        print(type(self.all_keywords))
+        print('{} searchable keywords'.format(len(self.all_keywords)))
+
         # set page layout
         self._generate_page_layout()
 
@@ -72,7 +81,10 @@ class WebApp(object):
         self.app.layout = html.Div(
             className='content-wrapper',
             children=[
-                *self._generate_filters(),
+                html.Div(
+                    className='input-wrapper',
+                    children=self._generate_filters(),
+                    ),                
                 html.Div(        
                     id='table_container',
                     className='table-wrapper',
@@ -90,12 +102,12 @@ class WebApp(object):
         filter_layouts = {
             'City': html.Div(
                 id='container_city_filter',
-                    children=dcc.Dropdown(
+                children=dcc.Dropdown(
                     id='city_filter',
                     multi=True,
                     options=self._calc_data_ranges('city')
                 )
-            ),               
+            ),
             'Committee': html.Div(
                 id='container_committee_filter',
                 children=dcc.Dropdown(
@@ -123,8 +135,16 @@ class WebApp(object):
             ),
             'Keywords': html.Div(
                 id='container_keyword_filter',
-                children=dcc.Input(id='keyword_filter')
-            )
+                children=dcc.Dropdown(
+                    id='keyword_filter',
+                    multi=True,
+                    options=self._calc_data_ranges('keyword')
+                )
+            )            
+            # 'Keywords': html.Div(
+            #     id='container_keyword_filter',
+            #     children=dcc.Input(id='keyword_filter')
+            # )
         }
 
         layout = []
@@ -184,7 +204,10 @@ class WebApp(object):
         # calculates the ranges of certain variables
         
         if var in self.categorical_vars:
-            vals = self.table_data.loc[:, var].dropna().unique() 
+            if var=='keyword':
+                vals = self.all_keywords
+            else:
+                vals = self.table_data.loc[:, var].dropna().unique() 
             return [{'label': _, 'value': _} for _ in vals]
         elif var in self.datetime_vars:
             return (self.table_data.loc[:, var].min(), datetime.now())
@@ -197,9 +220,9 @@ class WebApp(object):
         @app.callback(
             [
                 Output('table_container', 'children'),
-                Output('city_filter', 'options'),
-                Output('doctype_filter', 'options'),
-                Output('committee_filter', 'options'),
+                # Output('city_filter', 'options'),
+                # Output('doctype_filter', 'options'),
+                # Output('committee_filter', 'options'),
             ],
             [
                 Input('committee_filter', 'value'),
@@ -215,11 +238,11 @@ class WebApp(object):
             doc_type,
             start_date,
             end_date,
-            keyword):
+            keywords):
             # on user input, automatically update table
             
             # don't update if there's nothing to do
-            all_params = [committee, city, doc_type, start_date, end_date, keyword]
+            all_params = [committee, city, doc_type, start_date, end_date, keywords]
             if all([param is None for param in all_params]):
                 raise PreventUpdate
 
@@ -238,16 +261,22 @@ class WebApp(object):
                 idx = idx & np.array(self.table_data.loc[:,'doc_type'].isin(doc_type))
             if start_date and end_date:
                 idx = idx & np.array(self.table_data.loc[:,'date'].between(start_date, end_date))
-            if keyword:
-                idx = idx & (self.documents.get_count_vector(keyword, 'keyword') > 0)
-            print(idx)
+            if keywords:
+                for keyword in keywords:
+                    t0 = time()
+                    idx = idx & (self.documents.get_count_vector(keyword, 'keyword') > 0)
+                    t1 = time()
+                print('{}: created index in: {:3f}ms'.format(keyword, (t1-t0)*1000))
+            t0 = time()
             df = self.table_data.loc[idx,:]
+            t1 = time()
+            print('created data table in: {:3f}ms'.format((t1-t0)*1000))
 
             res = (
                 self._generate_table(df), \
-                self._calc_data_ranges('city'), \
-                self._calc_data_ranges('doc_type'), \
-                self._calc_data_ranges('committee')
+                # self._calc_data_ranges('city'), \
+                # self._calc_data_ranges('doc_type'), \
+                # self._calc_data_ranges('committee')
                 )
 
             return res

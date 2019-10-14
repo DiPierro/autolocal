@@ -3,6 +3,7 @@ from collections import Counter
 from datetime import datetime
 import threading
 import pickle as pkl
+from time import time
 
 import pandas as pd
 import numpy as np
@@ -69,6 +70,11 @@ class DocumentManager(object):
     """
     "Public" methods for reading and writing info from documents
     """
+
+    def get_index(self):
+        # Safely return the current value of the index
+        with self.index_lock:
+            return self.index
 
     def get_metadata(self):
         # Safely return the current value of the metadata table
@@ -147,6 +153,8 @@ class DocumentManager(object):
         # and converts to dict of counts with len of metadata
 
         # initialize vector with same length as metadata
+        
+        t0 = time()
         with self.metadata_lock:
             with self.index_lock:
                 #counts = #np.zeros(len(self.metadata), dtype=int)
@@ -158,12 +166,16 @@ class DocumentManager(object):
                 # see if the key is in the index; if not, return zero vector
                 try:
                     values = self.index[index_var][key.upper()]
-                except KeyError:            
+                except KeyError:
+                    t1 = time()
+                    print('Returned count vector in time: {}ms'.format((t1-t0)*1000))
                     return np.array(counts.loc[:,0])
 
                 # if key is in index, return the dataframe of counts across documents
                 for doc_id, count in values:
                     counts.loc[doc_id,0] = count
+                t1 = time()
+                print('Returned count vector in time: {}ms'.format((t1-t0)*1000))
                 return np.array(counts.loc[:,0])
 
 
