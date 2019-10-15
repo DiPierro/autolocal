@@ -209,8 +209,8 @@ class LiveOakScraper(Scraper):
     def build_url(self, x):
         if x.a:
             url = self.site_url + x.a["href"]
-            url = url.replace('//', '/')
-            url = url.replace('//', '/')
+            url = url.replace('Citizens//', 'Citizens/')
+            url = url.replace('Citizens//', 'Citizens/')
             url = url.replace("Citizens/Citizens/", "Citizens/")
             return url
 
