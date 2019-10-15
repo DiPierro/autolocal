@@ -3,5 +3,5 @@
 *.txt
 *.pyc
 data/index/*
-autolocal/__pycache__/*
+*/__pycache__/*
 notebooks/.ipynb_checkpoints/*
