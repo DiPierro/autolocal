@@ -24,7 +24,7 @@ def init_scrapers(documents):
             table_url = "https://www.biggs-ca.gov/Government/Agendas--Minutes/index.html"),
         LiveOakScraper(
             documents = documents,
-            site_url = "http://liveoakca.iqm2.com/",
+            site_url = "http://liveoakca.iqm2.com/Citizens/",
             table_url = "http://liveoakca.iqm2.com/Citizens/Calendar.aspx?From=1/1/1900&To=12/31/9999")
     ]
 
@@ -110,12 +110,16 @@ class GridleyScraper(Scraper):
 class BiggsScraper(Scraper): 
         
     def scrape(self):
+        self.read_table_page()
+        self.parse_table_html()
+        self.data = self.convert_table_data()
+        print("accessing table from: ", self.next_table_url)
         while self.table_url != self.next_table_url:
-            if self.next_table_url:
-                self.table_url = self.next_table_url
+            self.table_url = self.next_table_url
             self.read_table_page()
             self.parse_table_html()
-            self.data = self.convert_table_data()
+            self.data = pd.concat([self.data, self.convert_table_data()], ignore_index = True)
+            print("accessing table from: ", self.next_table_url)
     
     def parse_table_html(self):
         table_of_docs = self.table_html.body.find('table')
@@ -150,12 +154,13 @@ class BiggsScraper(Scraper):
             if cancelled:
                 mtg_type = mtg_type[11:]
             doc_types = ["Agendas", "Minutes"]
+            new_doc_types = ["Agendas", "Minutes"]
             return pd.DataFrame({
                 "city": "Biggs",
                 "committee": mtg_type,
                 "date": date,
                 "time": time,
-                "doc_type": doc_types,
+                "doc_type": new_doc_types,
                 'url': [self.build_url(df[x]) for x in doc_types]})
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
         return new_df
@@ -200,6 +205,14 @@ class LiveOakScraper(Scraper):
                 table_data.append((month, year, cancelled, links, mtg_type, date))
         table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date"])
         self.table_data = table_data
+        
+    def build_url(self, x):
+        if x.a:
+            url = self.site_url + x.a["href"]
+            url = url.replace('//', '/')
+            url = url.replace('//', '/')
+            url = url.replace("Citizens/Citizens/", "Citizens/")
+            return url
 
     def convert_table_data(self):
         # TODO: explore mtg_page document type
