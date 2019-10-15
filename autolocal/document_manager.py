@@ -308,7 +308,12 @@ class DocumentManager(object):
         os.makedirs(os.path.split(local_path)[0], exist_ok=True)
 
         # download pdf
-        urlretrieve(url.replace(' ', '%20'), local_path)
+        try:
+            urlretrieve(url.replace(' ', '%20'), local_path)
+        except:
+            print('warning: could not retrieve html')
+            print(url)
+
         return
 
     def _convert_doc(self, doc):
