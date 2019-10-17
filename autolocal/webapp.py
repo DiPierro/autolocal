@@ -49,7 +49,7 @@ class WebApp(object):
         self.filter_labels = filter_labels
 
         # get data to display
-        self.table_data = self.documents.get_metadata()
+        self.table_data = self._sort_table(self.documents.get_metadata())
 
         # initialize server and app
         self.server = Flask(__name__)
@@ -180,7 +180,6 @@ class WebApp(object):
         className='fl-table',
         **kwargs):
         # function for generating the HTML for the data table
-
         header = html.Tr([html.Th(c) for c in self.disp_columns])
         rows = []
         for r in range(len(df)):
@@ -221,6 +220,9 @@ class WebApp(object):
         elif var in self.datetime_vars:
             return (self.table_data.loc[:, var].min(), datetime.now())
 
+    def _sort_table(self, df):
+        sort_dir = [False if v=='date' else True for v in self.disp_columns]
+        return df.sort_values(self.disp_columns, ascending=sort_dir)
 
     
     def _init_dash_callbacks(self, app):
@@ -229,9 +231,6 @@ class WebApp(object):
         @app.callback(
             [
                 Output('table_container', 'children'),
-                # Output('city_filter', 'options'),
-                # Output('doctype_filter', 'options'),
-                # Output('committee_filter', 'options'),
             ],
             [
                 Input('committee_filter', 'value'),
@@ -281,14 +280,7 @@ class WebApp(object):
             t1 = time()
             print('created data table in: {:3f}ms'.format((t1-t0)*1000))
 
-            res = (
-                self._generate_table(df), \
-                # self._calc_data_ranges('city'), \
-                # self._calc_data_ranges('doc_type'), \
-                # self._calc_data_ranges('committee')
-                )
-
-            return res
+            return (self._generate_table(df),)
 
 if __name__ == '__main__':    
     WebApp().run(debug=True)
