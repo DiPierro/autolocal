@@ -117,6 +117,7 @@ class GridleyScraper(Scraper):
                 "committee": self.mtg_type,
                 "date": meeting_date,
                 "doc_type": doc_types,
+                "doc_format": "pdf",
                 'url': [self.build_url(df[x]) for x in doc_types]})
 #         print(self.table_data.apply(parse_table_row, axis=1))
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
@@ -176,6 +177,7 @@ class BiggsScraper(Scraper):
                 "committee": mtg_type,
                 "date": date,
                 "time": time,
+                "doc_format": "pdf",
                 "doc_type": new_doc_types,
                 'url': [self.build_url(df[x]) for x in doc_types]})
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
@@ -243,12 +245,18 @@ class LiveOakScraper(Scraper):
                 "city": self.city_name,
                 "date": df["Date"],
                 "month": df["Month"],
+                "doc_format": [],
                 "doc_type": [], 
                 "url": []} 
             for doc_type in links:
                 url = links[doc_type]
                 mtg_data["doc_type"].append(doc_type)
                 mtg_data["url"].append(url)
+                if doc_type == "mtg_page":
+                    doc_format = "html"
+                else:
+                    doc_format = "pdf"
+                mtg_data["doc_format"] = doc_format
             return pd.DataFrame(mtg_data)
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
         return new_df
