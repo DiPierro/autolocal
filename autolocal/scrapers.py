@@ -1,36 +1,51 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
 import urllib
 from bs4 import BeautifulSoup
 import pandas as pd
 
+__all__ = ['GridleyScraper', 'BiggsScraper', 'LiveOakScraper']
+
+scraper_args = [
+    {
+        'city_name': 'Gridley',
+        'mtg_type': "City Council",
+        'site_url': "http://gridley.ca.us",        
+        'table_url': "http://gridley.ca.us/government-and-departments/city-council/",
+    },
+    {
+        'city_name': 'Gridley',
+        'site_url': "http://gridley.ca.us",
+        'mtg_type': "Planning Commission",
+        'table_url': "http://gridley.ca.us/government-and-departments/planning-commission/"
+    },
+    {
+        'city_name': 'Biggs',
+        'site_url': "https://www.biggs-ca.gov/",
+        'table_url': "https://www.biggs-ca.gov/Government/Agendas--Minutes/index.html"
+    },    
+    {
+        'city_name': 'Live Oak',
+        'site_url': "http://liveoakca.iqm2.com/Citizens/",
+        'table_url': "http://liveoakca.iqm2.com/Citizens/Calendar.aspx?From=1/1/1900&To=12/31/9999"
+    }
+]
+
 def init_scrapers(documents):
-    return [
-        GridleyScraper(
-            documents = documents,
-            site_url = "http://gridley.ca.us",
-            mtg_type = "City Council",
-            table_url = "http://gridley.ca.us/government-and-departments/city-council/"),
-        GridleyScraper(
-            documents = documents,
-            site_url = "http://gridley.ca.us",
-            mtg_type = "Planning Commission",
-            table_url = "http://gridley.ca.us/government-and-departments/planning-commission/"),
-        BiggsScraper(
-            documents = documents,
-            site_url = "https://www.biggs-ca.gov/",
-            table_url = "https://www.biggs-ca.gov/Government/Agendas--Minutes/index.html"),
-        LiveOakScraper(
-            documents = documents,
-            site_url = "http://liveoakca.iqm2.com/Citizens/",
-            table_url = "http://liveoakca.iqm2.com/Citizens/Calendar.aspx?From=1/1/1900&To=12/31/9999")
-    ]
+    res = []
+    for args in scraper_args:
+        if args['city_name']=='Gridley':
+            res.append(GridleyScraper(documents, **args))
+        elif args['city_name']=='Biggs':
+            res.append(BiggsScraper(documents, **args))
+        elif args['city_name']=='Live Oak':
+            res.append(LiveOakScraper(documents, **args))
+    return res
 
 
 class Scraper(object): 
-    def __init__ (self, documents, site_url, table_url, mtg_type = None):
+    def __init__ (self, documents, site_url, table_url, mtg_type = None, city_name=''):
         self.documents = documents
         self.site_url = site_url
         self.table_url = table_url
@@ -39,6 +54,7 @@ class Scraper(object):
         self.table_page = None
         self.table_data = None
         self.next_table_url = None
+        self.city_name = city_name
         self.data_headers = [
             'city',
             'committee',
@@ -97,7 +113,7 @@ class GridleyScraper(Scraper):
             minutes_elem = df["Minutes"]
             doc_types = ["Agenda", "Minutes"]
             return pd.DataFrame({
-                "city": "Gridley",
+                "city": self.city_name,
                 "committee": self.mtg_type,
                 "date": meeting_date,
                 "doc_type": doc_types,
@@ -156,7 +172,7 @@ class BiggsScraper(Scraper):
             doc_types = ["Agendas", "Minutes"]
             new_doc_types = ["Agendas", "Minutes"]
             return pd.DataFrame({
-                "city": "Biggs",
+                "city": self.city_name,
                 "committee": mtg_type,
                 "date": date,
                 "time": time,
@@ -222,9 +238,9 @@ class LiveOakScraper(Scraper):
             minutes = None
             links = df["Links"]
             mtg_data = {
-                "city": "Live Oak",
                 "committee": df["committee"],
                 "meeting_type": df["Type"],
+                "city": self.city_name,
                 "date": df["Date"],
                 "month": df["Month"],
                 "doc_type": df["DocType"], 
