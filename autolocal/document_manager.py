@@ -22,7 +22,8 @@ METADATA_VARS = [
     'meeting_type',
     'url',
     'local_path_pdf',
-    'local_path_txt'
+    'local_path_txt',
+    'doc_format'
 ]
 
 class DocumentManager(object):
@@ -198,13 +199,13 @@ class DocumentManager(object):
                             index_col=0,
                             parse_dates=['date']
                             )
-                        return            
+                        return
         self._init_metadata()
         return
 
     def _init_metadata(self):
         # create a metadata file with no data
-        metadata = pd.DataFrame({v: [] for v in self.metadata_vars})        
+        metadata = pd.DataFrame({v: [] for v in self.metadata_vars})   
         self._save_metadata(metadata)
         pass
 
@@ -345,7 +346,7 @@ class DocumentManager(object):
         date = doc['date'].strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
-        if type(doc['meeting_type']) is str:
+        if isinstance(doc['meeting_type'], str):
             meeting_type = doc['meeting_type'].title().replace(' ', '-')
         else:
             meeting_type = None
@@ -375,7 +376,8 @@ class DocumentManager(object):
 
 
     def _get_doc_paths(self, doc):
-        formats = ['pdf', 'txt']
+        orig_format = doc["doc_format"]
+        formats = [orig_format, 'txt']
         doc_paths = {'local_path_' + s: '' for s in formats}
         if doc['url']:
             for s in formats:

@@ -62,7 +62,8 @@ class Scraper(object):
             'doc_type',
             'url',
             'local_path_pdf',
-            'local_path_txt'
+            'local_path_txt',
+            'doc_format'
         ]
         
     def scrape(self):
