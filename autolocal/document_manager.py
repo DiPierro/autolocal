@@ -19,6 +19,7 @@ METADATA_VARS = [
     'committee',
     'date',
     'doc_type',
+    'meeting_type',
     'url',
     'local_path_pdf',
     'local_path_txt'
@@ -344,8 +345,9 @@ class DocumentManager(object):
         date = doc['date'].strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
+        meeting_type = doc['meeting_type'].title().replace(' ', '-')
         doc_type = doc['doc_type'].title().replace(' ', '-')
-        return '{}_{}_{}_{}'.format(city, date, committee, doc_type)        
+        return '{}_{}_{}_{}_{}'.format(city, date, committee, meeting_type, doc_type)        
 
 
     def _parse_doc_id(self, doc_id):

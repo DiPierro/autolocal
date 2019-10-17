@@ -182,6 +182,7 @@ class LiveOakScraper(Scraper):
                 links = {}
                 date = None
                 mtg_type = None
+                doc_type = None
                 for row_part in row.find_all("div", recursive=False):
                     for div in row_part.find_all("div", recursive=False):
                         if "RowIcon" in div["class"]:
@@ -198,12 +199,12 @@ class LiveOakScraper(Scraper):
                                     doc_url = self.build_url(div)
                                     links[doc_type] = doc_url
                         elif "RowDetails" in div["class"]:
-                            mtg_type = div.text.strip()
+                            committee, mtg_type = div.text.strip().split(" - ")
                             pass
                         elif "RowRight" in div["class"]:
                             cancelled = True
-                table_data.append((month, year, cancelled, links, mtg_type, date))
-        table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date"])
+                table_data.append((month, year, cancelled, links, mtg_type, date, committee, doc_type))
+        table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date", "committee", "DocType"])
         self.table_data = table_data
         
     def build_url(self, x):
@@ -222,10 +223,11 @@ class LiveOakScraper(Scraper):
             links = df["Links"]
             mtg_data = {
                 "city": "Live Oak",
-                "committee": df["Type"],
+                "committee": df["committee"],
+                "meeting_type": df["Type"],
                 "date": df["Date"],
                 "month": df["Month"],
-                "doc_type": [], 
+                "doc_type": df["DocType"], 
                 "url": []} 
             for doc_type in links:
                 url = links[doc_type]
