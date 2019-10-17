@@ -345,9 +345,13 @@ class DocumentManager(object):
         date = doc['date'].strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
-        meeting_type = doc['meeting_type'].title().replace(' ', '-')
+        if type(doc['meeting_type']) is str:
+            meeting_type = doc['meeting_type'].title().replace(' ', '-')
+        else:
+            meeting_type = None
         doc_type = doc['doc_type'].title().replace(' ', '-')
-        return '{}_{}_{}_{}_{}'.format(city, date, committee, meeting_type, doc_type)        
+        identifiers = ["{}".format(x) for x in [city, date, committee, meeting_type, doc_type] if x]
+        return '_'.join(identifiers)
 
 
     def _parse_doc_id(self, doc_id):

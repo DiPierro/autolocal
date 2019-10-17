@@ -219,8 +219,8 @@ class LiveOakScraper(Scraper):
                             pass
                         elif "RowRight" in div["class"]:
                             cancelled = True
-                table_data.append((month, year, cancelled, links, mtg_type, date, committee, doc_type))
-        table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date", "committee", "DocType"])
+                table_data.append((month, year, cancelled, links, mtg_type, date, committee))
+        table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date", "committee"])
         self.table_data = table_data
         
     def build_url(self, x):
@@ -243,7 +243,7 @@ class LiveOakScraper(Scraper):
                 "city": self.city_name,
                 "date": df["Date"],
                 "month": df["Month"],
-                "doc_type": df["DocType"], 
+                "doc_type": [], 
                 "url": []} 
             for doc_type in links:
                 url = links[doc_type]
