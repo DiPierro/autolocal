@@ -295,12 +295,13 @@ class DocumentManager(object):
 
     def _download_doc(self, doc):
         # download a document from given url to designated local location
-        
         try:
-            local_path = doc['local_path_pdf']
+            doc_format = doc['doc_format']
+            local_path_key = 'local_path_{}'.format(doc_format)
+            local_path = doc[local_path_key]
             url = doc['url']
         except KeyError:
-            return            
+            return
         if not (url and local_path):
             return
         if os.path.exists(local_path):
@@ -321,23 +322,32 @@ class DocumentManager(object):
     def _convert_doc(self, doc):
         # convert a pdf to txt and save in designated location
         try:
-            pdf_path = doc['local_path_pdf']
+            if doc['doc_format'] == 'pdf':
+                pdf_path = doc['local_path_pdf']
+            elif doc['doc_format'] == 'html':
+                html_path= doc['local_path_html']
             txt_path = doc['local_path_txt']
         except KeyError:
             return
-        if not (pdf_path and txt_path):
+        if not txt_path:
             return
         if os.path.exists(txt_path):
             return
 
-
         # make directories if they don't yet exist
         os.makedirs(os.path.split(txt_path)[0], exist_ok=True)
         
-        # convert pdf
-        args = [pdf_path, '-o', txt_path]
-        pdf2txt(args)
-        return
+        if doc['doc_format'] == "pdf":
+            if not (pdf_path and txt_path):
+                return
+            # convert pdf
+            args = [pdf_path, '-o', txt_path]
+            pdf2txt(args)
+            return
+        else:
+            # convert html
+            # TODO
+            return
 
 
     def _get_doc_id(self, doc):

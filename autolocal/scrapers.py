@@ -248,16 +248,12 @@ class LiveOakScraper(Scraper):
                 "month": df["Month"],
                 "doc_format": [],
                 "doc_type": [], 
-                "url": []} 
+                "url": []}
             for doc_type in links:
                 url = links[doc_type]
                 mtg_data["doc_type"].append(doc_type)
                 mtg_data["url"].append(url)
-                if doc_type == "mtg_page":
-                    doc_format = "html"
-                else:
-                    doc_format = "pdf"
-                mtg_data["doc_format"] = doc_format
+                mtg_data["doc_format"].append("html" if doc_type=="mtg_page" else "pdf")
             return pd.DataFrame(mtg_data)
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
         return new_df
