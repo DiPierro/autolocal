@@ -7,7 +7,7 @@ documents = DocumentManager()
 
 # just for testing - load some documents
 print('Downloading sample documents...')
-doc_list_path = '../data/misc/meeting_table_prototype_v4.csv'
+doc_list_path = '../data/misc/meeting_table_prototype_v5.csv'
 documents.add_docs_from_csv(doc_list_path)
 
 # run scraper in its own thread

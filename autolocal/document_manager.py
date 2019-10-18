@@ -19,9 +19,11 @@ METADATA_VARS = [
     'committee',
     'date',
     'doc_type',
+    'meeting_type',
     'url',
     'local_path_pdf',
-    'local_path_txt'
+    'local_path_txt',
+    'doc_format'
 ]
 
 class DocumentManager(object):
@@ -197,13 +199,13 @@ class DocumentManager(object):
                             index_col=0,
                             parse_dates=['date']
                             )
-                        return            
+                        return
         self._init_metadata()
         return
 
     def _init_metadata(self):
         # create a metadata file with no data
-        metadata = pd.DataFrame({v: [] for v in self.metadata_vars})        
+        metadata = pd.DataFrame({v: [] for v in self.metadata_vars})   
         self._save_metadata(metadata)
         pass
 
@@ -293,12 +295,13 @@ class DocumentManager(object):
 
     def _download_doc(self, doc):
         # download a document from given url to designated local location
-        
         try:
-            local_path = doc['local_path_pdf']
+            doc_format = doc['doc_format']
+            local_path_key = 'local_path_{}'.format(doc_format)
+            local_path = doc[local_path_key]
             url = doc['url']
         except KeyError:
-            return            
+            return
         if not (url and local_path):
             return
         if os.path.exists(local_path):
@@ -319,23 +322,32 @@ class DocumentManager(object):
     def _convert_doc(self, doc):
         # convert a pdf to txt and save in designated location
         try:
-            pdf_path = doc['local_path_pdf']
+            if doc['doc_format'] == 'pdf':
+                pdf_path = doc['local_path_pdf']
+            elif doc['doc_format'] == 'html':
+                html_path= doc['local_path_html']
             txt_path = doc['local_path_txt']
         except KeyError:
             return
-        if not (pdf_path and txt_path):
+        if not txt_path:
             return
         if os.path.exists(txt_path):
             return
 
-
         # make directories if they don't yet exist
         os.makedirs(os.path.split(txt_path)[0], exist_ok=True)
         
-        # convert pdf
-        args = [pdf_path, '-o', txt_path]
-        pdf2txt(args)
-        return
+        if doc['doc_format'] == "pdf":
+            if not (pdf_path and txt_path):
+                return
+            # convert pdf
+            args = [pdf_path, '-o', txt_path]
+            pdf2txt(args)
+            return
+        else:
+            # convert html
+            # TODO
+            return
 
 
     def _get_doc_id(self, doc):
@@ -344,8 +356,13 @@ class DocumentManager(object):
         date = doc['date'].strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
+        if isinstance(doc['meeting_type'], str):
+            meeting_type = doc['meeting_type'].title().replace(' ', '-')
+        else:
+            meeting_type = None
         doc_type = doc['doc_type'].title().replace(' ', '-')
-        return '{}_{}_{}_{}'.format(city, date, committee, doc_type)        
+        identifiers = ["{}".format(x) for x in [city, date, committee, meeting_type, doc_type] if x]
+        return '_'.join(identifiers)
 
 
     def _parse_doc_id(self, doc_id):
@@ -369,7 +386,8 @@ class DocumentManager(object):
 
 
     def _get_doc_paths(self, doc):
-        formats = ['pdf', 'txt']
+        orig_format = doc["doc_format"]
+        formats = [orig_format, 'txt']
         doc_paths = {'local_path_' + s: '' for s in formats}
         if doc['url']:
             for s in formats:

@@ -62,7 +62,8 @@ class Scraper(object):
             'doc_type',
             'url',
             'local_path_pdf',
-            'local_path_txt'
+            'local_path_txt',
+            'doc_format'
         ]
         
     def scrape(self):
@@ -117,6 +118,7 @@ class GridleyScraper(Scraper):
                 "committee": self.mtg_type,
                 "date": meeting_date,
                 "doc_type": doc_types,
+                "doc_format": "pdf",
                 'url': [self.build_url(df[x]) for x in doc_types]})
 #         print(self.table_data.apply(parse_table_row, axis=1))
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
@@ -176,6 +178,7 @@ class BiggsScraper(Scraper):
                 "committee": mtg_type,
                 "date": date,
                 "time": time,
+                "doc_format": "pdf",
                 "doc_type": new_doc_types,
                 'url': [self.build_url(df[x]) for x in doc_types]})
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
@@ -198,6 +201,7 @@ class LiveOakScraper(Scraper):
                 links = {}
                 date = None
                 mtg_type = None
+                doc_type = None
                 for row_part in row.find_all("div", recursive=False):
                     for div in row_part.find_all("div", recursive=False):
                         if "RowIcon" in div["class"]:
@@ -214,12 +218,12 @@ class LiveOakScraper(Scraper):
                                     doc_url = self.build_url(div)
                                     links[doc_type] = doc_url
                         elif "RowDetails" in div["class"]:
-                            mtg_type = div.text.strip()
+                            committee, mtg_type = div.text.strip().split(" - ")
                             pass
                         elif "RowRight" in div["class"]:
                             cancelled = True
-                table_data.append((month, year, cancelled, links, mtg_type, date))
-        table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date"])
+                table_data.append((month, year, cancelled, links, mtg_type, date, committee))
+        table_data = pd.DataFrame(table_data, columns=["Month", "Year", "Cancelled", "Links", "Type", "Date", "committee"])
         self.table_data = table_data
         
     def build_url(self, x):
@@ -237,16 +241,19 @@ class LiveOakScraper(Scraper):
             minutes = None
             links = df["Links"]
             mtg_data = {
+                "committee": df["committee"],
+                "meeting_type": df["Type"],
                 "city": self.city_name,
-                "committee": df["Type"],
                 "date": df["Date"],
                 "month": df["Month"],
+                "doc_format": [],
                 "doc_type": [], 
-                "url": []} 
+                "url": []}
             for doc_type in links:
                 url = links[doc_type]
                 mtg_data["doc_type"].append(doc_type)
                 mtg_data["url"].append(url)
+                mtg_data["doc_format"].append("html" if doc_type=="mtg_page" else "pdf")
             return pd.DataFrame(mtg_data)
         new_df = pd.concat([parse_table_row(row) for idx, row in self.table_data.iterrows()], ignore_index = True)
         return new_df
