@@ -29,6 +29,7 @@ class WebApp(object):
     def __init__(        
         self,
         documents=None, # should be an instance of DocumentManager
+        server=None,
         categorical_vars=CATEGORICAL_VARS,
         datetime_vars=DATETIME_VARS,
         hyperlink_columns=HYPERLINK_VARS,
@@ -52,7 +53,10 @@ class WebApp(object):
         self.table_data = self._sort_table(self.documents.get_metadata())
 
         # initialize server and app
-        self.server = Flask(__name__)
+        if server is None:
+            self.server = Flask(__name__)
+        else:
+            self.server = server
         self.app = dash.Dash(__name__, server=self.server)
         self.app.scripts.config.serve_locally = True
         self.app.title = page_title
