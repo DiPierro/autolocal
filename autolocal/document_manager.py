@@ -45,10 +45,10 @@ class DocumentManager(object):
         # store arguments
         self.document_dir = os.path.abspath(document_dir)
         if not os.path.exists(self.document_dir):
-            os.mkdir(self.document_dir)
+            os.makedirs(self.document_dir)
         self.index_dir = os.path.abspath(index_dir)
         if not os.path.exists(self.index_dir):
-            os.mkdir(self.index_dir)
+            os.makedirs(self.index_dir)
         self.metadata_path = os.path.abspath(metadata_path)
         self.index_path = os.path.abspath(index_path)
         self.index_vars = index_vars
