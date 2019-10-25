@@ -86,10 +86,14 @@ try:
       # t+=1
   #     links_to_search = [link for link in links_from_this_page if not link in urls_searched]
   # urls_to_search
-except KeyboardInterrupt:
+except:
   with open("../data/crawled_urls/urls_to_search.txt", "w") as w:
     w.write("\n".join(urls_to_search))
   searched_file.close()
   collected_file.close()
 
+with open("../data/crawled_urls/urls_to_search.txt", "w") as w:
+  w.write("\n".join(urls_to_search))
+searched_file.close()
+collected_file.close()
 
