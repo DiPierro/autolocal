@@ -46,15 +46,15 @@ def get_link(a, url):
 # links_from_this_page = set([get_link(a, source_url) for a in page.find_all("a") if get_link(a, source_url)])
 # links_from_this_page
 
-with open("urls_searched.txt") as f:
+with open("../data/crawled_urls/urls_searched.txt") as f:
   urls_searched = set([x.strip() for x in f.readlines()])
 searched_file = open("urls_searched.txt", "a")
 
-with open("urls_that_are_not_html.txt") as f:
+with open("../data/crawled_urls/urls_that_are_not_html.txt") as f:
   urls_that_are_not_html = set([x.strip() for x in f.readlines()])
 collected_file = open("urls_that_are_not_html.txt", "a")
 
-with open("urls_to_search.txt") as f:
+with open("../data/crawled_urls/urls_to_search.txt") as f:
   urls_to_search = set(source_urls + [x.strip() for x in f.readlines()])
 
 try:
@@ -87,7 +87,7 @@ try:
   #     links_to_search = [link for link in links_from_this_page if not link in urls_searched]
   # urls_to_search
 except KeyboardInterrupt:
-  with open("urls_to_search.txt", "w") as w:
+  with open("../data/crawled_urls/urls_to_search.txt", "w") as w:
     w.write("\n".join(urls_to_search))
   searched_file.close()
   collected_file.close()
