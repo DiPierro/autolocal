@@ -3,6 +3,5 @@
 *.txt
 *.html
 *.pyc
-data/index/*
 */__pycache__/*
 notebooks/.ipynb_checkpoints/*
