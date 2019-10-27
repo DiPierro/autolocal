@@ -1,1 +1,1 @@
-web: gunicorn autolocal:'run_app()'
+web: gunicorn autolocal:server
