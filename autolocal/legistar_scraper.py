@@ -42,6 +42,46 @@ CITY_ARGS = [
     'city_name': 'cupertino',
     'scrape_url': 'https://cupertino.legistar.com/Calendar.aspx'
     },
+    {
+    'city_name': 'san_mateo_county',
+    'scrape_url': 'https://sanmateocounty.legistar.com/Calendar.aspx'
+    },    
+    {
+    'city_name': 'burlingame',
+    'scrape_url': 'https://burlingameca.legistar.com/Calendar.aspx'
+    },
+    {
+    'city_name': 'san_leandro',
+    'scrape_url': 'https://sanleandro.legistar.com/Calendar.aspx'
+    },    
+    {
+    'city_name': 'alameda',
+    'scrape_url': 'https://alameda.legistar.com/Calendar.aspx'
+    },   
+    {
+    'city_name': 'oakland',
+    'scrape_url': 'https://oakland.legistar.com/Calendar.aspx'
+    },
+    {
+    'city_name': 'san_francisco',
+    'scrape_url': 'https://sfgov.legistar.com/Calendar.aspx'
+    },
+    {
+    'city_name': 'hercules',
+    'scrape_url': 'https://hercules.legistar.com/Calendar.aspx'
+    },
+    {
+    'city_name': 'stockton',
+    'scrape_url': 'https://stockton.legistar.com/Calendar.aspx'
+    },
+    {
+    'city_name': 'south_san_francisco',
+    'scrape_url': 'https://ci-ssf-ca.legistar.com/Calendar.aspx'
+    },            
+    {
+    'city_name': 'mtc',
+    'scrape_url': 'https://mtc.legistar.com/Calendar.aspx'
+    }            
 ]
 
 
@@ -181,7 +221,7 @@ if __name__=='__main__':
     parser.add_argument("city_name")
     args = parser.parse_args()
 
-    # select city to scrape
+    # get city to scrape (must be one of the cities in CITY_ARGS)
     city_name = args.city_name
     for city_args in CITY_ARGS:
         if city_args['city_name']==city_name:
