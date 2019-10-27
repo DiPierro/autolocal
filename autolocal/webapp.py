@@ -26,7 +26,7 @@ class WebApp(object):
     Class for web app (front end) code.
     """
 
-    def __init__(        
+    def __init__(
         self,
         documents=None, # should be an instance of DocumentManager
         server=None,
@@ -37,7 +37,7 @@ class WebApp(object):
         filter_labels=FILTER_LABELS,
         page_title=PAGE_TITLE,
         ):
-        
+
         # store arguments
         if documents is None:
             self.documents = DocumentManager()
@@ -79,7 +79,7 @@ class WebApp(object):
         # function to launch webapp
         self.app.run_server(**kwargs)
         pass
-    
+
     def _generate_page_layout(self):
         # Function to generate page layout in HTML
         self.app.layout = html.Div(
@@ -91,8 +91,8 @@ class WebApp(object):
                         self._generate_title(),
                         *self._generate_filters(),
                     ]
-                ),                
-                html.Div(        
+                ),
+                html.Div(
                     id='table_container',
                     className='table-wrapper',
                     children=self._generate_table(self.table_data)
@@ -136,7 +136,7 @@ class WebApp(object):
                     multi=True,
                     options=self._calc_data_ranges('doc_type')
                 )
-            ),            
+            ),
             'Date': html.Div(
                 id='container_date_filter',
                 children=dcc.DatePickerRange(
@@ -144,7 +144,7 @@ class WebApp(object):
                     start_date=self._calc_data_ranges('date')[0],
                     end_date=self._calc_data_ranges('date')[1],
                     initial_visible_month=self._calc_data_ranges('date')[1],
-                )         
+                )
             ),
             'Keywords': html.Div(
                 id='container_keyword_filter',
@@ -153,7 +153,7 @@ class WebApp(object):
                     multi=True,
                     options=self._calc_data_ranges('keyword')
                 )
-            )            
+            )
             # 'Keywords': html.Div(
             #     id='container_keyword_filter',
             #     children=dcc.Input(id='keyword_filter')
@@ -161,7 +161,7 @@ class WebApp(object):
         }
 
         layout = []
-        for label in self.filter_labels:            
+        for label in self.filter_labels:
             layout.append(
                 html.Div(
                     className='filter_container',
@@ -176,7 +176,7 @@ class WebApp(object):
             )
 
         return layout
-    
+
     def _generate_table(
         self,
         df,
@@ -201,7 +201,7 @@ class WebApp(object):
                     cell_content = value
                 row.append(html.Td(cell_content))
             rows.append(html.Tr(row))
-            
+
         layout = html.Table(
             [
                 html.Thead(header),
@@ -214,12 +214,12 @@ class WebApp(object):
 
     def _calc_data_ranges(self, var):
         # calculates the ranges of certain variables
-        
+
         if var in self.categorical_vars:
             if var=='keyword':
                 vals = self.all_keywords
             else:
-                vals = self.table_data.loc[:, var].dropna().unique() 
+                vals = self.table_data.loc[:, var].dropna().unique()
             return [{'label': _, 'value': _} for _ in vals]
         elif var in self.datetime_vars:
             return (self.table_data.loc[:, var].min(), datetime.now())
@@ -228,7 +228,7 @@ class WebApp(object):
         sort_dir = [False if v=='date' else True for v in self.disp_columns]
         return df.sort_values(self.disp_columns, ascending=sort_dir)
 
-    
+
     def _init_dash_callbacks(self, app):
         # function to instantiate the responsive portion of the site (via Dash callbacks)
 
@@ -243,7 +243,7 @@ class WebApp(object):
                 Input('date_filter', 'start_date'),
                 Input('date_filter', 'end_date'),
                 Input('keyword_filter', 'value')
-            ])    
+            ])
         def filter_table(
             committee,
             city,
@@ -252,7 +252,7 @@ class WebApp(object):
             end_date,
             keywords):
             # on user input, automatically update table
-            
+
             # don't update if there's nothing to do
             all_params = [committee, city, doc_type, start_date, end_date, keywords]
             if all([param is None for param in all_params]):
@@ -286,5 +286,9 @@ class WebApp(object):
 
             return (self._generate_table(df),)
 
-if __name__ == '__main__':    
-    WebApp().run(debug=True)
+def run_webapp(**kwargs):
+    webapp = WebApp()
+    webapp.run(**kwargs)
+
+if __name__ == '__main__':
+    run_webapp(debug=True)
