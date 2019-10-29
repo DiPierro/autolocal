@@ -1,0 +1,715 @@
+,city,date,committee,doc_format,url,doc_type
+0,Stockton,2019-10-29,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=723309&GUID=5A767531-53DE-43B1-A2F1-6C4358282B32,Agenda
+1,Stockton,2019-10-28,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=721146&GUID=9FFDEDD1-BFB6-42BD-983B-63D4152E8F7A,Agenda
+2,Stockton,2019-10-24,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653535&GUID=A331F98D-009E-495F-ACA5-1022F6C39F05,Agenda
+3,Stockton,2019-10-24,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=732573&GUID=1B77DE6D-C57D-4BFA-8583-3DB752CD46C6,Agenda
+4,Stockton,2019-10-22,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659158&GUID=D987E1D5-EDE5-4E8C-BCAF-F7A3D0974A3E,Agenda
+5,Stockton,2019-10-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692840&GUID=C3FC3A0F-5256-4271-9BB0-1D5407468B71,Agenda
+6,Stockton,2019-10-16,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644321&GUID=3C96BB74-26D8-48BA-9112-D1FB5D57E869,Agenda
+7,Stockton,2019-10-16,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=725558&GUID=D5DA843E-ED00-4282-A100-0DE69D621F38,Agenda
+8,Stockton,2019-10-15,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=725936&GUID=05ED372F-0E73-4233-B168-FB8A52B2B178,Agenda
+9,Stockton,2019-10-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653534&GUID=46075E68-059A-4A9D-AA27-48DC2D725708,Agenda
+10,Stockton,2019-10-10,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=723137&GUID=824470CE-FE43-44C5-8B49-1AFA3E793D4A,Agenda
+11,Stockton,2019-10-09,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=711006&GUID=C5CEECB3-886A-4B75-9DF8-EB8F740D8E0E,Agenda
+12,Stockton,2019-10-08,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649169&GUID=B8D32259-A8B0-479C-A74B-B348CAA8904A,Agenda
+13,Stockton,2019-10-07,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=724568&GUID=1785C0C9-787F-4CCB-893B-3DF0593A38A7,Agenda
+14,Stockton,2019-10-03,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=723724&GUID=744C121C-E64E-4BCB-AE57-C8D04C21F260,Agenda
+15,Stockton,2019-10-03,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=710684&GUID=85BE769E-1487-4CEC-BDFA-3E75436817FD,Agenda
+16,Stockton,2019-10-02,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=723125&GUID=3CE3CDFD-9CD4-4525-941C-25F170469EAE,Agenda
+17,Stockton,2019-10-02,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=722673&GUID=6C9FF0BF-8F8A-4374-90B9-675C24D46F75,Agenda
+18,Stockton,2019-09-30,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=720536&GUID=E1489A3A-219D-4020-9A3F-CE4FC9F9778E,Agenda
+19,Stockton,2019-09-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653533&GUID=18DFD086-9329-4390-A8CC-D39265B77E96,Agenda
+20,Stockton,2019-09-26,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706254&GUID=A2468A04-30A2-4004-9A7A-B76D787356DC,Agenda
+21,Stockton,2019-09-25,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=705728&GUID=94EE9823-A27E-4FEA-B968-5BDFEDA33750,Agenda
+22,Stockton,2019-09-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659157&GUID=00396743-8398-4D68-8F8A-AA26C887D198,Agenda
+23,Stockton,2019-09-23,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=713208&GUID=988D4AE1-6081-4D74-B189-4004681F2AC1,Agenda
+24,Stockton,2019-09-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692839&GUID=FFFEDDF1-AC1A-4908-AD8B-59C0A705A3B2,Agenda
+25,Stockton,2019-09-18,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644320&GUID=E347A872-A85E-46AD-9C5F-126D9F0915BB,Agenda
+26,Stockton,2019-09-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649168&GUID=F6960F5F-C59B-42CF-A5E6-AAF77E136DBC,Agenda
+27,Stockton,2019-09-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653532&GUID=B68F352F-0451-477D-8A8E-59F04DAA1E1D,Agenda
+28,Stockton,2019-09-12,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=713207&GUID=466AB253-5C2D-4F62-9C87-3816B4B1B189,Agenda
+29,Stockton,2019-09-09,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=718251&GUID=21B515B9-4A30-4E27-B527-31E49AA89120,Agenda
+30,Stockton,2019-09-05,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=718177&GUID=88AF5CF0-2BC6-4177-A560-D4748F623413,Agenda
+31,Stockton,2019-09-04,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651682&GUID=99780DA5-E1F9-44BF-9DA2-CE3CD86F2701,Agenda
+32,Stockton,2019-08-28,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=713782&GUID=250895F3-2733-44E4-9A7D-AAF345891C7E,Agenda
+33,Stockton,2019-08-27,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659156&GUID=071B56C6-D12B-41E7-9EC5-6BE430A61256,Agenda
+34,Stockton,2019-08-26,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706656&GUID=FFE8DA38-B8CE-4378-A090-C74FB951732F,Agenda
+35,Stockton,2019-08-23,Civil Service Commission Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=716605&GUID=031A63C8-8BC8-4DC1-9690-8005EF9EB4C0,Agenda
+36,Stockton,2019-08-22,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653531&GUID=4DBD4E3F-F07C-4D53-8BB3-35086A673A2B,Agenda
+37,Stockton,2019-08-21,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644319&GUID=C7A1BA95-F11E-4C8E-8F43-4AAD3B9E427F,Agenda
+38,Stockton,2019-08-21,Civil Service Commission Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=715363&GUID=27148E65-2CA5-4B55-85A0-DC71DDA6575E,Agenda
+39,Stockton,2019-08-20,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649167&GUID=34ADB30C-015D-4FBB-840B-95E13FCDCD80,Agenda
+40,Stockton,2019-08-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692838&GUID=367B587F-CA42-4DD3-9BAA-73EEC4B8979F,Agenda
+41,Stockton,2019-08-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653530&GUID=FDABBA6C-730F-42F2-8FB1-DBD78A8220FB,Agenda
+42,Stockton,2019-08-08,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=713125&GUID=348EBDF5-92B7-4E0C-853F-512A153E188C,Agenda
+43,Stockton,2019-08-07,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651681&GUID=E4166ED1-4658-429E-8A8D-F9A92A27B39B,Agenda
+44,Stockton,2019-08-07,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=713735&GUID=9F43EB6B-BFCA-4CAD-85B2-7895149BCACF,Agenda
+45,Stockton,2019-08-05,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706655&GUID=6F7C8E1D-968C-4E6F-84C7-229A3446C83A,Agenda
+46,Stockton,2019-07-31,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=713112&GUID=E1D54037-5979-4F62-9EF7-EDE3587D0057,Agenda
+47,Stockton,2019-07-30,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659155&GUID=C3B7C741-D9E3-421B-8B7A-6C24CDFF2861,Agenda
+48,Stockton,2019-07-24,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=712031&GUID=73344BA5-5FD5-42EA-A244-11DF80266C90,Agenda
+49,Stockton,2019-07-22,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706649&GUID=FED7B378-8945-48E5-9941-20622E50683C,Agenda
+50,Stockton,2019-07-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692837&GUID=E1A9F4A4-9F7C-4758-9191-FC4A37975ACA,Agenda
+51,Stockton,2019-07-17,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=707691&GUID=C393CC11-89F1-4512-87F1-5F23F884A020,Agenda
+52,Stockton,2019-07-16,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649166&GUID=BE277AFD-B706-498B-A270-011399BB6B62,Agenda
+53,Stockton,2019-07-16,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=707057&GUID=B09D26D1-46FF-40F6-B7F3-E0826D78DC69,Agenda
+54,Stockton,2019-07-15,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=711209&GUID=65334907-FB40-472C-BDF2-C9222817AA50,Agenda
+55,Stockton,2019-07-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653528&GUID=D31F307D-38FE-4910-8147-EEF24C357B62,Agenda
+56,Stockton,2019-07-11,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=695612&GUID=9908D324-618B-4482-82EE-64900C1E43B3,Agenda
+57,Stockton,2019-07-11,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659194&GUID=C7F3B2EE-B41F-4147-834D-4B5AE4A910FF,Agenda
+58,Stockton,2019-07-10,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651680&GUID=4BC6E24B-2444-4751-8807-E8C7E5BFAD8B,Agenda
+59,Stockton,2019-07-03,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=686337&GUID=5530EF34-3C58-4442-B42E-6E5A88477997,Agenda
+60,Stockton,2019-07-01,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706648&GUID=11DA267D-5208-4345-B986-292A44F0FEE0,Agenda
+61,Stockton,2019-06-27,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653527&GUID=0027D6A0-3ADF-4B2B-B1B7-213BB6B9B82E,Agenda
+62,Stockton,2019-06-25,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=705827&GUID=E10EA526-39EF-4F33-B9C0-64816F0B50FB,Agenda
+63,Stockton,2019-06-24,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706654&GUID=5FCDBDFC-3DEC-412A-9311-356CF7C23771,Agenda
+64,Stockton,2019-06-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692836&GUID=A9016553-1887-4AB3-B624-112A3E0E2671,Agenda
+65,Stockton,2019-06-20,Climate Action Plan Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=707095&GUID=C6CC9E80-EA14-4E44-A57D-CB1E75ADA5EF,Agenda
+66,Stockton,2019-06-19,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644317&GUID=A27EF09F-6766-470E-93CA-259AA585AA80,Agenda
+67,Stockton,2019-06-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649165&GUID=9AA11EFC-F435-4BFE-A58F-3D1943030F46,Agenda
+68,Stockton,2019-06-13,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653526&GUID=1FB63AEE-BE7C-4F29-8EE3-7369A4088BD3,Agenda
+69,Stockton,2019-06-13,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692365&GUID=50BE3C24-5661-4CE7-9669-DB3704A494DB,Agenda
+70,Stockton,2019-06-12,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644318&GUID=14B10085-A8F8-4D09-B58F-E50CC532F685,Agenda
+71,Stockton,2019-06-12,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=706130&GUID=BCA0E74F-7615-4105-94F5-1E6B91DB8C21,Agenda
+72,Stockton,2019-06-11,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659154&GUID=D87895BF-8220-47A5-A98A-219C6200F2D1,Agenda
+73,Stockton,2019-06-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659161&GUID=9A25349A-2D92-45BD-952E-ADEEB0F5B61C,Agenda
+74,Stockton,2019-06-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659160&GUID=8C9D7151-3F09-4F20-85A5-C888F992F177,Agenda
+75,Stockton,2019-06-05,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=689702&GUID=58EECC57-FE48-4C31-816F-86E426671E31,Agenda
+76,Stockton,2019-06-03,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=704526&GUID=C1B4834A-42D0-4282-BFF0-8C14525981CA,Agenda
+77,Stockton,2019-06-03,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692317&GUID=DADAE000-4516-483E-A347-A2F0F79368A1,Agenda
+78,Stockton,2019-05-31,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=690405&GUID=9CB778E8-53E1-4887-AD4C-A6C399824BE3,Agenda
+79,Stockton,2019-05-30,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=693845&GUID=5BD10026-AFB5-4A69-94E0-85598072987D,Agenda
+80,Stockton,2019-05-30,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=689971&GUID=EE3AC509-76D5-41BE-BAC8-A8D0F02FABE4,Agenda
+81,Stockton,2019-05-28,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=682311&GUID=54B0F210-CA6A-44A9-B1FB-4163B8B45D4F,Agenda
+82,Stockton,2019-05-28,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=693921&GUID=DF6D86FE-1905-44D1-994F-61DF0B0BCEEE,Agenda
+83,Stockton,2019-05-27,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=691425&GUID=15DD7A7E-494F-4625-A299-3A6DDF541BB3,Agenda
+84,Stockton,2019-05-23,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653525&GUID=826ED898-7CCE-49A8-A5AD-33082B39E462,Agenda
+85,Stockton,2019-05-22,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=680971&GUID=0C12BE73-0229-4518-A22E-EC9F8295753B,Agenda
+86,Stockton,2019-05-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649173&GUID=0F56B1D8-9182-4344-A028-C4E09DE108AC,Agenda
+87,Stockton,2019-05-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=682071&GUID=5F79420A-A25D-4526-8484-719EDACF56AD,Agenda
+88,Stockton,2019-05-15,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644316&GUID=04C80D14-6C0D-41EB-A879-28B5A57CD32A,Agenda
+89,Stockton,2019-05-14,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=691302&GUID=3939DD3F-ECB8-4096-B54E-4C4547B9154B,Agenda
+90,Stockton,2019-05-09,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653524&GUID=AF054A62-81D7-46CD-B1CB-AD851EA8F5FE,Agenda
+91,Stockton,2019-05-09,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=692380&GUID=BCF5B42C-BF71-45B3-8043-1009427D7B06,Agenda
+92,Stockton,2019-05-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649163&GUID=54ECDAE6-8B24-4A95-8F15-35F0F7359873,Agenda
+93,Stockton,2019-05-06,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=691420&GUID=58F51A82-6E60-4853-8CA6-7B6E247116A4,Agenda
+94,Stockton,2019-05-03,Stockton Center Site Authority,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=691363&GUID=0F7C6FBD-C0F0-4ED5-BE38-E6D136B51434,Agenda
+95,Stockton,2019-05-01,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651678&GUID=C6950E3E-17AB-414D-8B53-77622D9A4C3B,Agenda
+96,Stockton,2019-05-01,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=690199&GUID=626B7EE6-1102-46F8-9B3D-2467910F911B,Agenda
+97,Stockton,2019-04-30,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=677334&GUID=233FA3F4-4580-43B9-97D5-C06B7C89EA88,Agenda
+98,Stockton,2019-04-29,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=679092&GUID=09C2DBAF-7B85-42B4-82D2-E6398D762B29,Agenda
+99,Stockton,2019-04-25,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653522&GUID=685E8048-CB2C-4D80-A183-06FDAF41B00F,Agenda
+100,Stockton,2019-04-24,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=689965&GUID=8AB9BDA6-54D9-489E-8F71-DE0DEEAF1022,Agenda
+101,Stockton,2019-04-22,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=689655&GUID=DBE8BC29-6F2E-4568-9B9E-CA0C9DF757AC,Agenda
+102,Stockton,2019-04-22,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=687948&GUID=85F354EE-300F-480A-AC3F-3DBC2C0056DC,Agenda
+103,Stockton,2019-04-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=682070&GUID=D2D72875-2BA8-45BD-B93E-7193F0FEE8C0,Agenda
+104,Stockton,2019-04-18,Civil Service Commission Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=688210&GUID=48E864B0-F407-4655-9753-7E78B31D1E13,Agenda
+105,Stockton,2019-04-17,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644315&GUID=FE872A0F-4D52-4D65-AC49-1DB0A1387044,Agenda
+106,Stockton,2019-04-16,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649162&GUID=5E8A1C80-E4A9-4EEA-8BD0-DF4126E7283C,Agenda
+107,Stockton,2019-04-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=652995&GUID=0435A889-277E-469A-A20A-3C02347DA3B9,Agenda
+108,Stockton,2019-04-11,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=688188&GUID=301F07C9-AC65-427E-979E-D3864D7AEFB8,Agenda
+109,Stockton,2019-04-04,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=673016&GUID=0598A78F-8947-48B5-901B-AE2B6BD5A7D8,Agenda
+110,Stockton,2019-04-03,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651677&GUID=22C67AE2-9C63-4C58-9121-3B2F81BA75FA,Agenda
+111,Stockton,2019-04-03,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=686271&GUID=DACBF205-F7B4-45AF-8C8C-735BA584D0CB,Agenda
+112,Stockton,2019-04-02,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659153&GUID=749E7F84-5AE3-4A80-926F-66715431DA2B,Agenda
+113,Stockton,2019-04-01,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=686243&GUID=0498094C-CC81-4131-A559-9B3A4A0EF2D9,Agenda
+114,Stockton,2019-03-28,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653523&GUID=DDAFA522-B73C-4C63-A656-2E32628382B9,Agenda
+115,Stockton,2019-03-26,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=676209&GUID=383C5B17-EDD4-4D62-A851-0A53A5ADFEC9,Agenda
+116,Stockton,2019-03-25,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=680657&GUID=2201E3DF-1EF1-467A-A3C4-BC82397A845C,Agenda
+117,Stockton,2019-03-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=682069&GUID=19ED000D-9714-4082-97FB-D4672BA6EB76,Agenda
+118,Stockton,2019-03-20,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644314&GUID=C38619C0-BD8B-45D5-A891-FD07D8D95626,Agenda
+119,Stockton,2019-03-20,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=675771&GUID=B2D2B4F9-3B01-459D-899A-2F0014A424A5,Agenda
+120,Stockton,2019-03-19,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649161&GUID=1E88E3B8-8169-4393-8CE9-4AE8C8E123DC,Agenda
+121,Stockton,2019-03-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653515&GUID=5F1FA183-5A11-410C-8325-6FB6F3844476,Agenda
+122,Stockton,2019-03-14,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=684360&GUID=032707E4-7379-42D0-9CD7-E40306EA4DDD,Agenda
+123,Stockton,2019-03-12,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=677792&GUID=F80C40EB-2EA6-4703-B549-B4BE7A18D5C2,Agenda
+124,Stockton,2019-03-06,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651663&GUID=B0ED106D-EE22-45F9-B0E2-F0D332175C8E,Agenda
+125,Stockton,2019-03-06,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=680656&GUID=C3A79444-58CF-4EB0-816B-8B05C1C77684,Agenda
+126,Stockton,2019-03-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659152&GUID=F01F35E7-8AB2-42ED-81A7-D08354BDED60,Agenda
+127,Stockton,2019-02-28,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653517&GUID=CC1763ED-7715-4EC3-906F-4D65124EBD10,Agenda
+128,Stockton,2019-02-28,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=641658&GUID=117FA51B-5ABB-4380-B54B-C8433AEF54F2,Agenda
+129,Stockton,2019-02-27,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=681192&GUID=6BBF80BA-8BB9-44F0-9D97-84ACB69AF846,Agenda
+130,Stockton,2019-02-26,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=658847&GUID=7947E480-4F64-450C-B5DB-1AFFC9F3D947,Agenda
+131,Stockton,2019-02-25,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=681193&GUID=A21AACB4-E5F7-428D-9A5D-5D897EBE99F3,Agenda
+132,Stockton,2019-02-21,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=680102&GUID=40B29701-CB11-416B-80DD-141DA4F36484,Agenda
+133,Stockton,2019-02-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=657522&GUID=82C4D47A-B03F-4DD5-B0E1-76EEB0CDB8B9,Agenda
+134,Stockton,2019-02-20,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644313&GUID=2719FEF5-86CF-469A-BF6A-48BBE63A2A64,Agenda
+135,Stockton,2019-02-20,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659224&GUID=C10B8051-3047-43B3-A716-765D6BB49B2A,Agenda
+136,Stockton,2019-02-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653516&GUID=26D7DCB2-FC69-48DC-9632-A280C2C33BF9,Agenda
+137,Stockton,2019-02-14,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=678787&GUID=A6559B0F-A968-43F7-9BC0-C95D0E567D52,Agenda
+138,Stockton,2019-02-07,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=677074&GUID=681C0977-6D42-49A5-A084-F7AD246667F8,Agenda
+139,Stockton,2019-02-06,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=639906&GUID=8AF52121-C691-4B2F-97BD-C0B8DE64B9BF,Agenda
+140,Stockton,2019-02-06,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=677114&GUID=FE8D921D-E7BE-461D-A388-395246B15FC1,Agenda
+141,Stockton,2019-02-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649160&GUID=AA27B7C1-31BB-46A8-A36A-03033ADAE140,Agenda
+142,Stockton,2019-02-04,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=676615&GUID=14C91B77-CE7C-4D1A-950A-6A6F16AB7689,Agenda
+143,Stockton,2019-02-04,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659223&GUID=0E9C5E78-AC92-47F1-B327-97A1AF322389,Agenda
+144,Stockton,2019-01-31,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=655319&GUID=F78587AC-F9C7-43D0-98A6-C90AFAFFCC0F,Agenda
+145,Stockton,2019-01-31,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=668734&GUID=370D51C9-B147-41C6-AD8E-428E645FD265,Agenda
+146,Stockton,2019-01-29,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=659151&GUID=C6C6D502-C83B-47DD-8F6C-16375F0E7AEB,Agenda
+147,Stockton,2019-01-28,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=670298&GUID=7669EA9A-9C19-4841-B2A4-6A5565AEDE2F,Agenda
+148,Stockton,2019-01-24,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653514&GUID=419681B8-4303-40BA-97F9-8C877C47C8A5,Agenda
+149,Stockton,2019-01-23,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=671700&GUID=571999A7-8C9D-4921-8632-9CB6676A5119,Agenda
+150,Stockton,2019-01-22,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=663058&GUID=113AF362-64C3-4C22-A699-31E4C4D3105A,Agenda
+151,Stockton,2019-01-17,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=671687&GUID=5A1470BF-E8B3-4E3E-AAB9-976F2F1097AA,Agenda
+152,Stockton,2019-01-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=657521&GUID=F7960C87-67FB-43DE-B73A-40C18473793F,Agenda
+153,Stockton,2019-01-17,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=668962&GUID=588040FD-BD78-43E2-8EBD-FC2CD8CADBF5,Agenda
+154,Stockton,2019-01-16,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644312&GUID=EE6FDB7E-6CC1-4BA4-8CA1-5D266A793233,Agenda
+155,Stockton,2019-01-15,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=649159&GUID=F52B7C36-777D-409E-B10A-EA268D2464E8,Agenda
+156,Stockton,2019-01-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653513&GUID=8367739A-6B5D-4EC9-BA09-A7B90C5FFAB0,Agenda
+157,Stockton,2019-01-10,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=670297&GUID=7786A2EB-1D9B-49D6-A3AE-51DB29615D42,Agenda
+158,Stockton,2019-01-07,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=646744&GUID=64342609-F135-4906-9623-6F60CD914E62,Agenda
+159,Stockton,2019-01-02,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651661&GUID=E3AA3702-9018-461D-A75E-A2ACBA1F6031,Agenda
+160,Stockton,2019-01-02,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=668800&GUID=811817A9-2BEC-43B5-B231-134D6D5DEECE,Agenda
+161,Stockton,2018-12-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585464&GUID=452F0BC2-3E05-4FD2-BEA5-1129F909A090,Agenda
+162,Stockton,2018-12-20,Climate Action Plan Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=662086&GUID=2E3AC12A-B910-48FB-A814-FEC6B79C8FDE,Agenda
+163,Stockton,2018-12-19,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=588620&GUID=1A04412C-247D-4D3F-B501-F28392D7BF69,Agenda
+164,Stockton,2018-12-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=655159&GUID=AAED2101-3131-4193-8CD5-4DCB22674886,Agenda
+165,Stockton,2018-12-13,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575474&GUID=0947368E-B474-4F22-A528-98912A1349AF,Agenda
+166,Stockton,2018-12-13,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=657355&GUID=0AEE4DFE-D764-4CEF-901F-D81999E99062,Agenda
+167,Stockton,2018-12-06,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=652807&GUID=2969C88F-FCC4-40B5-AFBF-3A8E27926522,Agenda
+168,Stockton,2018-12-05,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651866&GUID=7E982E57-725E-4365-9596-BEB01376B306,Agenda
+169,Stockton,2018-12-04,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=603868&GUID=F4B4657C-7466-49B8-9A54-9D40429A5A7E,Agenda
+170,Stockton,2018-12-03,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=646743&GUID=7A67EA91-720E-4C07-88B9-3EB6C07754B7,Agenda
+171,Stockton,2018-11-29,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=652680&GUID=EB0A36D7-65B1-4035-9369-7206E5052506,Agenda
+172,Stockton,2018-11-29,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=653150&GUID=76754648-EA34-40D3-B37A-8005CAECFC12,Agenda
+173,Stockton,2018-11-28,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=642157&GUID=F5B2A7EF-2C72-47E3-BFC9-856732125BB5,Agenda
+174,Stockton,2018-11-26,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=646699&GUID=CB01F4DE-5346-4959-AA6E-672D5AB4A112,Agenda
+175,Stockton,2018-11-21,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=588619&GUID=05A8AF59-5233-4E4F-9797-04D2ABB47E4A,Agenda
+176,Stockton,2018-11-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=651419&GUID=8292DBD2-0E28-4F92-951B-A2D95E1F7FFB,Agenda
+177,Stockton,2018-11-15,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575473&GUID=F2013FFC-921D-49DA-BDD2-0BC1F8E8FBC3,Agenda
+178,Stockton,2018-11-14,Cultural Heritage Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=645800&GUID=8604886A-4DDC-456F-8324-6127E51E2174,Agenda
+179,Stockton,2018-11-14,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=647744&GUID=AC1EE9D2-DCFA-41FA-9695-5F0739491C41,Agenda
+180,Stockton,2018-11-08,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595763&GUID=80AD0302-6FB7-4CD9-83E1-1ACEF36C3EBB,Agenda
+181,Stockton,2018-11-07,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595751&GUID=1C3368AD-9062-4954-A99E-3BBBBA384FC2,Agenda
+182,Stockton,2018-11-07,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=646603&GUID=D999EADA-8002-454E-88F2-DEC514211DB4,Agenda
+183,Stockton,2018-11-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=603867&GUID=BA24934A-A3EF-4706-B87B-BC4F22D1D41E,Agenda
+184,Stockton,2018-11-05,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=646742&GUID=FA368534-49A4-463B-A975-22D3D5EEB46F,Agenda
+185,Stockton,2018-11-05,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=645229&GUID=5F59866E-C9E9-4BB3-95ED-17A1673FE8C7,Agenda
+186,Stockton,2018-10-24,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=643777&GUID=C5C85C3D-6D2C-4191-9114-58815C7D8591,Agenda
+187,Stockton,2018-10-24,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=609569&GUID=8B6508B7-9AB3-4203-8425-4F63A2F7ABF4,Agenda
+188,Stockton,2018-10-22,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=644342&GUID=19557463-6346-4120-8491-6D01FE4B0E50,Agenda
+189,Stockton,2018-10-22,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=620876&GUID=7E09332B-998D-47C6-B238-DA2F6D526E34,Agenda
+190,Stockton,2018-10-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585462&GUID=6E07E922-5467-43C8-BA2C-D7749C754014,Agenda
+191,Stockton,2018-10-17,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=588612&GUID=D54F8568-314E-4649-8097-E2F7AA249B90,Agenda
+192,Stockton,2018-10-16,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=603864&GUID=730F79EB-8D1A-4251-AC61-9CEB9A18F7D6,Agenda
+193,Stockton,2018-10-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575471&GUID=77609EF2-EDFC-4C82-BC15-F861A855FC32,Agenda
+194,Stockton,2018-10-11,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595762&GUID=87384A64-F28B-47EE-B29D-25F48BEDE44E,Agenda
+195,Stockton,2018-10-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=642058&GUID=6F6F28DA-67A5-4C9F-BF9B-E80A4B73E1F9,Agenda
+196,Stockton,2018-10-04,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=601490&GUID=8F2EB88C-D036-40C8-9C42-90E9091A4669,Agenda
+197,Stockton,2018-10-03,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595750&GUID=58EC2BAC-E560-4C58-BD19-8FB1D1B1C7F5,Agenda
+198,Stockton,2018-10-01,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=640275&GUID=F871382B-CF0F-4862-A43D-7FD943757300,Agenda
+199,Stockton,2018-09-27,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575470&GUID=C190BD0E-D113-4DCE-8131-10F224EA62BD,Agenda
+200,Stockton,2018-09-27,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=618402&GUID=A694EC28-31AD-4858-BADE-4193BAD3EE87,Agenda
+201,Stockton,2018-09-26,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=631370&GUID=75F943BB-7D35-4A75-8580-4425D97E45CD,Agenda
+202,Stockton,2018-09-26,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=646599&GUID=A84C0F5E-423A-455B-8262-C3892035A796,Agenda
+203,Stockton,2018-09-24,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=639157&GUID=7F6661C0-0F1E-4BC5-8727-72916262D57A,Agenda
+204,Stockton,2018-09-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585461&GUID=3563D8F0-E3DA-4F05-AA6C-A2EFA03843D3,Agenda
+205,Stockton,2018-09-19,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=614062&GUID=55D38819-D953-4794-A580-DC24B1FA9672,Agenda
+206,Stockton,2018-09-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=603863&GUID=7C0E6EB7-5239-432F-8A35-FD5235E49CAE,Agenda
+207,Stockton,2018-09-13,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575469&GUID=F56F1536-D89D-40D9-B08A-056F4B200F9E,Agenda
+208,Stockton,2018-09-13,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595761&GUID=D9F1EC34-0A63-4CE2-BC46-3CCC65991673,Agenda
+209,Stockton,2018-09-10,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=632162&GUID=5F864B8F-69FC-42D7-9025-4C48EB8D1E6B,Agenda
+210,Stockton,2018-09-10,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=614061&GUID=5762479E-0372-48E5-9644-56C9D90435E2,Agenda
+211,Stockton,2018-09-05,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595749&GUID=9821B94F-4E14-44B9-8D96-F737BB0404F0,Agenda
+212,Stockton,2018-08-27,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=628303&GUID=1C60898A-32AD-4927-8BCC-3E1F0B125041,Agenda
+213,Stockton,2018-08-27,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=630804&GUID=708C508C-47A6-4E68-BC46-26233A9E3AA8,Agenda
+214,Stockton,2018-08-23,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575468&GUID=CAA5E0C6-1345-4502-A018-A75215B63C84,Agenda
+215,Stockton,2018-08-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=603861&GUID=BA196EF8-4D28-4B74-95F3-C57A7151CB0B,Agenda
+216,Stockton,2018-08-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585460&GUID=43E710C0-E702-416F-BDD8-1FCE54AD8EB4,Agenda
+217,Stockton,2018-08-09,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575467&GUID=CDE34061-577C-41F1-BD59-D55672A5A396,Agenda
+218,Stockton,2018-08-09,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595760&GUID=97D6A171-F3C5-4015-B38D-78B0A7E94D84,Agenda
+219,Stockton,2018-08-06,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=618497&GUID=F66C221B-7D56-4816-AD60-E3CD4D246DC8,Agenda
+220,Stockton,2018-08-02,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=615948&GUID=4150E3AD-4BBA-4CE9-BD93-B56D2AA63581,Agenda
+221,Stockton,2018-08-02,Climate Action Plan Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=615947&GUID=28AA59FA-BF2A-4C42-80C6-365A5A8CC210,Agenda
+222,Stockton,2018-08-01,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595748&GUID=E9DD0A7C-DD52-43A4-BB0B-3CADE68A50A9,Agenda
+223,Stockton,2018-07-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575466&GUID=88478C25-84B1-4D62-9F89-E1A04BEBBC16,Agenda
+224,Stockton,2018-07-23,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=608749&GUID=52FD10C2-EB00-4433-8767-1CFB5BBB772E,Agenda
+225,Stockton,2018-07-23,Mayor's Task Force on Affordable and Workforce Housing,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=628402&GUID=162FDDB6-68DB-4178-B536-A37AC0496655,Agenda
+226,Stockton,2018-07-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585459&GUID=334EAC78-A688-4964-AC35-43E01F9FFEB0,Agenda
+227,Stockton,2018-07-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574953&GUID=C71101FF-8E99-4AF1-82BD-A62726FAF05C,Agenda
+228,Stockton,2018-07-16,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=612813&GUID=D921B487-ECAA-44B2-8A87-67E2ED340CAB,Agenda
+229,Stockton,2018-07-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575465&GUID=22D1A78D-E8AF-45F4-BE4A-E0266C6AA925,Agenda
+230,Stockton,2018-07-12,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595759&GUID=08DADB6F-62DB-4530-AD4F-026641CC1118,Agenda
+231,Stockton,2018-07-12,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=601488&GUID=4DD1DB87-A514-42A8-A38F-C9215F4579A1,Agenda
+232,Stockton,2018-07-09,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=608748&GUID=A9E10625-9B58-41A3-B1DD-25A1C792BFB4,Agenda
+233,Stockton,2018-07-04,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595747&GUID=3A9D95F9-620B-450E-979D-59C6BE0C93DE,Agenda
+234,Stockton,2018-07-02,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=607920&GUID=43360C54-7FB4-4E63-B73D-B589A0217401,Agenda
+235,Stockton,2018-06-25,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=607944&GUID=3B1CD197-6827-409C-87D6-B1DA15B4AA41,Agenda
+236,Stockton,2018-06-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585458&GUID=37FEB216-847C-42D6-92B7-78E5DAD65746,Agenda
+237,Stockton,2018-06-21,Climate Action Plan Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=610866&GUID=47A86AAC-902E-4A7C-8833-11AB3016BF1A,Agenda
+238,Stockton,2018-06-19,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574952&GUID=CE89FEC4-A449-45ED-8F1E-601ADA626B1E,Agenda
+239,Stockton,2018-06-14,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595758&GUID=58C65D47-E82C-4EB2-AFE8-DF0535069CC9,Agenda
+240,Stockton,2018-06-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=606237&GUID=6B62444D-C814-4736-9537-E0F9C70A2376,Agenda
+241,Stockton,2018-06-04,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=607919&GUID=4F77FAE4-B44D-4B39-A39A-B6974882CC7E,Agenda
+242,Stockton,2018-06-04,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=600342&GUID=FED47626-CF18-4FAD-9665-A506A0FD38EC,Agenda
+243,Stockton,2018-06-01,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=581029&GUID=0D6D0594-6470-4B7A-B809-AAF4DD9B39F4,Agenda
+244,Stockton,2018-05-30,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=571736&GUID=21F3E8B4-F033-4F68-B9AE-9A74FAA68319,Agenda
+245,Stockton,2018-05-29,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=597069&GUID=4C382DC6-5CD8-49C6-B5D1-46650B143C39,Agenda
+246,Stockton,2018-05-28,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=606718&GUID=885D60EC-9827-43CD-83AB-3F96D000997D,Agenda
+247,Stockton,2018-05-24,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575462&GUID=1D8EA9A3-C36F-4ECE-B246-05CC5D6C9042,Agenda
+248,Stockton,2018-05-23,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=600562&GUID=3DE97C2A-0C43-4709-9C2A-04B0F8B69D6E,Agenda
+249,Stockton,2018-05-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585457&GUID=C09C29D7-13B3-4307-A7CE-AB3544E27324,Agenda
+250,Stockton,2018-05-15,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574951&GUID=2412DB82-A0B8-4F01-8534-6332464493E6,Agenda
+251,Stockton,2018-05-14,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=600340&GUID=E8245880-5F44-436A-B5DB-0D754AC2068A,Agenda
+252,Stockton,2018-05-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575461&GUID=03338504-74F8-44CC-80D2-E9CAB13815FD,Agenda
+253,Stockton,2018-05-10,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595757&GUID=0A028BF3-09C7-4C1B-8170-C8F27057376F,Agenda
+254,Stockton,2018-05-07,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=600337&GUID=21D872AE-E4B7-4701-9872-C72114930B4B,Agenda
+255,Stockton,2018-05-04,Stockton Center Site Authority,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=556167&GUID=D6EADD7A-5728-44E3-80DF-6671156BA375,Agenda
+256,Stockton,2018-05-02,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595741&GUID=3DAF78DA-F4CD-4223-A472-1E8E3038F3EA,Agenda
+257,Stockton,2018-05-01,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=605290&GUID=A2BD708C-B69B-4935-8A12-28F55905FE40,Agenda
+258,Stockton,2018-04-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575460&GUID=157BA4E8-8BDF-4280-B703-52EB1C250EB2,Agenda
+259,Stockton,2018-04-23,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=603191&GUID=CE0D15E2-37B2-4863-9A96-81DC96F52616,Agenda
+260,Stockton,2018-04-23,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=598177&GUID=B7239DFA-54CA-44A9-A862-ABFC966E1AD4,Agenda
+261,Stockton,2018-04-20,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=602838&GUID=A2EE1923-7F6D-403A-8C34-88BFF6D632E3,Agenda
+262,Stockton,2018-04-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585456&GUID=A9A35C4C-C339-465D-BFB3-B4D84AB04A7F,Agenda
+263,Stockton,2018-04-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574950&GUID=0A6B0342-E8ED-4885-A693-8AB3A467B4C5,Agenda
+264,Stockton,2018-04-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575458&GUID=9E605EC4-42AB-4295-A916-B027642DDACC,Agenda
+265,Stockton,2018-04-12,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595756&GUID=C6671778-E279-4E39-9377-93D629EE954F,Agenda
+266,Stockton,2018-04-12,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=598178&GUID=59C34A97-96B1-44E4-A870-255884EF7C17,Agenda
+267,Stockton,2018-04-04,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595740&GUID=081CAD72-A160-4F60-9E3F-C63BBCC68C62,Agenda
+268,Stockton,2018-04-02,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=599115&GUID=8EF55734-A889-4BD3-B068-DE0D9F3C17CF,Agenda
+269,Stockton,2018-03-26,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=599789&GUID=898EDE5D-72E5-47DC-A5E9-49B8CAECCFBE,Agenda
+270,Stockton,2018-03-23,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=566168&GUID=1CA2CCD0-9C51-46FE-BCE6-68BB11852A94,Agenda
+271,Stockton,2018-03-22,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575457&GUID=8B442CA1-96B3-4DCB-8633-33243D77F543,Agenda
+272,Stockton,2018-03-22,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=599446&GUID=28A5126B-786F-4FD5-9580-CD45E8BBDB89,Agenda
+273,Stockton,2018-03-21,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=596765&GUID=26E04E55-ACE4-4259-8F58-706FBC9221EB,Agenda
+274,Stockton,2018-03-20,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574949&GUID=DC25EA35-3314-47CC-B395-53C640147861,Agenda
+275,Stockton,2018-03-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585455&GUID=19299342-EF59-4346-9EC8-0852033E8011,Agenda
+276,Stockton,2018-03-15,Climate Action Plan Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=598796&GUID=C5E65372-DC85-43D4-978E-C425E32B69EB,Agenda
+277,Stockton,2018-03-14,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=581028&GUID=E563AED6-B42F-40D2-AF0C-08313F4BD0F0,Agenda
+278,Stockton,2018-03-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575456&GUID=F294D4CF-0F7C-46D9-88EA-70096AE61A41,Agenda
+279,Stockton,2018-03-08,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=595739&GUID=354EE768-915E-4E6A-8EAE-1DE403C0F0BE,Agenda
+280,Stockton,2018-03-06,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=596490&GUID=A88F5D0E-110D-442E-967F-CAD01102D06A,Agenda
+281,Stockton,2018-03-05,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=596095&GUID=609DBE76-299D-4AF5-9EBD-E812F4CF1DB0,Agenda
+282,Stockton,2018-02-28,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=594100&GUID=ED983049-DFB9-4B99-A0FA-BB6A94013184,Agenda
+283,Stockton,2018-02-27,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574948&GUID=A367D818-BB4D-434E-A8F0-EB587B1E3995,Agenda
+284,Stockton,2018-02-26,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=596020&GUID=1EEB9AA4-4D6D-44E1-BB7F-652C87F8E268,Agenda
+285,Stockton,2018-02-22,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575455&GUID=0E1AC2D1-47E5-4E38-A8CC-3C1A4492D257,Agenda
+286,Stockton,2018-02-22,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=594851&GUID=69739CC7-6DA1-4D1E-9C0C-5E152F00709B,Agenda
+287,Stockton,2018-02-22,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575560&GUID=28325553-602F-42C8-A032-825ABE3D4B83,Agenda
+288,Stockton,2018-02-21,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=569945&GUID=230F259D-815E-420B-911B-CA8661476F4E,Agenda
+289,Stockton,2018-02-15,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=594012&GUID=2FDAD82B-9C64-484E-BDD4-FA125A622390,Agenda
+290,Stockton,2018-02-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585454&GUID=318C0B78-9127-4DF7-82C4-FC37A40B1926,Agenda
+291,Stockton,2018-02-12,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=566167&GUID=1B137A28-CCEA-418E-8F43-CEDD9B35CC24,Agenda
+292,Stockton,2018-02-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575454&GUID=9F7E08CD-B9A1-4DE9-99DD-F72FF23ACA92,Agenda
+293,Stockton,2018-02-08,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=591946&GUID=BCD01125-67C2-4FA8-A6BC-45B4BE13FB4D,Agenda
+294,Stockton,2018-02-08,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=592856&GUID=22120EA3-FAF0-4688-B9E0-1DAA7CA648F9,Agenda
+295,Stockton,2018-02-08,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575561&GUID=E29F1749-9FD2-42DA-BEFF-C50FAC91E449,Agenda
+296,Stockton,2018-02-07,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=584998&GUID=056EADE2-EAF2-44E0-87F3-07FDE7058E8A,Agenda
+297,Stockton,2018-02-06,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=591144&GUID=56D9E44B-E3C2-48BB-8AFA-ACB4D3CC71B4,Agenda
+298,Stockton,2018-02-05,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=592126&GUID=3A187A67-4C84-45C6-81DA-070BF7EE4FCC,Agenda
+299,Stockton,2018-02-05,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=591216&GUID=C49E0CBE-806D-4C4B-B767-5B601B6A2236,Agenda
+300,Stockton,2018-01-29,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=591143&GUID=C96FFA30-336F-4C6D-95CD-6F226FB2166D,Agenda
+301,Stockton,2018-01-25,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575453&GUID=95B5A572-823A-4671-803E-0B4F3FB59F42,Agenda
+302,Stockton,2018-01-25,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575559&GUID=C6990E5C-E060-4D2D-8870-83496A07F561,Agenda
+303,Stockton,2018-01-24,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=590376&GUID=89A8662E-D189-4A04-8AE7-963B7853AADE,Agenda
+304,Stockton,2018-01-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=574947&GUID=815BBC47-AB69-48C8-918C-9FD83DBF9ADB,Agenda
+305,Stockton,2018-01-23,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=588577&GUID=16693A15-D40F-440C-B7A7-D5A6A0FBF35D,Agenda
+306,Stockton,2018-01-22,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=611048&GUID=83261B73-6303-4E04-9088-585FE8003F26,Agenda
+307,Stockton,2018-01-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575452&GUID=FE5F6238-F644-4725-818A-AAAB8F8CE83A,Agenda
+308,Stockton,2018-01-11,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=582652&GUID=C30863E0-85E3-4FEA-8C53-CE484DCB9850,Agenda
+309,Stockton,2018-01-11,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575558&GUID=0CC56CB1-50CD-4A27-96BE-3F4CC65ACACF,Agenda
+310,Stockton,2018-01-11,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=585297&GUID=CA131FD4-4247-47B4-A012-7FB5536F8C94,Agenda
+311,Stockton,2018-01-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=586183&GUID=83952E6F-81B2-42C9-BDC9-BDEF91702BF9,Agenda
+312,Stockton,2018-01-08,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=584914&GUID=85256972-64B1-49FB-8172-BDF983D6F114,Agenda
+313,Stockton,2018-01-08,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=566166&GUID=345AEE29-A5E6-437A-AFDA-98D10CEA350B,Agenda
+314,Stockton,2018-01-04,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=581540&GUID=93B8F428-0138-4F25-BDEE-542E39FDB12A,Agenda
+315,Stockton,2018-01-03,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=581478&GUID=6B3110F8-51A5-4835-8854-06193890250C,Agenda
+316,Stockton,2017-12-28,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=582535&GUID=AE444AAA-D445-407B-B8FD-25ADBCA41DFC,Agenda
+317,Stockton,2017-12-25,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=580432&GUID=081021F5-E3B8-4067-A199-F2B08D864943,Agenda
+318,Stockton,2017-12-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=524232&GUID=9088BE9D-50B3-4BD0-B598-B6CF66220FF9,Agenda
+319,Stockton,2017-12-21,Climate Action Plan Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=582519&GUID=968B9267-A167-4F98-BCF2-EBFBF4C51B31,Agenda
+320,Stockton,2017-12-19,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517406&GUID=88230800-A249-4185-AF90-F8FB1B2169DF,Agenda
+321,Stockton,2017-12-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517384&GUID=67EF96F2-F9CC-4C84-BC23-F3689B45364E,Agenda
+322,Stockton,2017-12-14,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=529450&GUID=CF0A55A4-F392-4A7C-8662-304A111C9372,Agenda
+323,Stockton,2017-12-13,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=581630&GUID=B1A3DDE7-6555-4AA6-B792-B9416FA150E8,Agenda
+324,Stockton,2017-12-07,Strong Communities Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=571650&GUID=808DA708-FAA0-4861-BE21-610029479973,Agenda
+325,Stockton,2017-12-06,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=578231&GUID=142D71AB-217B-465C-A65A-0F6C9744F15C,Agenda
+326,Stockton,2017-12-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517405&GUID=4054D150-48CA-49CD-B40B-7AF4447D0972,Agenda
+327,Stockton,2017-12-04,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=578765&GUID=C8B086FC-C440-43CA-8060-C3C35FC71E32,Agenda
+328,Stockton,2017-12-04,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=571261&GUID=23AAA6DC-F546-45B0-8D5B-74FC8AD45556,Agenda
+329,Stockton,2017-11-30,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=576724&GUID=5AC1BF6D-1F50-4D29-94E5-00E87D494C81,Agenda
+330,Stockton,2017-11-27,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=573091&GUID=920321AD-5EA2-4E61-99E5-E3F8356B73C6,Agenda
+331,Stockton,2017-11-21,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=575031&GUID=3809CE34-7279-45E3-9F89-560DB2D10735,Agenda
+332,Stockton,2017-11-16,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517383&GUID=732F76E7-1077-4911-BE38-F4608701A71F,Agenda
+333,Stockton,2017-11-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=524231&GUID=A048A6F9-80E9-4EAF-9AEB-B62B03B6DB15,Agenda
+334,Stockton,2017-11-15,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=569942&GUID=79CF88A5-A8DD-4299-AE7D-3EFCA28C1B97,Agenda
+335,Stockton,2017-11-13,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=566163&GUID=122D6F16-4C87-4B96-8B43-B22386ED7258,Agenda
+336,Stockton,2017-11-09,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=529449&GUID=2A7F840F-1C8D-4717-8074-F529816628D8,Agenda
+337,Stockton,2017-11-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517404&GUID=42FB29EE-0232-430F-9F6C-67D594567E09,Agenda
+338,Stockton,2017-11-06,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=572374&GUID=E8B95273-1DC8-4E70-8EA9-DE5D6ACFB875,Agenda
+339,Stockton,2017-11-01,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=562676&GUID=E26B7D23-B83E-4334-88C8-EF9BEA57B412,Agenda
+340,Stockton,2017-10-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517382&GUID=814E66EE-CD76-4D10-AD9F-9FC526DC1290,Agenda
+341,Stockton,2017-10-26,City of Stockton and Stockton Unified School District 3 X 3 Joint Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=571552&GUID=4A23A5BC-2D13-41D1-9903-88C50AB6226C,Agenda
+342,Stockton,2017-10-25,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=562562&GUID=B3E429A3-FB65-42C7-B767-4B77BF64A0CA,Agenda
+343,Stockton,2017-10-23,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=570770&GUID=23ADEF8B-3A37-4E3A-A0AD-DF0F3A5D03DE,Agenda
+344,Stockton,2017-10-23,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=562976&GUID=123386FE-C8E5-4953-B72A-BFADE91F08FA,Agenda
+345,Stockton,2017-10-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=524230&GUID=5334D127-A731-4755-9EEB-F445D3374EA3,Agenda
+346,Stockton,2017-10-18,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=570021&GUID=CFF1F94C-041D-42C9-89AD-AB0A23272FD2,Agenda
+347,Stockton,2017-10-18,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=568889&GUID=222415DB-3152-4C06-AEEB-8287C2160F4D,Agenda
+348,Stockton,2017-10-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517403&GUID=28F302D3-4F88-4A21-A1AB-5FC4022DE386,Agenda
+349,Stockton,2017-10-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517381&GUID=D47E738C-1983-470A-879A-43F43E9B88D5,Agenda
+350,Stockton,2017-10-12,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=529448&GUID=412C6729-D8CE-4123-BE63-1092051F2690,Agenda
+351,Stockton,2017-10-05,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=566345&GUID=4D9343A3-4FDB-4D93-9EF3-3CFAD73ACA82,Agenda
+352,Stockton,2017-10-04,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=562672&GUID=00C1CCF6-01E5-4472-AA5D-11DECC4D3229,Agenda
+353,Stockton,2017-10-03,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517402&GUID=1294A9BB-9011-4391-B800-580E2C68A4E7,Agenda
+354,Stockton,2017-10-02,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=565748&GUID=E1142A37-8312-436C-ACB9-41C5685ED9BD,Agenda
+355,Stockton,2017-09-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523569&GUID=79E29EAE-91F1-44CA-8EB1-23D90B95E46F,Agenda
+356,Stockton,2017-09-20,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=564258&GUID=DF69084D-460A-428C-B1B3-F7D7A71B988E,Agenda
+357,Stockton,2017-09-20,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=551261&GUID=5DD05A73-1043-4D84-88F0-9F8E455C3BDA,Agenda
+358,Stockton,2017-09-19,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517401&GUID=97E7BDD0-5ACA-415A-8CEA-4310D413BD7C,Agenda
+359,Stockton,2017-09-19,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=564259&GUID=8CF7AE7F-D7D7-4045-BC3C-6687E0AC5D3B,Agenda
+360,Stockton,2017-09-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517377&GUID=BE32F268-44ED-4897-AD7B-59125D4C6286,Agenda
+361,Stockton,2017-09-11,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=563517&GUID=095DBB43-9173-462D-86A7-A536E9693C07,Agenda
+362,Stockton,2017-09-06,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=561785&GUID=7943E375-60EE-4CFF-8F31-8F9C0A4751AD,Agenda
+363,Stockton,2017-08-30,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=561378&GUID=E47F15E0-0357-46C2-8CD9-37F23E0A50F8,Agenda
+364,Stockton,2017-08-30,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=558957&GUID=BD23459C-5CCA-4C59-918B-7CC7DCFC51BB,Agenda
+365,Stockton,2017-08-28,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=562382&GUID=227A948E-51A3-49EB-80F9-A45493E2728E,Agenda
+366,Stockton,2017-08-22,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517400&GUID=141D5346-0791-42B1-A7A1-A5DB10604380,Agenda
+367,Stockton,2017-08-21,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=561379&GUID=F037C8B0-3F75-494F-BFAE-50E1D7F50089,Agenda
+368,Stockton,2017-08-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523509&GUID=B6ECF426-3D9C-430F-8B50-C51DD1D77AB5,Agenda
+369,Stockton,2017-08-16,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=558028&GUID=FC87C248-B56E-4FFD-9DAE-B93D217106DD,Agenda
+370,Stockton,2017-08-14,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=559051&GUID=0DA00B10-C12A-4264-A1DA-41A3A768A1E1,Agenda
+371,Stockton,2017-08-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517374&GUID=0E80490F-1DA5-4164-94CA-84ED2290AA4D,Agenda
+372,Stockton,2017-08-08,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517399&GUID=CF69C3DD-B23E-415F-9FED-C15300202078,Agenda
+373,Stockton,2017-08-07,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=559113&GUID=79265C5F-F9FF-4D8F-A868-4502DC795B5A,Agenda
+374,Stockton,2017-08-07,Council Community Improvement and Crime Prevention Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=559270&GUID=6D6CAC32-5BD1-4F69-B803-4569F63CC8B5,Agenda
+375,Stockton,2017-08-02,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=553121&GUID=5A075897-42A3-4986-8DDF-124408AC51EE,Agenda
+376,Stockton,2017-07-27,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517373&GUID=2473F298-5ED0-4184-A081-EBFF6154D56D,Agenda
+377,Stockton,2017-07-27,City of Stockton and Stockton Unified School District 3 X 3 Joint Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=557944&GUID=9568E0E4-C66D-4887-888F-EBACB63726F9,Agenda
+378,Stockton,2017-07-25,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517398&GUID=887383AC-5794-48A6-BCFD-3F7630CD667B,Agenda
+379,Stockton,2017-07-24,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=558035&GUID=421B6908-267C-4720-9336-668F297B2B0B,Agenda
+380,Stockton,2017-07-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=552340&GUID=AE514FA8-B239-4B27-A8FD-8DB352879DE9,Agenda
+381,Stockton,2017-07-20,Civil Service Commission Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=554611&GUID=5DCDE2B3-DA1D-48BF-B854-B7DB2305E525,Agenda
+382,Stockton,2017-07-19,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=552513&GUID=892DFD20-7A28-4BD2-9F93-81FE65555817,Agenda
+383,Stockton,2017-07-19,Parking Authority Advisory Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=557285&GUID=AABEB639-6D4F-4C42-AC64-7DF6C41FE5F7,Agenda
+384,Stockton,2017-07-19,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=554773&GUID=A6D338C8-6325-46A1-91A4-90FEBEBB27A3,Agenda
+385,Stockton,2017-07-13,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517372&GUID=8EAD230F-4278-41CC-BB4C-EECE9E56300C,Agenda
+386,Stockton,2017-07-13,Development Oversight Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=542729&GUID=8C8D8A54-E062-4BE0-905D-06468D6B0537,Agenda
+387,Stockton,2017-07-11,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517397&GUID=B39E2373-7AF4-46CC-8F6C-2C5A63581096,Agenda
+388,Stockton,2017-07-10,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=556198&GUID=2B179F60-BF2B-440E-8765-0AB619700C26,Agenda
+389,Stockton,2017-07-05,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=553120&GUID=7C4BB67A-B81E-4E90-B71E-927CED0B108D,Agenda
+390,Stockton,2017-06-30,Stockton Center Site Authority,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=546180&GUID=21FB2D10-ADCE-4475-A59A-C5804FB82BEA,Agenda
+391,Stockton,2017-06-26,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=555022&GUID=9BA18C74-50FB-42DB-8A09-A5943EC4DA56,Agenda
+392,Stockton,2017-06-22,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517371&GUID=4E0B3FBB-BF1E-4217-8143-10963CBF250F,Agenda
+393,Stockton,2017-06-21,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=549663&GUID=ACD7EAF2-02DD-442D-A699-BD183227003E,Agenda
+394,Stockton,2017-06-20,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517396&GUID=1DBDA3F0-73C9-43A3-85F8-8D91EB20C5D6,Agenda
+395,Stockton,2017-06-19,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=547534&GUID=2FEEB575-755F-4E60-AB95-2F25F3995103,Agenda
+396,Stockton,2017-06-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523559&GUID=1B7501AD-D6D2-4E05-B07D-D1A61C9F5EAA,Agenda
+397,Stockton,2017-06-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517370&GUID=1D8E70DD-42C2-412B-B4A8-FD84CF6A1B14,Agenda
+398,Stockton,2017-06-08,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=529444&GUID=3F12893E-443B-42BC-A71D-4F30EAF377D4,Agenda
+399,Stockton,2017-06-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517395&GUID=6A314255-A8B3-4356-A637-C6AE7DE4412A,Agenda
+400,Stockton,2017-06-06,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=546957&GUID=C5B9904A-AA5D-446C-A048-2A97FFA59DED,Agenda
+401,Stockton,2017-06-05,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=550707&GUID=13A81034-B42E-49F1-B171-1FC32183E943,Agenda
+402,Stockton,2017-05-31,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=546714&GUID=1E1EB67A-E3CA-42D5-A9A1-EC01601B14B8,Agenda
+403,Stockton,2017-05-31,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=542496&GUID=C991675A-5FA3-42FB-BA05-98FF020EE424,Agenda
+404,Stockton,2017-05-25,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517369&GUID=23D2EA60-4A9C-4F25-9A6F-36FE97050BE3,Agenda
+405,Stockton,2017-05-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517394&GUID=052EB705-05AC-4EF0-89A2-831DEFD65AEC,Agenda
+406,Stockton,2017-05-23,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=549608&GUID=D032FBC2-477A-4434-BBF9-3BDF8E5B4BD1,Agenda
+407,Stockton,2017-05-22,Parks and Recreation Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=549522&GUID=265C59B3-7314-4E78-BDE0-4C755795D4B1,Agenda
+408,Stockton,2017-05-17,Mayor's Task Force For Persons With Disabilities,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=547431&GUID=230E1697-E63A-4768-856F-0FCA176BE449,Agenda
+409,Stockton,2017-05-16,Joint Stockton City Council/San Joaquin County Board of Supervisors,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=547545&GUID=4BB431F2-177E-4DA9-8F56-BF5871F5820F,Agenda
+410,Stockton,2017-05-11,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=529443&GUID=87AFD343-9F13-4210-99B9-8978DEA9D26F,Agenda
+411,Stockton,2017-05-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517393&GUID=7569FF81-C70E-4F07-A2C1-5085104FD94A,Agenda
+412,Stockton,2017-05-08,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=545751&GUID=149F8DAE-4E26-4FE3-AE85-DE2D5BAA07A2,Agenda
+413,Stockton,2017-05-04,Community Development Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=546751&GUID=5F471E71-6B5C-4264-8ECF-A7035F58206E,Agenda
+414,Stockton,2017-05-03,Water Advisory Group,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=546757&GUID=9B7766F3-F0EF-4165-8AAD-FCFBD0A0D9D3,Agenda
+415,Stockton,2017-05-01,Stockton Arts Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=546742&GUID=AEDF7BF8-EE31-41CA-9516-46C1C4A7BB76,Agenda
+416,Stockton,2017-04-27,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517367&GUID=D985AE08-282D-4320-BF8B-E9F29CEE6736,Agenda
+417,Stockton,2017-04-25,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517392&GUID=C5D507B0-F28E-4A80-BC48-FD465DF87F18,Agenda
+418,Stockton,2017-04-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523355&GUID=8224C000-8B00-47E0-8087-10D44DF7618A,Agenda
+419,Stockton,2017-04-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=544306&GUID=6AAD1F23-2F83-4B5C-B93A-DA3A58C5CC19,Agenda
+420,Stockton,2017-04-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=526386&GUID=74C9E1A9-BB43-4FE4-91DA-DF03F6CE4E53,Agenda
+421,Stockton,2017-04-11,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517391&GUID=B9715958-60F9-4A21-ABB9-8E962528CF2B,Agenda
+422,Stockton,2017-04-04,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=538955&GUID=00854D58-9FB3-43ED-AEB2-93456860A49E,Agenda
+423,Stockton,2017-04-01,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=539248&GUID=5A3C7E2A-A8BD-428B-B41D-71F943403673,Agenda
+424,Stockton,2017-03-29,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=532949&GUID=FFA465EC-2CD7-4A02-A6A1-B8EA9CE39878,Agenda
+425,Stockton,2017-03-28,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517390&GUID=9F1348FB-2B47-44C4-B7C3-3AEED82D9203,Agenda
+426,Stockton,2017-03-23,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517363&GUID=976841A4-DD4C-4F7F-84F0-AFAA08A3E5C0,Agenda
+427,Stockton,2017-03-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523139&GUID=0804FEDB-3874-44AA-A209-75B2A40AE296,Agenda
+428,Stockton,2017-03-13,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=537576&GUID=AEF3B3BE-4D97-4AC6-A563-D1C838E9FD38,Agenda
+429,Stockton,2017-03-08,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=537029&GUID=68098494-BB69-4EFC-949D-00DF33237229,Agenda
+430,Stockton,2017-03-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517389&GUID=74DCFC41-C503-4F2B-97BE-9A282D5859AB,Agenda
+431,Stockton,2017-03-02,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=536136&GUID=9ED6DE1D-EBC4-4353-BB30-585A9307F4C9,Agenda
+432,Stockton,2017-02-28,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=535257&GUID=D83ACB98-4328-47E0-9CCF-30B1765BE91C,Agenda
+433,Stockton,2017-02-22,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=532082&GUID=759FB178-165F-444F-9A23-DC16352AD940,Agenda
+434,Stockton,2017-02-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517388&GUID=D41B89D9-D48B-472A-AF30-31B4672C2BC3,Agenda
+435,Stockton,2017-02-20,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=535195&GUID=781CEB1D-A567-457F-BC04-450BD485D756,Agenda
+436,Stockton,2017-02-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523138&GUID=2283396B-52B1-4261-8187-0A16967F31CD,Agenda
+437,Stockton,2017-02-09,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=532865&GUID=7DC12258-FFE2-4B4B-B53C-9BEDAFE684B6,Agenda
+438,Stockton,2017-02-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517387&GUID=481B8D85-4F14-4C54-95FD-7922BB1F7937,Agenda
+439,Stockton,2017-01-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517359&GUID=5792AF9F-D568-43FA-A8BD-46650F5DBD31,Agenda
+440,Stockton,2017-01-25,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=522065&GUID=69C5558D-16AF-486C-9F65-97357046DB40,Agenda
+441,Stockton,2017-01-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=521544&GUID=9A3A7236-5369-4316-978D-4AEC0693F465,Agenda
+442,Stockton,2017-01-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=523137&GUID=EB52BA84-FADC-4277-89C4-0BFFDD3C0E30,Agenda
+443,Stockton,2017-01-18,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517386&GUID=1CB10FCA-80BF-4B37-89BA-90208664ABAE,Agenda
+444,Stockton,2017-01-12,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=525713&GUID=69FDE4EA-0BE1-49D1-9052-A92B48977210,Agenda
+445,Stockton,2016-12-15,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448898&GUID=D2436B28-2993-4956-95F3-6DDAE9B0BAA4,Agenda
+446,Stockton,2016-12-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452848&GUID=AF0AD8A8-3D43-4555-AB92-8BED60989337,Agenda
+447,Stockton,2016-12-13,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446657&GUID=4BEDF292-E71F-4558-9109-F97980D984D7,Agenda
+448,Stockton,2016-12-12,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=517221&GUID=B8532C5B-CA08-486F-ADF5-66AF2E61CBFE,Agenda
+449,Stockton,2016-12-07,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=508248&GUID=16488877-B439-48EF-8DFF-29872DB562D8,Agenda
+450,Stockton,2016-12-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446656&GUID=509E6006-A1D7-40D9-871A-F1D384FE446C,Agenda
+451,Stockton,2016-11-17,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448897&GUID=649D34BF-FEF3-4C56-81BE-F84A0A8306B3,Agenda
+452,Stockton,2016-11-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=515414&GUID=3A3EC7EF-030B-4ECA-B839-BD78B579ADA3,Agenda
+453,Stockton,2016-11-15,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446655&GUID=DB18FE51-369D-4A0D-8852-C7531195335C,Agenda
+454,Stockton,2016-10-27,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448896&GUID=E813EA47-DE60-4ECB-B347-33C68105E1BB,Agenda
+455,Stockton,2016-10-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452846&GUID=C6AD63C1-603B-42C1-B80B-24B0F61085C4,Agenda
+456,Stockton,2016-10-20,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=504353&GUID=1A42E925-F614-40D7-9577-8010AC73134C,Agenda
+457,Stockton,2016-10-19,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=511561&GUID=D00A055E-27F4-4AAF-BCCE-99D51747265D,Agenda
+458,Stockton,2016-10-19,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=510979&GUID=2AAD9A7F-71DB-4228-A18E-95FDC95827B1,Agenda
+459,Stockton,2016-10-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446653&GUID=E146ACB5-8E47-4F36-8CF9-7EB2034BFAA8,Agenda
+460,Stockton,2016-10-13,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=508166&GUID=AA3AE9AD-3543-4390-BDC1-99EDBF69D86B,Agenda
+461,Stockton,2016-10-03,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=506492&GUID=253CCE2C-6E4F-48EE-A666-FDED07984A83,Agenda
+462,Stockton,2016-09-29,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=490945&GUID=67838669-FDBC-4147-803C-5F8E5CD72723,Agenda
+463,Stockton,2016-09-27,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448816&GUID=7B782A75-B52A-4C40-879E-1D405EB2435C,Agenda
+464,Stockton,2016-09-22,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448894&GUID=85A478F3-5164-421B-B1A6-505A1D23A103,Agenda
+465,Stockton,2016-09-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452844&GUID=F9D4A642-CF3B-431A-ADCA-56D85D34CB93,Agenda
+466,Stockton,2016-09-13,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448815&GUID=53C3EC70-7466-4F86-8A6E-985F53D3D7B9,Agenda
+467,Stockton,2016-09-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448876&GUID=4E42C82E-0058-4994-9848-1FBF081EE6DD,Agenda
+468,Stockton,2016-09-08,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=504077&GUID=E0F6FF9A-7E8F-4F04-9F99-21CE17D8F00F,Agenda
+469,Stockton,2016-08-25,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448875&GUID=7B414832-191A-423D-B3DC-3AE5F2E6A091,Agenda
+470,Stockton,2016-08-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448814&GUID=7E7E3AB6-460D-4DD0-BE2B-EF660CE13B21,Agenda
+471,Stockton,2016-08-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452843&GUID=B22F43C9-DA60-4427-B697-001B8C0AF5E5,Agenda
+472,Stockton,2016-08-18,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=501807&GUID=EE90A3F3-7B7E-4BC2-B230-44F2EDA12034,Agenda
+473,Stockton,2016-08-11,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=500885&GUID=3F1B56CB-578C-4A68-837C-A4BEE472363A,Agenda
+474,Stockton,2016-08-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446647&GUID=D75D4A05-A4D9-4A04-BF0C-DDDF436913B7,Agenda
+475,Stockton,2016-07-28,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448873&GUID=9F17F500-279C-43E5-B712-647BD808B674,Agenda
+476,Stockton,2016-07-26,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448812&GUID=AC7DDAE5-F17B-4ED3-95CE-0B499EB1BE3E,Agenda
+477,Stockton,2016-07-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452841&GUID=C53487D5-64CD-4536-90D2-5252D4BE3464,Agenda
+478,Stockton,2016-07-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448872&GUID=9FD8FE2E-4C11-4DE4-8A2A-E8571E0FE1E7,Agenda
+479,Stockton,2016-07-14,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=496009&GUID=21C2029C-FE2B-4079-8E19-814465C16F6E,Agenda
+480,Stockton,2016-07-12,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448811&GUID=82D0F87A-1612-4392-BE69-5EC28165199D,Agenda
+481,Stockton,2016-07-11,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=496077&GUID=B9D2117D-2AE7-4367-8040-7E0986773D71,Agenda
+482,Stockton,2016-06-29,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=490574&GUID=E12BE3A2-E5A5-4923-87A4-7E8853ADD3C0,Agenda
+483,Stockton,2016-06-28,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=493986&GUID=031E6CCC-22E1-4A27-8D07-EE6E86A99AE6,Agenda
+484,Stockton,2016-06-23,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448871&GUID=0425F0DA-8000-4190-9630-212A397ECDEF,Agenda
+485,Stockton,2016-06-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446642&GUID=DA453F73-EBBF-4E62-B601-C0AC95A7E582,Agenda
+486,Stockton,2016-06-20,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=484581&GUID=2AF36358-ED53-4F12-B4E5-981539FD5F49,Agenda
+487,Stockton,2016-06-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452840&GUID=131F8E76-3B3C-4794-9000-D6EDC71D44B1,Agenda
+488,Stockton,2016-06-14,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=482329&GUID=13B890DE-244A-457B-BA01-54E708EA874A,Agenda
+489,Stockton,2016-06-13,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=482328&GUID=965AE661-E895-4D39-B2E6-601E9DB064C6,Agenda
+490,Stockton,2016-06-09,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448870&GUID=D385C5DC-CF4F-4409-A2DE-3964DEA25EA0,Agenda
+491,Stockton,2016-06-09,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=489337&GUID=49A4CB71-1D6D-4074-A79F-3B523C84C499,Agenda
+492,Stockton,2016-06-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448809&GUID=B7F6842D-5A46-4D4E-9850-61E95460D4EB,Agenda
+493,Stockton,2016-06-02,Measure W Oversight Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=488730&GUID=AA60E528-24D1-4648-832A-13683E5F1A47,Agenda
+494,Stockton,2016-05-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448869&GUID=C1016104-7F0E-4A85-8C1E-F5AC49E643F2,Agenda
+495,Stockton,2016-05-25,Measure A Citizens' Advisory Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=488727&GUID=0E067BDE-60CE-4D18-9BB3-B404D085C21C,Agenda
+496,Stockton,2016-05-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446640&GUID=6955AEED-FCE4-4519-AC91-D765ECD8FE56,Agenda
+497,Stockton,2016-05-18,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=484582&GUID=7EF6A9E9-2BF7-4EE2-8E38-5D96C7BD24E3,Agenda
+498,Stockton,2016-05-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448868&GUID=C7EEFAA6-C691-49A6-8C6E-AF8BA901D598,Agenda
+499,Stockton,2016-05-12,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=485264&GUID=1A7F0200-68CD-4190-8659-095961019FF8,Agenda
+500,Stockton,2016-05-10,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446639&GUID=667033F9-683F-4C36-9EDA-78F46B32BC38,Agenda
+501,Stockton,2016-05-03,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=484002&GUID=AE6BEE7F-A4D6-46DA-BB3C-6271077AC685,Agenda
+502,Stockton,2016-04-28,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448867&GUID=09B7E447-9653-42FF-9181-43347C87BC26,Agenda
+503,Stockton,2016-04-26,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448806&GUID=9571AED6-A465-42D3-9392-895CEFFFDC61,Agenda
+504,Stockton,2016-04-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452838&GUID=A7D9996F-2341-4893-B1C9-C13AFEE5B4BA,Agenda
+505,Stockton,2016-04-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448630&GUID=B0DDE5F6-DD49-4DBC-B9F0-4A0D373053F5,Agenda
+506,Stockton,2016-04-14,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=481043&GUID=14B36254-4825-4BC2-BE46-BFC13C5E3D92,Agenda
+507,Stockton,2016-04-12,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448628&GUID=DE139EA3-FFD2-4FF2-B34C-1B6D51EB2B93,Agenda
+508,Stockton,2016-04-11,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=479410&GUID=3F19761E-669D-4A18-A3FF-8554F2605029,Agenda
+509,Stockton,2016-04-06,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=480188&GUID=C9D92965-5CEE-443A-82D6-49D52118C730,Agenda
+510,Stockton,2016-03-29,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448804&GUID=7336E3B2-FDE8-4446-8E2C-A82ABFBE2BF2,Agenda
+511,Stockton,2016-03-26,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=464400&GUID=E4A42802-07DE-4311-A691-4DBFBC877088,Agenda
+512,Stockton,2016-03-24,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448627&GUID=EEE12AA0-9541-45B3-B648-116DF394C821,Agenda
+513,Stockton,2016-03-14,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=464366&GUID=F2D9A497-BAC7-4BD4-A42B-3CCD2D5529A0,Agenda
+514,Stockton,2016-03-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448637&GUID=DA21FD5B-3DED-4E38-9717-E0E2EBB9F5F6,Agenda
+515,Stockton,2016-03-10,Council Water Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=463397&GUID=24E3F265-31A5-4775-8A7A-48244AF2117C,Agenda
+516,Stockton,2016-03-09,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=462251&GUID=E2B54E95-1ABC-43F8-B104-5B7E2D47E851,Agenda
+517,Stockton,2016-03-09,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448803&GUID=78A5161D-D07B-475D-A666-16C2CD5C220F,Agenda
+518,Stockton,2016-03-08,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=462293&GUID=3DD8DBDD-42FA-4FBD-A7E9-4173F6DCF910,Agenda
+519,Stockton,2016-02-25,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448624&GUID=AFF509D4-E84A-4591-9389-C01CE945C1E1,Agenda
+520,Stockton,2016-02-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446634&GUID=217F47F5-20C6-46A6-8502-BEF1BFF8FC3F,Agenda
+521,Stockton,2016-02-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=452835&GUID=097810EF-F191-4692-ACE2-529AB3D80B0D,Agenda
+522,Stockton,2016-02-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448623&GUID=3B6A5B24-BD93-4EA8-BB75-84DEAFCDC180,Agenda
+523,Stockton,2016-01-28,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448622&GUID=70A016EE-5B20-47BB-BABC-EFC6572DB1C6,Agenda
+524,Stockton,2016-01-27,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=457177&GUID=F42724FE-9343-4C24-B0A3-74B45D2F5682,Agenda
+525,Stockton,2016-01-26,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446632&GUID=2D687FD2-C510-4843-B5E4-EC0C2A17B409,Agenda
+526,Stockton,2016-01-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=448621&GUID=9571019A-4B3B-4AB4-95A0-7B6F2069C6AE,Agenda
+527,Stockton,2016-01-12,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=446539&GUID=971193CC-4D7A-4E8E-8232-50D4BDA06016,Agenda
+528,Stockton,2016-01-11,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=453325&GUID=36062C2F-3D0D-4FBB-9E4A-9DB0824C5758,Agenda
+529,Stockton,2015-12-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369515&GUID=8E96D401-22C1-47D2-8B65-8E2685D5960F,Agenda
+530,Stockton,2015-12-15,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419986&GUID=C6BBF45F-21A3-44CA-8A8C-CA46D72265DA,Agenda
+531,Stockton,2015-12-14,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=449310&GUID=263ADF4B-E326-4850-91A7-97829A3F305C,Agenda
+532,Stockton,2015-12-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382319&GUID=658A63FF-CF50-4F21-93B1-8A05C64AF5F4,Agenda
+533,Stockton,2015-12-08,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419985&GUID=FCE27FD9-62B7-48FF-A362-2BCAB31232FF,Agenda
+534,Stockton,2015-12-07,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=447792&GUID=66BE7F38-2EB6-41A9-802E-B4DB1EF5ED4C,Agenda
+535,Stockton,2015-11-19,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=436769&GUID=D1CB10DC-6C14-4C48-8B49-92E727D91760,Agenda
+536,Stockton,2015-11-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369514&GUID=2FDE3065-EF52-4E3A-BB94-D314FFEFB47C,Agenda
+537,Stockton,2015-11-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419984&GUID=F9E7183E-EA65-4477-AB0F-4E209D0C8C47,Agenda
+538,Stockton,2015-11-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382318&GUID=D0CD6DBE-540E-4C90-88AD-DEFFE527140F,Agenda
+539,Stockton,2015-11-04,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=442614&GUID=CF44028E-ADC8-40F4-B8AD-B2B61FDB429C,Agenda
+540,Stockton,2015-11-03,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361153&GUID=2A3FA077-539B-419B-9236-22FF52272383,Agenda
+541,Stockton,2015-10-28,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419989&GUID=71F1C4DC-0D91-4988-AFB4-FB0F59279B6E,Agenda
+542,Stockton,2015-10-22,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382317&GUID=9F53CAB3-59C1-48A2-8C56-C3740DF64840,Agenda
+543,Stockton,2015-10-22,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=440652&GUID=6B59DA6A-3850-486A-B8CB-E9360BD6491A,Agenda
+544,Stockton,2015-10-20,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=435926&GUID=4C16C793-9767-4E9D-8D25-EDE8C5F0A027,Agenda
+545,Stockton,2015-10-20,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361152&GUID=91CBFF58-40ED-493A-87EF-EA1D2FA58281,Agenda
+546,Stockton,2015-10-15,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369513&GUID=F579CD94-0542-4103-905D-5158554E3973,Agenda
+547,Stockton,2015-10-13,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=437947&GUID=CF86E1F0-7F39-4A17-866C-47192CAEDF2C,Agenda
+548,Stockton,2015-10-07,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=436983&GUID=81202B30-3A5F-475C-9E07-0A3A5BF7E4CA,Agenda
+549,Stockton,2015-10-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=436811&GUID=D654295E-62D5-4AB6-B947-9E2A6CDD1FB4,Agenda
+550,Stockton,2015-09-24,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382315&GUID=5D6267B3-4B34-492B-BCC0-AFA152D2B003,Agenda
+551,Stockton,2015-09-23,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419988&GUID=FCB4183B-9E62-4C1F-97D9-B75D2CEC6B14,Agenda
+552,Stockton,2015-09-23,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=434813&GUID=DF28F56C-8F4F-4BCE-9A1D-978BFFB22596,Agenda
+553,Stockton,2015-09-22,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361150&GUID=BF8D987F-90D3-4410-8E85-B90E74E58503,Agenda
+554,Stockton,2015-09-21,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=434454&GUID=BFA55886-E4B2-4DF2-ACFE-E7F11ED455E2,Agenda
+555,Stockton,2015-09-10,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382314&GUID=EDFB420A-FAF8-40DC-B92B-FE26EECDB5F7,Agenda
+556,Stockton,2015-08-31,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419081&GUID=D7D530E9-A870-4638-9E21-C4031CD8CDC7,Agenda
+557,Stockton,2015-08-26,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419689&GUID=99114B05-8CB3-4835-9E38-30990214F02C,Agenda
+558,Stockton,2015-08-26,Council Community Improvement and Crime Prevention Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=419690&GUID=023E16BF-EB45-4623-B216-C73C65BCF926,Agenda
+559,Stockton,2015-08-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369509&GUID=318976FC-EABF-4FCF-8CB8-D7AC03BAF7DE,Agenda
+560,Stockton,2015-08-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361148&GUID=1E924F18-D28E-48F7-B643-9832278639F3,Agenda
+561,Stockton,2015-08-13,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382312&GUID=0A4F9060-497A-4B5B-A458-13BD3FCFFFDD,Agenda
+562,Stockton,2015-08-05,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=418747&GUID=75539763-B765-4798-AA79-0745B98607D7,Agenda
+563,Stockton,2015-08-04,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361147&GUID=A2339A11-BFD2-48F4-8FEE-B6CDF1008CC2,Agenda
+564,Stockton,2015-07-22,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=415417&GUID=3AC41147-ECC5-4461-9D04-0D29897B79D3,Agenda
+565,Stockton,2015-07-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361146&GUID=52978B10-FFDF-4216-AE43-30040C048EEC,Agenda
+566,Stockton,2015-07-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369508&GUID=F9885975-4727-487F-99C4-515ACAC380EE,Agenda
+567,Stockton,2015-06-24,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=399286&GUID=078048FD-0BC5-416C-8905-2CCDC7EEE3E8,Agenda
+568,Stockton,2015-06-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361142&GUID=8A880011-A8C1-4B37-817F-88CBCB74414C,Agenda
+569,Stockton,2015-06-19,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=409823&GUID=807B56BD-BA73-4F98-B53D-01C9D85A94AE,Agenda
+570,Stockton,2015-06-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369507&GUID=D519812C-1E74-4931-98E7-8E5489BA642C,Agenda
+571,Stockton,2015-06-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382301&GUID=248155E6-2ECA-444C-A29A-F1CCF001C6FE,Agenda
+572,Stockton,2015-06-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361141&GUID=AFA18345-80CA-4451-B018-B96E10DE8F5A,Agenda
+573,Stockton,2015-06-08,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=395043&GUID=7D61BEE1-C303-47F7-8213-02DDB10902AA,Agenda
+574,Stockton,2015-05-21,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369506&GUID=D8CFA062-1E7F-41B5-8A7E-A4DF8D1270BA,Agenda
+575,Stockton,2015-05-19,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=393341&GUID=3372FC56-03A4-4CD2-B8FC-14B7153B9769,Agenda
+576,Stockton,2015-05-14,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382299&GUID=2B88F6FA-C56A-4F8D-883C-62AF18E58D09,Agenda
+577,Stockton,2015-05-12,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=394764&GUID=04D9165C-DD2E-4474-8A58-51F1AC8CDBC2,Agenda
+578,Stockton,2015-04-28,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=396667&GUID=31A62D69-88BB-4328-81A9-FAF6330B1CFF,Agenda
+579,Stockton,2015-04-22,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=395337&GUID=6472EEBD-C2AB-4374-B799-3F10E8A30666,Agenda
+580,Stockton,2015-04-22,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=394702&GUID=D52F85F7-5F09-4028-87A5-D79AB4D15341,Agenda
+581,Stockton,2015-04-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361138&GUID=08A7B68D-792B-46FD-82D8-76A5789B6AFD,Agenda
+582,Stockton,2015-04-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369505&GUID=F6CCA8CA-AB37-4173-99C0-8FC64820A62D,Agenda
+583,Stockton,2015-04-13,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=394293&GUID=4E58FC2C-1B2F-4720-84F8-152C402B9AC6,Agenda
+584,Stockton,2015-04-08,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=388544&GUID=A58A120B-7981-4653-95A2-432A56F7E5D7,Agenda
+585,Stockton,2015-04-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361137&GUID=F31C8216-B601-4DF3-9F15-293311C0DB71,Agenda
+586,Stockton,2015-03-27,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=386884&GUID=92960D9D-C8B2-41F5-90E0-0824384F176D,Agenda
+587,Stockton,2015-03-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=381835&GUID=B8FEC3DA-4195-4039-906C-803F2B8243FE,Agenda
+588,Stockton,2015-03-25,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=389519&GUID=B8703997-B9F2-4AC7-A602-A594B0E6D2A4,Agenda
+589,Stockton,2015-03-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361136&GUID=03519E91-ED85-46BA-B0B6-FA4AABB964FC,Agenda
+590,Stockton,2015-03-09,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=387020&GUID=E510A73F-17F7-4DFA-8401-822C8978E157,Agenda
+591,Stockton,2015-03-05,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=387019&GUID=6653366C-2B00-4B67-8F9D-DA05CDF7453E,Agenda
+592,Stockton,2015-03-03,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=386824&GUID=249571AB-71E8-47C6-A176-CC9A00C3E3B4,Agenda
+593,Stockton,2015-02-25,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=385799&GUID=94FC5759-561B-4AB3-B00C-55EE79DB7CD6,Agenda
+594,Stockton,2015-02-25,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=383106&GUID=FF03FD16-F900-45E4-A0FA-B26C813AABF2,Agenda
+595,Stockton,2015-02-25,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=385804&GUID=1F751C37-0792-45A5-B332-D8ADE6E309E2,Agenda
+596,Stockton,2015-02-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361134&GUID=BF4126D2-418F-4E42-9DF9-96BC9986DEB5,Agenda
+597,Stockton,2015-02-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=369503&GUID=C01A40C5-1A4E-45A0-8EA0-5627EA9C3D3F,Agenda
+598,Stockton,2015-02-18,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382282&GUID=1F17DF4C-D749-4D3B-83C1-C1461BF8D50C,Agenda
+599,Stockton,2015-02-12,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=373810&GUID=45925060-2337-4EA7-B11E-FCB62F97FDCA,Agenda
+600,Stockton,2015-02-10,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=382280&GUID=8E66A8D1-96F1-40D9-87A4-120F29B7C6F3,Agenda
+601,Stockton,2015-02-03,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=361133&GUID=2FF41753-2C33-4649-A74F-F55859B5DFC8,Agenda
+602,Stockton,2015-01-29,Salary Setting Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=374691&GUID=B11F621A-3146-4387-9F12-424BA6831000,Agenda
+603,Stockton,2015-01-27,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=360456&GUID=DB66782F-7279-49F4-91E3-E7717844BA89,Agenda
+604,Stockton,2015-01-12,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=372354&GUID=884BDEC6-B372-4FDE-8992-8EB1425D7DF6,Agenda
+605,Stockton,2015-01-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=360185&GUID=2B95C45C-55BC-4FF6-BF94-536215FD9C4F,Agenda
+606,Stockton,2015-01-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=368688&GUID=C5CD4AB1-DA32-4A62-AA96-0150D2479BA1,Agenda
+607,Stockton,2014-12-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282258&GUID=5F0CBD6A-009D-4133-AC75-E6623A2BB61D,Agenda
+608,Stockton,2014-12-16,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276978&GUID=C251D810-F6F6-4867-942B-F46A14973FB7,Agenda
+609,Stockton,2014-12-11,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=338225&GUID=61D4BAB4-45C2-49D0-A440-35336010C877,Agenda
+610,Stockton,2014-12-10,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=360450&GUID=787E41E2-E2C4-482D-8319-1E260AE4ED14,Agenda
+611,Stockton,2014-12-08,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=358833&GUID=77CE1B4E-C607-4238-86BC-7D9B102DBFF9,Agenda
+612,Stockton,2014-11-25,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=359615&GUID=79765BB1-CC35-4682-BFBB-93119C677C5F,Agenda
+613,Stockton,2014-11-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282257&GUID=F9FCFDCB-2322-4083-890D-A9FB98BA9524,Agenda
+614,Stockton,2014-11-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276976&GUID=21FFF9C7-3EE6-41D0-B4FA-7F747EAE1C08,Agenda
+615,Stockton,2014-11-13,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=338224&GUID=A5E094BB-AD44-4205-BE2D-A8DF3E1873AF,Agenda
+616,Stockton,2014-11-04,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276975&GUID=5D3DB261-C83D-48A3-8D25-C51E46D5F3AB,Agenda
+617,Stockton,2014-10-22,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=347319&GUID=6B360BA2-DF7A-40F2-90C1-287ECB837ED4,Agenda
+618,Stockton,2014-10-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282256&GUID=12917C3F-F2B4-4A5F-B4A9-57BEF085EB6E,Agenda
+619,Stockton,2014-10-09,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=338223&GUID=2363B6C4-8E6B-4FED-8041-B7552BB90A4E,Agenda
+620,Stockton,2014-10-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276973&GUID=C6DA1FC9-B5A3-42CE-B330-891032A4AB86,Agenda
+621,Stockton,2014-10-01,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=343264&GUID=8221BA97-1C3F-4B24-9360-68B352BCE867,Agenda
+622,Stockton,2014-09-30,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=343122&GUID=6762398C-1B7B-4722-A0A3-99CBCAB6332D,Agenda
+623,Stockton,2014-09-24,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=339696&GUID=2225F78E-9DE4-4F10-84A1-8064DE927963,Agenda
+624,Stockton,2014-09-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276972&GUID=E1688463-9B32-4C88-9378-376EB6E4327D,Agenda
+625,Stockton,2014-09-18,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282255&GUID=15F9F542-98EB-4458-8492-251652A4E181,Agenda
+626,Stockton,2014-09-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276971&GUID=63EC48CC-B22E-45F0-A1F8-2F5BEEA96569,Agenda
+627,Stockton,2014-08-27,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=336863&GUID=CAAF74AB-85A3-47EE-BC33-89DCE1CBBC8F,Agenda
+628,Stockton,2014-08-26,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=336821&GUID=43FF8992-A778-4216-B9DE-21C16E883AB4,Agenda
+629,Stockton,2014-08-12,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276969&GUID=4F4A0104-4E5B-4BB4-8018-06AE5A203BC7,Agenda
+630,Stockton,2014-08-11,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=334825&GUID=9A0DF89F-44A3-430B-9B1D-CB62BEDCD481,Agenda
+631,Stockton,2014-07-29,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276968&GUID=75F1428C-965F-4179-940F-E5ADD6456D23,Agenda
+632,Stockton,2014-07-24,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=325656&GUID=009A6619-8840-4630-A9D3-C4D87614CB65,Agenda
+633,Stockton,2014-07-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282253&GUID=8F783F27-DCD3-4F90-94E4-073F37878199,Agenda
+634,Stockton,2014-07-15,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276965&GUID=BE41ADBC-932F-472C-84DA-418770D93BCD,Agenda
+635,Stockton,2014-07-08,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=324168&GUID=907F1210-804C-4857-AFE0-AF9BE1105CF6,Agenda
+636,Stockton,2014-07-01,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=323669&GUID=D636C3E1-B9E2-4CA1-B1E2-78D274650FA1,Agenda
+637,Stockton,2014-06-26,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=303768&GUID=1B9D469F-28DF-4F08-BAC8-8E23FC6DD006,Agenda
+638,Stockton,2014-06-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276963&GUID=8D21C2F2-7EBC-49CF-8312-C1A412CA413A,Agenda
+639,Stockton,2014-06-10,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276962&GUID=7C2190DD-40A7-46AC-9073-550BAC78605D,Agenda
+640,Stockton,2014-06-04,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=318351&GUID=344D17A8-258B-473D-9023-FE25EA803A20,Agenda
+641,Stockton,2014-05-28,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=318373&GUID=46CDADDC-C3CC-4D98-B34B-8C84E0BB9345,Agenda
+642,Stockton,2014-05-27,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=318372&GUID=9CA12231-AB8F-4822-8B2C-63182224F76C,Agenda
+643,Stockton,2014-05-21,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=317402&GUID=7A10B016-7B27-4D73-B2D7-3EBD0D788711,Agenda
+644,Stockton,2014-05-20,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276961&GUID=DDC673D5-0866-4839-BDB9-3ADDA51ED792,Agenda
+645,Stockton,2014-05-19,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=317113&GUID=3CF58A96-6EDA-414F-A956-59EFD2F293FF,Agenda
+646,Stockton,2014-05-15,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=317177&GUID=E520808D-3305-4115-BC0D-5771CE8E7CB1,Agenda
+647,Stockton,2014-05-08,Planning Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=303765&GUID=07981911-DF33-455E-86F1-5503F04273E0,Agenda
+648,Stockton,2014-05-06,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276960&GUID=61599360-6B6C-4B61-BB5B-BEE1EB47606A,Agenda
+649,Stockton,2014-04-30,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=311813&GUID=E506F7C4-0418-424A-974A-DFC5CCB42D91,Agenda
+650,Stockton,2014-04-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282250&GUID=42552457-2B44-4513-9234-F7F81DA940D3,Agenda
+651,Stockton,2014-04-15,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276959&GUID=9D19391D-10B7-4C97-B127-EDEA1F629107,Agenda
+652,Stockton,2014-04-14,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=308737&GUID=EDE7FD1D-9CF3-4135-A629-93F0E28869A3,Agenda
+653,Stockton,2014-04-01,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276958&GUID=39904542-063D-4681-9913-84B58A634AAD,Agenda
+654,Stockton,2014-03-26,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=301604&GUID=E56780F3-D01A-4A1E-AAC9-CF59E583188D,Agenda
+655,Stockton,2014-03-26,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=303704&GUID=69377337-5D4E-4228-8A84-59345BBCD1F7,Agenda
+656,Stockton,2014-03-26,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=302071&GUID=7211C691-2818-4A94-9EEE-B1B7A81334D1,Agenda
+657,Stockton,2014-03-25,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=303685&GUID=106CDAA5-94B5-4FE2-8CFB-8221924E29D8,Agenda
+658,Stockton,2014-03-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=303178&GUID=F4D73997-354A-454F-BF99-CDABBCCE7070,Agenda
+659,Stockton,2014-03-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=303082&GUID=E352AC6A-26FC-4F0C-BAD7-B60F5A8FEC4B,Agenda
+660,Stockton,2014-03-10,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=301938&GUID=AA75C647-1DDC-4FDF-8539-3481D66EFD7F,Agenda
+661,Stockton,2014-03-05,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=301545&GUID=E94111AC-8351-4F7D-AD69-3FA3F1729017,Agenda
+662,Stockton,2014-03-04,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276956&GUID=186FDA1D-D1B4-4EDC-A579-12F5165163A0,Agenda
+663,Stockton,2014-02-26,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=299191&GUID=143959FE-CB94-4729-AAC8-21A5181AC59A,Agenda
+664,Stockton,2014-02-26,Stockton Successor Agency Oversight Board,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=299146&GUID=6DA337F8-10D9-40DE-8D35-B340AFE8F9FE,Agenda
+665,Stockton,2014-02-25,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276955&GUID=9673F1BB-39B1-4A2E-AF79-02C224C62F66,Agenda
+666,Stockton,2014-02-24,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=296920&GUID=BC22C5F8-64D0-4C73-A156-24DB3F5485FA,Agenda
+667,Stockton,2014-02-20,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282247&GUID=A02B4981-D939-47A9-9D6C-F4CC78CB345A,Agenda
+668,Stockton,2014-02-18,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=297073&GUID=98D986D5-8F73-4727-AFA1-68E241548279,Agenda
+669,Stockton,2014-01-29,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=296314&GUID=81BE1721-C2B7-4A7A-97D4-ADF1596913A7,Agenda
+670,Stockton,2014-01-28,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276953&GUID=8A414EAC-FEF8-4AA5-92A6-6B654D911E8A,Agenda
+671,Stockton,2014-01-22,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282333&GUID=26E53FA1-F1F3-4E3B-82B0-72DEA52FD52D,Agenda
+672,Stockton,2014-01-22,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=295209&GUID=C8AE2074-7A0F-493D-8DC9-C8B1D22F9FA9,Agenda
+673,Stockton,2014-01-21,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=295496&GUID=127C10FB-CCA0-4F0C-91B6-2F2125315751,Agenda
+674,Stockton,2014-01-16,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282246&GUID=4D66D184-4137-4563-B8A6-26B8F957FB1F,Agenda
+675,Stockton,2014-01-14,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=276952&GUID=B8ABE93A-4486-4E0F-8A52-C257600687D4,Agenda
+676,Stockton,2014-01-13,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=294713&GUID=8F96106F-4181-4DCD-964C-6D1F156237A8,Agenda
+677,Stockton,2013-12-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235044&GUID=B23702F7-16A3-45B1-A60C-FB12811C84E5,Agenda
+678,Stockton,2013-12-04,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=268940&GUID=48F95DC9-28B4-4A2A-A54B-71E2FDF6C871,Agenda
+679,Stockton,2013-12-03,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235043&GUID=9D1469C6-544A-4D71-B78E-DCC333F7CBAF,Agenda
+680,Stockton,2013-11-21,Council Legislation/Environmental Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=275118&GUID=73987CCC-0DE7-4061-A04A-ED9A4E1C4F22,Agenda
+681,Stockton,2013-11-20,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282017&GUID=C9979805-051D-485A-A22D-E09DC6E338A6,Agenda
+682,Stockton,2013-11-19,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235042&GUID=8F3CF216-ABBA-4894-9CD4-2F839605262C,Agenda
+683,Stockton,2013-11-12,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=274478&GUID=2212500C-5B14-41F1-9120-8753E3BB5083,Agenda
+684,Stockton,2013-11-12,City Council Charter Review Ad-Hoc Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=282016&GUID=53C38440-BB2A-4481-965F-EFECB6847EB3,Agenda
+685,Stockton,2013-11-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235041&GUID=0330807F-F9B4-428C-92B1-146129525DC2,Agenda
+686,Stockton,2013-11-05,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=M&ID=235041&GUID=0330807F-F9B4-428C-92B1-146129525DC2,Minutes
+687,Stockton,2013-11-02,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=268767&GUID=ED5A7D45-1B82-400F-95F9-A5F07969F067,Agenda
+688,Stockton,2013-11-02,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=M&ID=268767&GUID=ED5A7D45-1B82-400F-95F9-A5F07969F067,Minutes
+689,Stockton,2013-10-22,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235040&GUID=678A696C-30D5-447B-B1E6-3CBB74C67301,Agenda
+690,Stockton,2013-10-17,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=263021&GUID=88300C13-3B02-4623-99B1-9A91517F0DB3,Agenda
+691,Stockton,2013-10-08,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235039&GUID=C9005E04-97CE-4CE0-ABFC-1D167AFCBB23,Agenda
+692,Stockton,2013-09-25,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=262058&GUID=D9B8A4C6-8F64-475E-95B6-63FF7319634D,Agenda
+693,Stockton,2013-09-24,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235038&GUID=F7E7DD2C-5C77-43D3-A6FF-D1CB5B9CA156,Agenda
+694,Stockton,2013-09-23,Council Audit Committee,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=263657&GUID=DC123D45-81D1-4F2E-BBB0-48CC31DF1E57,Agenda
+695,Stockton,2013-09-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=263590&GUID=4057462D-419F-45B8-A35A-C8F06BDFD0BF,Agenda
+696,Stockton,2013-09-19,Civil Service/Equal Employment Commission Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=263515&GUID=68A06B0C-49CB-4A2A-86A6-BCEDA5B688DD,Agenda
+697,Stockton,2013-09-17,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=263341&GUID=BCA8D03B-FADF-4EDF-A120-EBDB5BE8F45F,Agenda
+698,Stockton,2013-09-10,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235037&GUID=02FE16F1-9309-409B-95D9-572CB55CA3FE,Agenda
+699,Stockton,2013-08-28,Charter Review Advisory Commission,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=260983&GUID=670EE8BB-CA51-476F-BCC6-8028F83CD306,Agenda
+700,Stockton,2013-08-27,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235035&GUID=7EBCCD56-6552-402C-81D8-651C104B3F77,Agenda
+701,Stockton,2013-07-30,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235033&GUID=EB48D913-43A9-4400-B97B-2B7C8AE62C0A,Agenda
+702,Stockton,2013-07-23,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=258008&GUID=B5B7D1CC-28A6-46FE-8307-1F1DD91191B1,Agenda
+703,Stockton,2013-07-16,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235032&GUID=DCC84268-7EBB-4D77-90C1-1C038AF58D41,Agenda
+704,Stockton,2013-07-09,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=254580&GUID=86B1C8F3-A8C0-4C96-BBFF-FD61173C7284,Agenda
+705,Stockton,2013-06-25,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235031&GUID=193943FA-E36D-40FC-83B3-86D76AE36FCC,Agenda
+706,Stockton,2013-06-18,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=248976&GUID=0B291294-0CC2-449D-8A3F-FCF8F8B3B40B,Agenda
+707,Stockton,2013-06-11,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=235030&GUID=7D17256F-2BAA-4C69-9639-E0A16929656F,Agenda
+708,Stockton,2013-06-06,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=244648&GUID=3C4A0845-52A0-4EE7-B259-900EAF5338C7,Agenda
+709,Stockton,2013-06-04,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=244647&GUID=A6191E9A-70B5-45D3-882F-E3C27BDF70A3,Agenda
+710,Stockton,2013-06-03,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=244646&GUID=88284707-47AF-49DB-B401-264855E65CE4,Agenda
+711,Stockton,2013-05-21,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=243122&GUID=C5FC4460-4FA8-41E2-BB18-8B567B5162B2,Agenda
+712,Stockton,2013-05-14,City Council Special,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=242531&GUID=D866D234-0AC0-4CAC-B5B0-F326CBE2D453,Agenda
+713,Stockton,2013-05-07,City Council/Successor Agency to the Redevelopment Agency/Public Financing Authority/Parking Authority Concurrent,pdf,https://stockton.legistar.com/View.ashx?M=A&ID=241769&GUID=85B4B35D-9B57-40E5-B3C1-35CFCBF40094,Agenda

@@ -35,7 +35,7 @@ class WebApp(object):
         hyperlink_columns=HYPERLINK_VARS,
         disp_columns=DISP_VARS,
         filter_labels=FILTER_LABELS,
-        page_title=PAGE_TITLE,
+        page_title=PAGE_TITLE,        
         ):
 
         # store arguments
@@ -95,7 +95,7 @@ class WebApp(object):
                 html.Div(
                     id='table_container',
                     className='table-wrapper',
-                    children=self._generate_table(self.table_data)
+                    children=self._generate_table(*self.table_data)
                 )
             ]
         )
@@ -179,6 +179,7 @@ class WebApp(object):
 
     def _generate_table(
         self,
+        num_results,
         df,
         id='table',
         className='fl-table',
@@ -202,13 +203,22 @@ class WebApp(object):
                 row.append(html.Td(cell_content))
             rows.append(html.Tr(row))
 
-        layout = html.Table(
+        layout = html.Div(
             [
-                html.Thead(header),
-                html.Tbody(rows)
-            ],
-            className=className,
-            **kwargs)
+                html.Div(
+                    className='filter_label',
+                    children='Found {:,} documents. '.format(num_results) +\
+                    'Displaying {:,} most recent results.'.format(len(df))
+                    ),
+                html.Table(
+                [
+                    html.Thead(header),
+                    html.Tbody(rows)
+                ],
+                className=className,
+                **kwargs)
+            ])
+
         return layout
 
 
@@ -219,14 +229,15 @@ class WebApp(object):
             if var=='keyword':
                 vals = self.all_keywords
             else:
-                vals = self.table_data.loc[:, var].dropna().unique()
+                vals = self.table_data[1].loc[:, var].dropna().unique()
             return [{'label': _, 'value': _} for _ in vals]
         elif var in self.datetime_vars:
-            return (self.table_data.loc[:, var].min(), datetime.now())
+            return (self.table_data[1].loc[:, var].min(), datetime.now())
 
-    def _sort_table(self, df):
-        sort_dir = [False if v=='date' else True for v in self.disp_columns]
-        return df.sort_values(self.disp_columns, ascending=sort_dir)
+    def _sort_table(self, df, cutoff=50):
+        # sort_dir = [False if v=='date' else True for v in self.disp_columns]
+        # return df.sort_values(self.disp_columns, ascending=sort_dir)
+        return len(df), df.sort_values('date', ascending=False).iloc[:cutoff,:]
 
 
     def _init_dash_callbacks(self, app):
@@ -280,15 +291,29 @@ class WebApp(object):
                     t1 = time()
                 print('{}: created index in: {:3f}ms'.format(keyword, (t1-t0)*1000))
             t0 = time()
-            df = self.table_data.loc[idx,:]
+            sort_results = self._sort_table(self.table_data.loc[idx,:])
             t1 = time()
             print('created data table in: {:3f}ms'.format((t1-t0)*1000))
 
-            return (self._generate_table(df),)
+            return (self._generate_table(*sort_results),)
 
-def run_webapp(**kwargs):
+def run_webapp(index_dir='', dash_debug=False):
     webapp = WebApp()
-    webapp.run(**kwargs)
+    webapp.run(debug=dash_debug)
+
+    if index_dir:
+        pass
+
 
 if __name__ == '__main__':
-    run_webapp(debug=True)
+    run_webapp()
+    # import argparse
+    # parser = argparse.ArgumentParser()
+    # parser.add_arg('--index_dir', type=str, default='')
+    # parser.add_arg('--dash_debug_mode', action='store_true')
+    # args = parser.parse_args()
+    
+    # run_webapp(
+    #     index_dir=args.index_dir,
+    #     dash_debug=args.dash_debug_mode
+    #     )
