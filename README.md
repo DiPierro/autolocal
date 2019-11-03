@@ -17,6 +17,8 @@ This works with the following packages/versions:
 
 `dash` 1.3.0
 
+`flask` 1.1.1
+
 `pdfminer` 20181108
 
 `pandas` 0.24.2

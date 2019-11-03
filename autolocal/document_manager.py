@@ -338,11 +338,12 @@ class DocumentManager(object):
         os.makedirs(os.path.split(txt_path)[0], exist_ok=True)
         
         if doc['doc_format'] == "pdf":
-            if not (pdf_path and txt_path):
-                return
             # convert pdf
-            args = [pdf_path, '-o', txt_path]
-            pdf2txt(args)
+            try:
+                args = [pdf_path, '-o', txt_path]
+                pdf2txt(args)
+            except:
+                return
             return
         else:
             # convert html
