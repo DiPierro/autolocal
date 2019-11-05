@@ -4,6 +4,7 @@
 *.html
 *.pyc
 */__pycache__/*
-data/index/*
 notebooks/.ipynb_checkpoints/*
+data/index/*
+data/docs/*
 data/sfbay_docs.tar.gz
