@@ -43,14 +43,14 @@ class DocumentManager(object):
         ):
 
         # store arguments
-        self.document_dir = os.path.abspath(document_dir)
+        self.document_dir = document_dir
         if not os.path.exists(self.document_dir):
             os.makedirs(self.document_dir)
-        self.index_dir = os.path.abspath(index_dir)
+        self.index_dir = index_dir
         if not os.path.exists(self.index_dir):
             os.makedirs(self.index_dir)
-        self.metadata_path = os.path.abspath(metadata_path)
-        self.index_path = os.path.abspath(index_path)
+        self.metadata_path = metadata_path
+        self.index_path = index_path
         self.index_vars = index_vars
 
         # init tokenizer
@@ -393,11 +393,9 @@ class DocumentManager(object):
         if doc['url']:
             for s in formats:
                 k = 'local_path_' + s
-                doc_paths[k] = os.path.abspath(
-                    os.path.join(
-                        self.document_dir,
-                        self._get_city_dir(doc),
-                        '{}.{}'.format(self._get_doc_id(doc), s)
-                    )
-                ) 
+                doc_paths[k] = os.path.join(
+                    self.document_dir,
+                    self._get_city_dir(doc),
+                    '{}.{}'.format(self._get_doc_id(doc), s)
+                )
         return doc_paths
