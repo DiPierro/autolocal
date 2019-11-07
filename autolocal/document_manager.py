@@ -305,6 +305,7 @@ class DocumentManager(object):
         if not (url and local_path):
             return
         if os.path.exists(local_path):
+            print('... path already exists: {}'.format(local_path))
             return
 
         # make directories if they don't yet exist
@@ -332,6 +333,7 @@ class DocumentManager(object):
         if not txt_path:
             return
         if os.path.exists(txt_path):
+            print('... path already exists: {}'.format(txt_path))
             return
 
         # make directories if they don't yet exist
