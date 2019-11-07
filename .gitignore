@@ -3,6 +3,7 @@
 *.txt
 *.html
 *.pyc
+*.tar.gz
 */__pycache__/*
 notebooks/.ipynb_checkpoints/*
 data/index/*
