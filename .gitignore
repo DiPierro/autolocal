@@ -4,8 +4,11 @@
 *.html
 *.pyc
 *.tar.gz
+*.log
 */__pycache__/*
 notebooks/.ipynb_checkpoints/*
 data/index/*
 data/docs/*
+data/scraping/*
+data/gis/*
 data/sfbay_docs.tar.gz
