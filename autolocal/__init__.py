@@ -4,5 +4,5 @@ from .webapp import WebApp
 
 #from .main import run_app
 
-webapp = WebApp()
-server = webapp.server
+# webapp = WebApp()
+# server = webapp.server
