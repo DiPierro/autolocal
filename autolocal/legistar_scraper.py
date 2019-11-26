@@ -3,6 +3,7 @@ import numpy as np
 from urllib import parse
 from urllib import request
 import bs4 as bs
+from copy import  deepcopy
 
 from urllib.parse import urlparse
 
@@ -24,11 +25,12 @@ class LegistarScraper(object):
         city_name,
         scrape_url,
         base_url=None,
-        save_dir='../data/scraping/scraped_tables',
+        save_dir='../data/scraping',
         headless=True,
         ):
                 
         self.city_name = city_name
+        self.city_name_lower = self.city_name.lower().replace(' ', '-')
         self.scrape_url = scrape_url
         if base_url is None:
             self.base_url = '{uri.scheme}://{uri.netloc}/'.format(uri=urlparse(self.scrape_url))
@@ -43,6 +45,8 @@ class LegistarScraper(object):
         self.driver = Firefox(options=options)
         self.driver.get(self.scrape_url)
 
+        print('Initialized scraper for {}'.format(self.city_name))
+
     def _click(self, item):
         self.driver.execute_script("arguments[0].scrollIntoView();", item)
         item.click()
@@ -56,20 +60,27 @@ class LegistarScraper(object):
         return [l.text for l in pagelinks], pagelinks
 
 
-    def _get_page_signature(self):
+    def _get_page_signature(self):        
+        # sig  = ''
+        # elm_id = 'ctl00_ContentPlaceHolder1_lstYears_Input'        
+        # sig += self.driver.find_element_by_id(elm_id).get_attribute('value')
         elm_id = 'ctl00_ContentPlaceHolder1_gridCalendar_ctl00__0'
-        return self.driver.find_element_by_id(elm_id).text.strip() #get_attribute('outerHTML')
+        return self.driver.find_element_by_id(elm_id).text.strip()
 
-
-    def _wait_for_table_load(self, page_signature):
+    def _wait_for_table_load(self, page_signature, max_wait=None):
         sig_match = True
-        while sig_match:
+        expired = False
+        # t0 = time.now()
+        while sig_match and not expired:
             try:
                 time.sleep(0.1)
                 new_sig = self._get_page_signature()
                 sig_match = new_sig in [page_signature, '']         
             except StaleElementReferenceException:
                 sig_match = False    
+            # if max_wait is not None:
+            #     expired = (time.datetime.now() - t0 > time.datetime.timedelta(seconds=max_wait))
+
         return
 
     def scrape_all_pages(self, **filter_args):
@@ -107,33 +118,43 @@ class LegistarScraper(object):
                 filter_elm = self.driver.find_element_by_xpath(dropdown_xpath)         
             self._click(filter_elm)
 
-        # wait for table to load
-        self._wait_for_table_load(page_signature)
+            # click search button
+            search_button_id = 'ctl00_ContentPlaceHolder1_btnSearch'
+            search_button = self.driver.find_element_by_id(search_button_id)
+            self._click(search_button)
 
-        # input('Manually select all years and all committees, then press enter. ')
         # click through pages and save html
         c = 1
         page_data = []
         while True:
+            # scrape the page data
+            print('Scraping page {}'.format(c))
+            page_data.append(self.driver.page_source)            
+
+            # increase page count
+            c += 1
+
+            # get page links, if any
             pages, pagelinks = self._get_page_links(self.driver)
             page_signature = self._get_page_signature()
-            try:
-                # click on the integer we want
-                i = pages.index(str(c))
-                link = pagelinks[i]
-            except:
-                # if it's not there and the list ends with '...', click on '...'
-                if pages[-1]=='...':
-                    link = pagelinks[-1]
-                # if it's not there and the list starts with '...', we are done.
-                else:
-                    break
-            self._click(link)
-            if c > 1:
-                self._wait_for_table_load(page_signature)
-            print('Scraping page {}'.format(c))
-            page_data.append(self.driver.page_source)
-            c += 1
+            if pages:
+                try:
+                    # click on the integer we want
+                    i = pages.index(str(c))
+                    link = pagelinks[i]
+                except:
+                    # if it's not there and the list ends with '...', click on '...'
+                    if pages[-1]=='...':
+                        link = pagelinks[-1]
+                    # if it's not there and the list starts with '...', we are done.
+                    else:
+                        break
+                self._click(link)
+            else:
+                break
+
+            #  wait for page to load
+            self._wait_for_table_load(page_signature)                
 
         return page_data
 
@@ -145,13 +166,13 @@ class LegistarScraper(object):
         ):
         # find table in page
         soup = bs.BeautifulSoup(page_source, features='lxml')
-        table = soup.select(table_id)[0]
-        num_cols = int(table.td.get('colspan'))
+        table = soup.select(table_id)[0]        
 
         # extract column headers
         header_data = [''.join(cell.stripped_strings) for cell in table.find_all('th')]
         header_data = [h for h in header_data if h!='Data pager']
-        assert(len(header_data)==num_cols)
+        num_cols = len(header_data)
+        # num_cols = int(table.td.get('colspan'))
 
         # extract text and URL data from table
         text_data, url_data = [], []
@@ -181,6 +202,34 @@ class LegistarScraper(object):
         return df
 
 
+    def extract_doc_list(self, page_data):
+        
+        doc_list = []
+        for i, row in page_data.iterrows():
+            meeting_data = {
+                'city': self.city_name,
+                'date': pd.to_datetime(row['Meeting Date Text']),
+                'committee': row['Name Text'],
+                'doc_format': 'pdf',
+            }        
+            url_col_pairs = [
+                ('Agenda', 'Agenda URL'),
+                ('Minutes', 'Minutes URL'),
+                ('Minutes', 'Official Minutes URL')
+            ]
+            for doc_type, url_col in url_col_pairs:
+                try:
+                    url = row[url_col]
+                    if isinstance(url, str):
+                        row_data = deepcopy(meeting_data)
+                        row_data['url'] = url
+                        row_data['doc_type'] = doc_type
+                        doc_list.append(row_data)
+                except:
+                    pass
+        
+        return pd.DataFrame(doc_list)
+
     def extract_all_table_data(self, saving=True, **filter_args):
         
         # get htmls of pages
@@ -189,16 +238,28 @@ class LegistarScraper(object):
         
         # convert to dataframes and concatenate
         page_dfs = [self.extract_table_data(page) for page in tqdm(page_htmls)]
-        data = pd.concat(page_dfs)
-        print('Recovered {} records'.format(len(data)))
-        
+        page_data = pd.concat(page_dfs)
+        print('Recovered {} meetings'.format(len(page_data)))
+
+        # extract document list
+        doc_list = self.extract_doc_list(page_data)
+        print('Recovered {} documents'.format(len(doc_list)))
+
         # save
         if saving:
-            save_path = os.path.join(self.save_dir, '{}.csv'.format(self.city_name))                        
-            data.to_csv(save_path)
-            print('Saved to {}'.format(save_path))
+            fname = '{}.csv'.format(self.city_name_lower)
 
-        return data
+            scraped_tables_dir = os.path.join(self.save_dir, 'scraped_tables')
+            if not os.path.exists(scraped_tables_dir):
+                os.mkdir(scraped_tables_dir)
+            page_data.to_csv(os.path.join(scraped_tables_dir, fname))
+
+            doc_list_dir = os.path.join(self.save_dir, 'document_list')
+            if not os.path.exists(doc_list_dir):
+                os.mkdir(doc_list_dir)            
+            doc_list.to_csv(os.path.join(doc_list_dir, fname))
+
+        return page_data
 
 
 def scrape_city(city_args, filter_args):
@@ -211,7 +272,7 @@ def scrape_city(city_args, filter_args):
     # quit browser
     scraper.driver.quit()
     
-    return None
+    return page_data
 
 
 if __name__=='__main__':    
