@@ -87,10 +87,7 @@ class WebApp(object):
             children=[
                 html.Div(
                     className='input-wrapper',
-                    children=[
-                        self._generate_title(),
-                        *self._generate_filters(),
-                    ]
+                    children=[self._generate_title()] + self._generate_filters()
                 ),
                 html.Div(
                     id='table_container',
