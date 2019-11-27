@@ -10,7 +10,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 from dash.exceptions import PreventUpdate
 
-from autolocal import DocumentManager
+from autolocal.databases import CSVDocumentManager as DocumentManager
 
 DATETIME_VARS = ['date']
 CATEGORICAL_VARS = ['city', 'committee', 'doc_type', 'keyword']

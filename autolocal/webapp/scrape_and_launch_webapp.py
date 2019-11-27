@@ -2,7 +2,8 @@ from threading import Thread
 
 from flask import Flask
 
-from autolocal import WebApp, DocumentManager, scrapers
+from autolocal import WebApp, scrapers
+from autolocal.databases import CSVDocumentManager as DocumentManager
 
 # callable function to start web app
 def run_app():
