@@ -128,10 +128,10 @@ class S3DocumentManager(DocumentManager):
             url = doc['url']
         except KeyError:
             print('warning: could not load path(s): {}'.format(doc['doc_id']))
-            return
+            return doc
         if self._s3_object_exists(s3_path_pdf):
             print('object already exists: {}'.format(s3_path_pdf))
-            return
+            return doc
         else:        
             self._retrieve_url(url, tmp_path_pdf)
             self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
@@ -198,7 +198,8 @@ class S3DocumentManager(DocumentManager):
         # download doc from url
         doc = self._download_doc(doc)          
             
-        # convert to txt
+        import pdb; pdb.set_trace()
+        # convert to txt        
         self._convert_doc(doc)
 
         # add to metadata and index
