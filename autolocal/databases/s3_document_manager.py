@@ -47,10 +47,11 @@ class S3DocumentManager(DocumentManager):
         # store arguments
         self.s3_bucket_name = s3_bucket_name
         self.document_base_dir = 'docs'    
-        if not os.path.exists(local_tmp_dir):
-            os.mkdir(local_tmp_dir)
+        self.local_tmp_dir = os.path.expanduser(local_tmp_dir)
+        if not os.path.exists(self.local_tmp_dir):
+            os.mkdir(self.local_tmp_dir)
         self.tmp_paths = {
-            ext: os.path.join(os.path.expanduser(local_tmp_dir), 'doc.{}'.format(ext))
+            ext: os.path.join(self.local_tmp_dir, 'doc.{}'.format(ext))
                 for ext in ['txt', 'pdf']
             }
 
