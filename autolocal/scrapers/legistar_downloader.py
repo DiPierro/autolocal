@@ -18,3 +18,5 @@ if __name__=='__main__':
     args = parser.parse_args()
     
     add_documents(args.doc_list_dir)
+
+    
