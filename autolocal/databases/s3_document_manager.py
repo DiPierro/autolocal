@@ -221,7 +221,7 @@ class S3DocumentManager(DocumentManager):
         # csv should also contain field `url` in order to download anything        
         
         docs = pd.read_csv(csv_path, index_col=0)
-        with self.table.batch_writer() as batch:
+        with self.table.batch_writer(overwrite_by_pkeys=['partition_key', 'sort_key']) as batch:
             for _, row in tqdm(docs.iterrows()):
                 self.add_doc(row, batch=batch)
             pass
