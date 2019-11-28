@@ -54,6 +54,7 @@ class S3DocumentManager(DocumentManager):
 
         # init resources
         self.table = boto3.resource('dynamodb').Table(db_name)
+        self.s3 = boto3.resource('s3')
         self.s3_client = boto3.client('s3')
 
         # load metadata from file if it exists
@@ -73,7 +74,7 @@ class S3DocumentManager(DocumentManager):
 
     def _s3_object_exists(self, s3_path):
         try:
-            self.s3_client.Object(self.s3_bucket_name, s3_path).load()
+            self.s3.Object(self.s3_bucket_name, s3_path).load()
             return True
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == '404':
