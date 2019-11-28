@@ -12,7 +12,6 @@ from tqdm import tqdm
 
 from autolocal.pdf2txt import pdf2txt
 from autolocal import nlp
-
 from autolocal.databases import DocumentManager
 
 INDEX_VARS = ['keyword']
@@ -102,7 +101,7 @@ class CSVDocumentManager(DocumentManager):
 
         # don't add the document if we already have it
         try:
-            doc_id = self._get_doc_id(doc)
+            doc_id = self._get_doc_id(**dict(doc))
         except:
             print('warning: could not add document')
             return
@@ -122,7 +121,7 @@ class CSVDocumentManager(DocumentManager):
         self._download_doc(doc)
             
         # convert to txt
-        self._convert_doc(doc)
+        self._convert_doc(**dict(doc))
 
         # add to metadata and index
         self._add_doc_to_metadata(doc_id, doc, to_file)
@@ -375,6 +374,33 @@ class CSVDocumentManager(DocumentManager):
                 doc_paths[k] = os.path.join(
                     self.document_dir,
                     self._upper(doc['city']),
-                    '{}.{}'.format(self._get_doc_id(doc), s)
+                    '{}.{}'.format(self._get_doc_id(**dict(doc)), s)
                 )
         return doc_paths
+
+    def _download_doc(self, doc):
+        # download a document from given url to designated local location
+        try:
+            doc_format = doc['doc_format']
+            local_path_key = 'local_path_{}'.format(doc_format)
+            local_path = doc[local_path_key]
+            url = doc['url']
+        except KeyError:
+            return
+        if not (url and local_path):
+            return
+        if os.path.exists(local_path):
+            print('... path already exists: {}'.format(local_path))
+            return
+
+        # make directories if they don't yet exist
+        os.makedirs(os.path.split(local_path)[0], exist_ok=True)
+
+        # download pdf
+        try:
+            urlretrieve(url.replace(' ', '%20'), local_path)
+        except:
+            print('warning: could not retrieve html')
+            print(url)
+
+        return
