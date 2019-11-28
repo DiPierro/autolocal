@@ -158,7 +158,7 @@ class S3DocumentManager(DocumentManager):
         # convert pdf
         try:
             import pdb; pdb.set_trace()
-            args = [tmp_path_pdf, '-o', temp_path_txt]
+            args = [tmp_path_pdf, '-o', tmp_path_txt]
             pdf2txt(args)
         except:
             print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
