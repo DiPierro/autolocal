@@ -47,6 +47,8 @@ class S3DocumentManager(DocumentManager):
         # store arguments
         self.s3_bucket_name = s3_bucket_name
         self.document_base_dir = 'docs'    
+        if not os.path.exists(local_tmp_dir):
+            os.mkdir(local_tmp_dir)
         self.tmp_paths = {
             ext: os.path.join(os.path.expanduser(local_tmp_dir), 'doc.{}'.format(ext))
                 for ext in ['txt', 'pdf']
@@ -132,7 +134,7 @@ class S3DocumentManager(DocumentManager):
         else:        
             self._retrieve_url(url, tmp_path_pdf)
             self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
-            doc['download_timestamp'] = datetime.now.isoformat()
+            doc['download_timestamp'] = datetime.now().isoformat()
         return doc
 
     def _convert_doc(self, doc):
