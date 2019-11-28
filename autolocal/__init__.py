@@ -1,1 +1,1 @@
-from .parsers.nlp import nlp
+from .parsers import nlp

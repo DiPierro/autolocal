@@ -3,7 +3,7 @@ from collections import Counter
 from datetime import datetime
 import pickle as pkl
 from time import time
-from datetime.datetime import now
+from datetime import datetime
 
 import pandas as pd
 import numpy as np
@@ -36,10 +36,10 @@ class S3DocumentManager(DocumentManager):
     """    
     def __init__(
         self,
-        s3_bucket_name='autolocal-documents'
+        s3_bucket_name='autolocal-documents',
         db_name='autolocal-documents',
         document_base_dir='docs',
-        local_tmp_dir='~/autolocal/data/scraping/tmp'
+        local_tmp_dir='~/autolocal/data/scraping/tmp',
         tokenizer_args={},
         ):
 
@@ -98,7 +98,7 @@ class S3DocumentManager(DocumentManager):
             KeyConditionExpression=Key('doc_id').eq(doc_id)
         )
 
-    def _get_doc_paths(self, formats=['pdf', 'txt'], doc):
+    def _get_doc_paths(self, doc, formats=['pdf', 'txt']):
         doc_paths = {'local_path_' + s: '' for s in formats}
         if doc['url']:
             for s in formats:
@@ -132,7 +132,8 @@ class S3DocumentManager(DocumentManager):
         else:        
             self._retrieve_url(url, tmp_path_pdf)
             self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
-        return
+            doc['download_timestamp'] = datetime.now.isoformat()
+        return doc
 
     def _convert_doc(self, doc):
         # convert a pdf to txt and save in designated location
@@ -148,7 +149,7 @@ class S3DocumentManager(DocumentManager):
             print('warning: could not load path(s): {}'.format(doc['doc_id']))
             return
         # check to see if txt already exists
-        if self._s3_object_exists(s3_path_txt)
+        if self._s3_object_exists(s3_path_txt):
             print('object already exists: {}'.format(s3_path_txt))
             return                
         # convert pdf
@@ -192,7 +193,7 @@ class S3DocumentManager(DocumentManager):
         doc.update(doc_paths)
 
         # download doc from url
-        self._download_doc(doc)
+        doc = self._download_doc(doc)          
             
         # convert to txt
         self._convert_doc(doc)
