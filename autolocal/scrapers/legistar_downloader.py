@@ -1,6 +1,6 @@
 import os
 import argparse
-from autolocal import S3DocumentManager
+from autolocal.databases import S3DocumentManager
 
 documents = S3DocumentManager()
 
