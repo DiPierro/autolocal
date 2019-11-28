@@ -16,6 +16,7 @@ from autolocal.databases import DocumentManager
 
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
+import botocore
 
 METADATA_VARS = [
     'city',
