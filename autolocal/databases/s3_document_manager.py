@@ -94,9 +94,7 @@ class S3DocumentManager(DocumentManager):
             return self.table.put_item(Item=item)
 
     def _query_db_by_doc_id(self, doc_id):
-        return self.table.query(
-            KeyConditionExpression=Key('doc_id').eq(doc_id)
-        )
+        return self.table.query(KeyConditionExpression=Key('doc_id').eq(doc_id))['Items']
 
     def _get_doc_paths(self, doc, formats=['pdf', 'txt']):
         doc_paths = {'local_path_' + s: '' for s in formats}
