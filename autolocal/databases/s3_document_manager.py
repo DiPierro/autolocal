@@ -216,7 +216,7 @@ class S3DocumentManager(DocumentManager):
         # csv must contain fields: city, date, committee, doc_type
         # csv should also contain field `url` in order to download anything        
         import pdb; pdb.set_trace()
-        docs = pd.read_csv(csv_path)
+        
         with self.table.batch_writer() as batch:
             for _, row in tqdm(docs.iterrows()):
                 self.add_doc(row, batch=batch)

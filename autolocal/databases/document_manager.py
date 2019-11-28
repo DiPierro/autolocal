@@ -57,7 +57,7 @@ class DocumentManager():
     def _get_doc_id(self, doc):
         # produce the file name which the document will be known by locally.
         # `doc` variable must contain fields:  city, date, committee        
-        date = doc['date'].strftime('%Y-%m-%d')
+        date = pd.to_datetime(doc['date']).strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
         if isinstance(doc['meeting_type'], str):
