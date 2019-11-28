@@ -47,7 +47,7 @@ class S3DocumentManager(DocumentManager):
         self.s3_bucket_name = s3_bucket_name
         self.document_base_dir = 'docs'    
         self.tmp_paths = {
-            ext: os.path.join(os.path.expanduser(self.local_tmp_dir), 'doc.{}'.format(ext))
+            ext: os.path.join(os.path.expanduser(local_tmp_dir), 'doc.{}'.format(ext))
                 for ext in ['txt', 'pdf']
             }
 
