@@ -157,6 +157,7 @@ class S3DocumentManager(DocumentManager):
             return                
         # convert pdf
         try:
+            import pdb; pdb.set_trace()
             args = [tmp_path_pdf, '-o', temp_path_txt]
             pdf2txt(args)
         except:
@@ -199,7 +200,6 @@ class S3DocumentManager(DocumentManager):
         # download doc from url
         doc = self._download_doc(doc)          
             
-        import pdb; pdb.set_trace()
         # convert to txt        
         self._convert_doc(doc)
 
