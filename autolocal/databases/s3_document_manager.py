@@ -54,7 +54,7 @@ class S3DocumentManager(DocumentManager):
 
         # init resources
         self.table = boto3.resource('dynamodb').Table(db_name)
-        self.s3_client = boto3.resource('s3')
+        self.s3_client = boto3.client('s3')
 
         # load metadata from file if it exists
         self.metadata_vars = METADATA_VARS
