@@ -187,6 +187,7 @@ class S3DocumentManager(DocumentManager):
 
         # don't add the document if we already have it
         doc_id = self._get_doc_id(doc)
+        doc['doc_id'] = doc_id
         if self._query_db_by_doc_id(doc_id):
             print('document already in database: {}'.format(doc_id))
             return
