@@ -101,7 +101,7 @@ class CSVDocumentManager(DocumentManager):
 
         # don't add the document if we already have it
         try:
-            doc_id = self._get_doc_id(**dict(doc))
+            doc_id = self._get_doc_id(doc)
         except:
             print('warning: could not add document')
             return
@@ -374,7 +374,7 @@ class CSVDocumentManager(DocumentManager):
                 doc_paths[k] = os.path.join(
                     self.document_dir,
                     self._upper(doc['city']),
-                    '{}.{}'.format(self._get_doc_id(**dict(doc)), s)
+                    '{}.{}'.format(self._get_doc_id(doc), s)
                 )
         return doc_paths
 

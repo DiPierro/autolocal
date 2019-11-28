@@ -54,7 +54,7 @@ class DocumentManager():
         # get city name back from a file-structure friendly version
         return city_name.replace('-', ' ').title()        
 
-    def _get_doc_id(self, **doc):
+    def _get_doc_id(self, doc):
         # produce the file name which the document will be known by locally.
         # `doc` variable must contain fields:  city, date, committee        
         date = doc['date'].strftime('%Y-%m-%d')
