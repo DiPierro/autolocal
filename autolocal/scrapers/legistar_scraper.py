@@ -17,6 +17,8 @@ import time
 
 import os
 
+from autolocal.databases import S3DocumentManager
+
 
 class LegistarScraper(object):
 
@@ -250,16 +252,18 @@ class LegistarScraper(object):
             fname = '{}.csv'.format(self.city_name_lower)
 
             scraped_tables_dir = os.path.join(self.save_dir, 'scraped_tables')
+            scraped_tables_csv = os.path.join(scraped_tables_dir, fname)
             if not os.path.exists(scraped_tables_dir):
                 os.mkdir(scraped_tables_dir)
-            page_data.to_csv(os.path.join(scraped_tables_dir, fname))
+            page_data.to_csv(scraped_tables_csv)
 
             doc_list_dir = os.path.join(self.save_dir, 'document_list')
+            doc_list_csv = os.path.join(doc_list_dir, fname)
             if not os.path.exists(doc_list_dir):
                 os.mkdir(doc_list_dir)            
-            doc_list.to_csv(os.path.join(doc_list_dir, fname))
+            doc_list.to_csv(doc_list_csv)
 
-        return page_data
+        return page_data, doc_list_csv
 
 
 def scrape_city(city_args, filter_args):
@@ -267,12 +271,12 @@ def scrape_city(city_args, filter_args):
     scraper = LegistarScraper(**city_args)
     
     # run scraping tool
-    page_data = scraper.extract_all_table_data(**filter_args)
+    table_results = scraper.extract_all_table_data(**filter_args)
     
     # quit browser
     scraper.driver.quit()
     
-    return page_data
+    return table_results
 
 
 if __name__=='__main__':    
@@ -283,6 +287,7 @@ if __name__=='__main__':
     parser.add_argument("--out")
     parser.add_argument("--year")
     parser.add_argument("--bodies")
+    parser.add_argument("--download", action='store_true')
     args = parser.parse_args()
 
     # add search filters
@@ -296,13 +301,21 @@ if __name__=='__main__':
     city_csv_columns = ['city_name', 'scrape_url']    
     city_df = pd.read_csv(args.city_list, header=None, names=city_csv_columns)
 
+    # connect to database
+    if args.download:
+        documents = S3DocumentManager()
+
     # scrape each city in turn    
     for _, city_args in city_df.iterrows():        
         city_args = dict(city_args)
         if args.out:
             city_args['save_dir'] = args.out        
+        _, doc_list_csv = scrape_city(city_args, filters)            
+        if args.download:
+            print('Adding documents to database: {}'.format(doc_list_csv))
+            documents.add_docs_from_csv(doc_list_csv)
 
-        scrape_city(city_args, filters)            
+
 
     # import argparse
     # parser = argparse.ArgumentParser()
