@@ -26,7 +26,7 @@ class LegistarScraper(object):
         self,
         city_name,
         scrape_url,
-        save_dir
+        save_dir,
         base_url=None,
         headless=True,
         ):
