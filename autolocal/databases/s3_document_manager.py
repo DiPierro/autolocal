@@ -40,7 +40,7 @@ class S3DocumentManager(DocumentManager):
         s3_bucket_name='autolocal-documents',
         db_name='autolocal-documents',
         document_base_dir='docs',
-        local_tmp_dir=os.path.join(AUTOLOCAL_HOME, '/data/scraping/tmp'),
+        local_tmp_dir=os.path.join(AUTOLOCAL_HOME, 'data', 'scraping', 'tmp'),
         tokenizer_args={},
         ):
 
