@@ -310,7 +310,7 @@ if __name__=='__main__':
 
     # scraper_configuration
     if not args.no_logging:
-        log_path = os.path.join(logs_dir, job_id, '.log')
+        log_path = os.path.join(logs_dir, job_id + '.log')
     if args.out:
         save_dir = args.out
     else:
