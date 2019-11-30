@@ -45,7 +45,8 @@ class LegistarScraper(object):
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
         if log_path is not None:
-            print('loging: {}'.format(log_path))
+            print('logging: {}'.format(log_path))
+            os.makedirs(log_path)
             sys.stdout = open(log_path, 'w')
 
         options = Options()    
