@@ -335,7 +335,8 @@ if __name__=='__main__':
     for _, city_args in city_df.iterrows():        
         city_args = dict(city_args)        
         city_args['save_dir'] = save_dir
-        city_args['log_path'] = log_path
+        if args.logging:
+            city_args['log_path'] = log_path
         _, doc_list_csv = scrape_city(city_args, filters)            
         if doc_list_csv and not args.no_download:
             print('Adding documents to database: {}'.format(doc_list_csv))
