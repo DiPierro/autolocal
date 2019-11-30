@@ -137,7 +137,7 @@ class S3DocumentManager(DocumentManager):
         else:        
             self._retrieve_url(url, tmp_path_pdf)
             self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
-            doc['download_timestamp'] = datetime.now().isoformat()
+            doc['download_timestamp'] = datetime.utcnow().isoformat()
         return doc
 
     def _convert_doc(self, doc):

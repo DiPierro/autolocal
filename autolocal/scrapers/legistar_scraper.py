@@ -14,10 +14,12 @@ from selenium.common.exceptions import StaleElementReferenceException
 
 from tqdm import tqdm
 import time
+from datetime import datetime
 
 import os
 
 from autolocal.databases import S3DocumentManager
+from autolocal import AUTOLOCAL_HOME
 
 
 class LegistarScraper(object):
@@ -29,6 +31,7 @@ class LegistarScraper(object):
         save_dir,
         base_url=None,
         headless=True,
+        log_path=None,
         ):
                 
         self.city_name = city_name
@@ -41,6 +44,9 @@ class LegistarScraper(object):
         self.save_dir = save_dir
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
+        if log_path is not None:
+            import sys
+            sys.stdout = open(log_path, 'w')
 
         options = Options()    
         options.headless = headless
@@ -72,7 +78,6 @@ class LegistarScraper(object):
     def _wait_for_table_load(self, page_signature, max_wait=None):
         sig_match = True
         expired = False
-        # t0 = time.now()
         while sig_match and not expired:
             try:
                 time.sleep(0.1)
@@ -80,8 +85,6 @@ class LegistarScraper(object):
                 sig_match = new_sig in [page_signature, '']         
             except StaleElementReferenceException:
                 sig_match = False    
-            # if max_wait is not None:
-            #     expired = (time.datetime.now() - t0 > time.datetime.timedelta(seconds=max_wait))
 
         return
 
@@ -282,27 +285,42 @@ def scrape_city(city_args, filter_args):
 if __name__=='__main__':    
     import argparse
     import pandas as pd
-    parser = argparse.ArgumentParser()
-    parser.add_argument("city_list")
-    parser.add_argument("--out")
-    parser.add_argument("--year")
-    parser.add_argument("--bodies")
-    parser.add_argument("--download", action='store_true')
-    args = parser.parse_args()
+    logs_dir = os.path.join(AUTOLOCAL_HOME, 'logs')
+    scraping_dir = os.path.join(AUTOLOCAL_HOME, 'data', 'scraping')
+    cities_csv_path = os.path.join(scraping_dir, 'cities.csv')
 
-    # add search filters
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--city_list", default=cities_csv_path)
+    parser.add_argument("--out", default='')
+    parser.add_argument("--year", default=str(datetime.utcnow().year))
+    parser.add_argument("--bodies")
+    parser.add_argument("--no_download", action='store_true')
+    parser.add_argument("--logging", action='store_true')
+    parser.add_argument("--job_id", default=datetime.utcnow().isoformat())
+    args = parser.parse_args()
+    job_id = 'legistar_scraper_' + args.job_id
+
+    # add query filters
     filters = {}
     if args.year:
         filters['years'] = args.year
     if args.bodies:
         filters['bodies'] = args.bodies
+    if args.logging:
+        filters['log_path'] = os.path.join(logs_dir, job_id)
+    if args.out:
+        save_dir = args.out
+    else:
+        save_dir = os.path.join(scraping_dir, job_id)
+
 
     # parse list of cities
+
     city_csv_columns = ['city_name', 'scrape_url']    
     city_df = pd.read_csv(args.city_list, header=None, names=city_csv_columns)
 
     # connect to database
-    if args.download:
+    if not args.no_download:
         documents = S3DocumentManager()
 
     # scrape each city in turn    
@@ -314,8 +332,6 @@ if __name__=='__main__':
         if args.download:
             print('Adding documents to database: {}'.format(doc_list_csv))
             documents.add_docs_from_csv(doc_list_csv)
-
-
 
     # import argparse
     # parser = argparse.ArgumentParser()
