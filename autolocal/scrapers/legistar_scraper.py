@@ -16,7 +16,7 @@ from tqdm import tqdm
 import time
 from datetime import datetime
 
-import os
+import os, sys
 
 from autolocal.databases import S3DocumentManager
 from autolocal import AUTOLOCAL_HOME
@@ -45,7 +45,7 @@ class LegistarScraper(object):
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
         if log_path is not None:
-            import sys
+            print('loging: {}'.format(log_path))
             sys.stdout = open(log_path, 'w')
 
         options = Options()    
