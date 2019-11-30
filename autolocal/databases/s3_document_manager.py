@@ -11,7 +11,7 @@ from urllib.request import urlretrieve
 from tqdm import tqdm
 
 from autolocal.pdf2txt import pdf2txt
-# from autolocal import nlp
+from autolocal import AUTOLOCAL_HOME
 from autolocal.databases import DocumentManager
 
 import boto3
@@ -40,7 +40,7 @@ class S3DocumentManager(DocumentManager):
         s3_bucket_name='autolocal-documents',
         db_name='autolocal-documents',
         document_base_dir='docs',
-        local_tmp_dir='~/autolocal/data/scraping/tmp',
+        local_tmp_dir=os.path.join(AUTOLOCAL_HOME, '/data/scraping/tmp'),
         tokenizer_args={},
         ):
 
