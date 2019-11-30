@@ -325,9 +325,8 @@ if __name__=='__main__':
 
     # scrape each city in turn    
     for _, city_args in city_df.iterrows():        
-        city_args = dict(city_args)
-        if args.out:
-            city_args['save_dir'] = save_dir
+        city_args = dict(city_args)        
+        city_args['save_dir'] = save_dir
         _, doc_list_csv = scrape_city(city_args, filters)            
         if args.download:
             print('Adding documents to database: {}'.format(doc_list_csv))
