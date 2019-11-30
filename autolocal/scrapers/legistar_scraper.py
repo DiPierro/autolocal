@@ -307,22 +307,23 @@ if __name__=='__main__':
     args = parser.parse_args()
     job_id = 'legistar_scraper_' + args.job_id
 
+
+    # scraper_configuration
+    if not args.no_logging:
+        log_path = os.path.join(logs_dir, job_id)
+    if args.out:
+        save_dir = args.out
+    else:
+        save_dir = os.path.join(scraping_dir, job_id)
+
     # add query filters
     filters = {}
     if args.year:
         filters['years'] = args.year
     if args.bodies:
         filters['bodies'] = args.bodies
-    if not args.no_logging:
-        filters['log_path'] = os.path.join(logs_dir, job_id)
-    if args.out:
-        save_dir = args.out
-    else:
-        save_dir = os.path.join(scraping_dir, job_id)
-
 
     # parse list of cities
-
     city_csv_columns = ['city_name', 'scrape_url']    
     city_df = pd.read_csv(args.city_list, header=None, names=city_csv_columns)
 
@@ -334,6 +335,7 @@ if __name__=='__main__':
     for _, city_args in city_df.iterrows():        
         city_args = dict(city_args)        
         city_args['save_dir'] = save_dir
+        city_args['log_path'] = log_path
         _, doc_list_csv = scrape_city(city_args, filters)            
         if doc_list_csv and not args.no_download:
             print('Adding documents to database: {}'.format(doc_list_csv))
