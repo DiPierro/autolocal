@@ -302,7 +302,7 @@ if __name__=='__main__':
     parser.add_argument("--year", default=str(datetime.utcnow().year))
     parser.add_argument("--bodies")
     parser.add_argument("--no_download", action='store_true')
-    parser.add_argument("--logging", action='store_false')
+    parser.add_argument("--logging", action='store_true')
     parser.add_argument("--job_id", default=datetime.utcnow().isoformat())
     args = parser.parse_args()
     job_id = 'legistar_scraper_' + args.job_id
