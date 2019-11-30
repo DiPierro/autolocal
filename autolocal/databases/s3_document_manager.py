@@ -124,7 +124,8 @@ class S3DocumentManager(DocumentManager):
         # download a document from given url to designated local location
         try:
             tmp_path_pdf = self.tmp_paths['pdf']
-            os.remove(tmp_path_pdf)
+            if os.path.exists(tmp_path_pdf):
+                os.remove(tmp_path_pdf)
             s3_path_pdf = doc['local_path_pdf']
             url = doc['url']
         except KeyError:
@@ -148,7 +149,8 @@ class S3DocumentManager(DocumentManager):
         try:
             tmp_path_pdf = self.tmp_paths['pdf']
             tmp_path_txt = self.tmp_paths['txt']
-            os.remove(tmp_path_txt)
+            if os.path.exists(tmp_path_txt):
+                os.remove(tmp_path_txt)
             s3_path_txt = doc['local_path_txt']
         except KeyError:
             print('warning: could not load path(s): {}'.format(doc['doc_id']))
