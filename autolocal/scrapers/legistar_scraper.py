@@ -46,7 +46,6 @@ class LegistarScraper(object):
             os.makedirs(self.save_dir)
         if log_path is not None:
             print('logging: {}'.format(log_path))
-            os.makedirs(log_path)
             sys.stdout = open(log_path, 'w')
 
         options = Options()    
@@ -311,7 +310,7 @@ if __name__=='__main__':
 
     # scraper_configuration
     if not args.no_logging:
-        log_path = os.path.join(logs_dir, job_id)
+        log_path = os.path.join(logs_dir, job_id, '.log')
     if args.out:
         save_dir = args.out
     else:
