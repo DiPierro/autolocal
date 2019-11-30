@@ -132,7 +132,7 @@ class S3DocumentManager(DocumentManager):
             print('warning: could not load path(s): {}'.format(doc['doc_id']))
             return doc
         if self._s3_object_exists(s3_path_pdf):
-            print('object already exists: {}'.format(s3_path_pdf))
+            print('s3: object already exists: {}'.format(s3_path_pdf))
             return doc
         else:        
             self._retrieve_url(url, tmp_path_pdf)
@@ -157,7 +157,7 @@ class S3DocumentManager(DocumentManager):
             return
         # check to see if txt already exists
         if self._s3_object_exists(s3_path_txt):
-            print('object already exists: {}'.format(s3_path_txt))
+            print('s3: object already exists: {}'.format(s3_path_txt))
             return                
         # convert pdf
         try:
@@ -193,7 +193,7 @@ class S3DocumentManager(DocumentManager):
         doc_id = self._get_doc_id(doc)
         doc['doc_id'] = doc_id
         if self._query_db_by_doc_id(doc_id):
-            print('document already in database: {}'.format(doc_id))
+            print('dynamodb: document already in database: {}'.format(doc_id))
             return
 
         # get local paths to document        
@@ -210,7 +210,7 @@ class S3DocumentManager(DocumentManager):
         self._add_doc_to_db(doc, batch)
         
         # done
-        print('added document: {}'.format(doc_id))
+        print('dynamodb: added document: {}'.format(doc_id))
         
         pass
 
