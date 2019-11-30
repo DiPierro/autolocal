@@ -116,7 +116,12 @@ class LegistarScraper(object):
                 # if a particular filter is specified, use that
                 elms = self.driver.find_elements_by_xpath(dropdown_xpath)
                 filter_options = [elm.text for elm in elms]
-                i = filter_options.index(filter_args[field])
+                try:
+                    i = filter_options.index(filter_args[field])
+                except ValueError:
+                    print('scraper: unable to find item {} in list {}, aborting'.format(
+                        filter_args[field], field))
+                    return []
                 filter_elm = elms[i]
             else:
                 # if not, select first option in dropdown
@@ -239,6 +244,8 @@ class LegistarScraper(object):
         
         # get htmls of pages
         page_htmls = self.scrape_all_pages(**filter_args)
+        if not page_htmls:
+            return [], ''
         print('Scraped {} pages'.format(len(page_htmls)))
         
         # convert to dataframes and concatenate
@@ -295,7 +302,7 @@ if __name__=='__main__':
     parser.add_argument("--year", default=str(datetime.utcnow().year))
     parser.add_argument("--bodies")
     parser.add_argument("--no_download", action='store_true')
-    parser.add_argument("--logging", action='store_true')
+    parser.add_argument("--no_logging", action='store_true')
     parser.add_argument("--job_id", default=datetime.utcnow().isoformat())
     args = parser.parse_args()
     job_id = 'legistar_scraper_' + args.job_id
@@ -306,7 +313,7 @@ if __name__=='__main__':
         filters['years'] = args.year
     if args.bodies:
         filters['bodies'] = args.bodies
-    if args.logging:
+    if not args.no_logging:
         filters['log_path'] = os.path.join(logs_dir, job_id)
     if args.out:
         save_dir = args.out
@@ -328,7 +335,7 @@ if __name__=='__main__':
         city_args = dict(city_args)        
         city_args['save_dir'] = save_dir
         _, doc_list_csv = scrape_city(city_args, filters)            
-        if not args.no_download:
+        if doc_list_csv and not args.no_download:
             print('Adding documents to database: {}'.format(doc_list_csv))
             documents.add_docs_from_csv(doc_list_csv)
 
