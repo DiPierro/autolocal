@@ -1,4 +1,4 @@
 from .parsers import nlp
-from os import path
+from pathlib import Path
 
 AUTOLOCAL_HOME = Path(__file__).parent.parent
