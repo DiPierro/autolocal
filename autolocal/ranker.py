@@ -114,7 +114,6 @@ def read_queries(query_source):
     queries = table.scan()["Items"]
     return queries
 
-
 def read_history():
     try:
         table = boto3.resource('dynamodb', region_name='us-west-1').Table('history')
@@ -156,7 +155,7 @@ def calculate_idf(all_docs):
     return inverse_doc_freq
 
 time_windows = {
-    'upcoming_only': datetime.now() + timedelta(days=0.5),
+    'upcoming': datetime.now() + timedelta(days=0.5),
     'this_week': datetime.now() - timedelta(weeks=1),
     'this_year': datetime.now() - timedelta(days=365),
     'past_six_months':datetime.now() - timedelta(days=183),
@@ -262,6 +261,10 @@ def score_doc_sections(doc_sections, keywords, idf, use_idf_for_doc_tokens=False
     # vectorize etc.
     # only consider keywords that have idf weights
     keywords = [keyword for keyword in keywords if (keyword in idf and keyword in vectors)]
+    fix_case = casing_function()
+    keywords = [fix_case(k) for k in keywords]
+    # TODO: if all keywords are cased, and we lowercase everything, but there's no lowercased word vectors, we have a problem
+    print(keywords)
     keyword_vectors = np.array([vectors[keyword] for keyword in keywords])
     keyword_weights = np.array([idf[keyword] for keyword in keywords])
     doc_sections_scores = []
@@ -326,34 +329,24 @@ def update_with_top_k(history, top_k_sections, query):
         history.append(x)
     return history
 
-def row2item(row):
-    row = dict(row)
-    item = {}
-    for k,v in row.items():
-        if k in ['local_path_pdf', 'local_path_txt']:
-            v = v[8:]
-        if isinstance(v, str):
-            item[k] = v
-        elif np.isnan(v):
-            pass
-    return item
-
+# TODO make this do something
 def write_history(history):
+    dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
     try:
-        table = boto3.resource('dynamodb', region_name='us-west-1').Table('history')
+        table = dynamodb.Table('history')
         table.scan()
     except:
         table_args = {
-            'TableName': 'autolocal-documents',
+            'TableName': 'history',
             'KeySchema': [
                 {
-                    'AttributeName': 'doc_id',
+                    'AttributeName': 'section_id',
                     'KeyType': 'HASH'
                 }
             ],
             'AttributeDefinitions': [
                 {
-                    'AttributeName': 'doc_id',
+                    'AttributeName': 'section_id',
                     'AttributeType': 'S'
                 }        
             ],
@@ -365,9 +358,19 @@ def write_history(history):
         }
         table = dynamodb.create_table(**table_args)
     with table.batch_writer() as batch:
-        for i, row in tqdm(history.iterrows()):
-            item = row2item(row)
+        for i, item in enumerate(history):
+            item['section_id'] = "{},{},{},{},{},{}".format(
+                item['filename'],
+                item['id'],
+                item['starting_page'],
+                item['starting_line'],
+                item['ending_page'],
+                item['ending_line']
+            )
             batch.put_item(Item=item)
+
+
+# dict_keys(['original_text', 'tokens', 'filename', 'starting_page', 'starting_line', 'ending_page', 'ending_line', 'section_text', 'section_tokens', 'Municipalities', 'id', 'Keywords', 'Time Window'])
 
 # emailer.send_emails
 
@@ -465,7 +468,7 @@ def run_queries(use_cached_idf = False, query_source="actual", k=3, use_idf_for_
         
     print("sending emails")
     send_emails(reformat_results(results))
-    # write_history(history)
+    write_history(history)
     print("finished")
 
 
@@ -482,4 +485,4 @@ def send_first_email():
 if __name__=='__main__':
     # TODO: contextual vectors
     vectors = setup_word_vectors()
-    run_queries(use_cached_idf=True, query_source="quick")
+    run_queries(use_cached_idf=True, query_source="actual")
