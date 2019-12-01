@@ -20,7 +20,7 @@ def extract_emails(result):
         email = []
         print('user id: ' + result[0]['user_id'])
         # email_address = 'autolocalnews@gmail.com'
-        email_address = 'promo@erindb.com'
+        email_address = 'chstock@stanford.edu'
         email.append(email_address)
         for y in range(0, len(result[x]['document_sections'])):
             notice = []
