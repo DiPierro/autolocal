@@ -4,17 +4,23 @@ import smtplib
 import json
 import urllib
 import urllib.request
+import pickle
 
-def extract_emails():
+# def read_results():
+#     return pickle.load(open("results.p", "rb"))
+
+def extract_emails(result):
     emailsToSend = []
-    url = "http://web.stanford.edu/~erindb/autolocal/ad_hoc_relevance_ranking_output.json"
-    response = urllib.request.urlopen(url)
-    buf = response.read()
-    result = json.loads(buf.decode('utf-8'))
+    # result = read_results()
+    # url = "http://web.stanford.edu/~erindb/autolocal/ad_hoc_relevance_ranking_output.json"
+    # response = urllib.request.urlopen(url)
+    # buf = response.read()
+    # result = json.loads(buf.decode('utf-8'))
     for x in range(0, len(result)):
         email = []
         print('user id: ' + result[0]['user_id'])
-        email_address = 'autolocalnews@gmail.com'
+        # email_address = 'autolocalnews@gmail.com'
+        email_address = 'promo@erindb.com'
         email.append(email_address)
         for y in range(0, len(result[x]['document_sections'])):
             notice = []
@@ -26,8 +32,8 @@ def extract_emails():
         emailsToSend.append(email)
     return emailsToSend
 
-def send_emails():
-    emailsToSend = extract_emails() #contains elements of format: [email_address, [title, url, blurb]]
+def send_emails(results=None):
+    emailsToSend = extract_emails(results) #contains elements of format: [email_address, [title, url, blurb]]
     if len(emailsToSend) > 0:
         email_user = 'autolocalnews@gmail.com'
         server = smtplib.SMTP ('smtp.gmail.com', 587)
@@ -44,16 +50,16 @@ def send_emails():
         emailsToSend.pop(0);
     server.quit()
 
-def send_emails_at(send_time):
-    time.sleep(send_time.timestamp() - time.time())
-    send_emails()
-    print('email sent')
+# def send_emails_at(send_time):
+#     time.sleep(send_time.timestamp() - time.time())
+#     send_emails()
+#     print('email sent')
 
 
-first_email_time = dt.datetime(2019,11,21,17,32,0) # set your sending time in UTC
-interval = dt.timedelta(minutes=1) # set the interval for sending the email
+# first_email_time = dt.datetime(2019,11,21,17,32,0) # set your sending time in UTC
+# interval = dt.timedelta(minutes=1) # set the interval for sending the email
 
-send_time = first_email_time
-while True:
-    send_emails_at(send_time)
-    send_time = send_time + interval
+# send_time = first_email_time
+# while True:
+#     send_emails_at(send_time)
+#     send_time = send_time + interval

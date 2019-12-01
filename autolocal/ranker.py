@@ -19,22 +19,16 @@ from  tqdm import tqdm
 
 import re
 import editdistance
+import pickle
+from autolocal.emailer import send_emails
 
 # set up word vectors
 # (this takes a loooong time)
 def setup_word_vectors():
-  print("loading language model")
-  # load language model (this takes a few minutes)
-  model = gensim.load('word2vec-google-news-300')
-  print("model loaded")
-
-  vectors = model.wv
-  del model
-  vectors.init_sims(True) # normalize the vectors (!), so we can use the dot product as similarity measure
-
-  print('embeddings loaded ')
-  print('loading docs ... ')
-  return vectors
+    s3 = boto3.resource('s3', region_name='us-west-1')
+    bucket = s3.Bucket('autolocal-documents')
+    body = bucket.Object('gensim_data.p').get()['Body'].read()
+    return pickle.loads(body)
 
 def read_metadata():
     table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-documents')
@@ -263,7 +257,8 @@ def segment_docs(relevant_docs):
     return doc_sections
 
 # TODO: use vectors to find closes words to keywords
-def score_doc_sections(doc_sections, keywords, idf):
+# TODO: why do shorter documents get higher scores?
+def score_doc_sections(doc_sections, keywords, idf, use_idf_for_doc_tokens=False, threshold_similarity=-1):
     # vectorize etc.
     # only consider keywords that have idf weights
     keywords = [keyword for keyword in keywords if (keyword in idf and keyword in vectors)]
@@ -280,12 +275,13 @@ def score_doc_sections(doc_sections, keywords, idf):
         else:
             section_vectors = np.array([vectors[t] for t in section_tokens if (t in idf and t in vectors)])
             if section_vectors.shape[0]>0:
-    #             section_weights = np.array([inverse_doc_props[t] for t in section_tokens if t in inverse_doc_props])
                 similarities = cosine_similarity(section_vectors, keyword_vectors)
-    #             similarities = similarities * section_weights
-    #             similarities = similarities*(similarities>0.2)
-                keyword_similarities = np.mean(similarities, axis=0)
-    #             keyword_similarities = np.average(similarities, axis=0, weights=section_weights)
+                similarities = similarities*(similarities>threshold_similarity)
+                if use_idf_for_doc_tokens:
+                    section_weights = np.array([idf[t] for t in section_tokens if (t in idf and t in vectors)])
+                    keyword_similarities = np.average(similarities, axis=0, weights=section_weights)
+                else:
+                    keyword_similarities = np.mean(similarities, axis=0)
                 score = np.sum(keyword_similarities*keyword_weights)
         doc_sections_scores.append(score)
 
@@ -373,8 +369,115 @@ def write_history(history):
             item = row2item(row)
             batch.put_item(Item=item)
 
-def send_emails(results): 
-    pass
+# emailer.send_emails
+
+# 'original_text', 'tokens', 'filename', 'starting_page', 'starting_line', 'ending_page', 'ending_line', 'section_text', 'section_tokens', 'Municipalities', 'id', 'Keywords', 'Time Window'
+def reformat_results(results):
+    reformatted_results = {}
+    # one per query
+    for result in results:
+        username = result['id']
+        keywords = result['Keywords']
+        query_id = username + ",".join(keywords) + ",".join(result['Municipalities']) + ",".join(result['Time Window'])
+        if query_id not in reformatted_results:
+            reformatted_results[query_id] = {
+                'user_id': username,
+                'document_sections': []
+            }
+        reformatted_results[query_id]['document_sections'].append({
+            # TODO
+            "section_id": "000",
+            # TODO
+            "doc_url": "https://example.com",
+            "doc_name": os.path.basename(result['filename']),
+            "user_id": username,
+            "page_number": result['starting_page'],
+            "keywords": keywords,
+            "text": result['section_text'].encode('ascii', errors='ignore').decode('ascii')
+        })
+    return [reformatted_results[r] for r in reformatted_results]
+
+# vectors = setup_word_vectors()
+def run_queries(use_cached_idf = False, query_source="actual", k=3, use_idf_for_doc_tokens=False, threshold_similarity=-1): 
+    print("reading queries")
+    queries = read_queries(query_source)
+    print("reading metadata")
+    metadata = read_metadata()
+    print("setting up reader")
+    doc_text_reader = DocTextReader(log_every=100)
+    if use_cached_idf:
+        # used cached idf and only read relevant documents
+        print("loading cached idf")
+        idf = read_cached_idf()
+        print("finding relevant filenames")
+        relevant_filenames = find_relevant_filenames(queries, metadata)
+        # (not actually *all*, but all the ones we care about for queries)
+        print("reading relevant documents")
+        all_docs = doc_text_reader.read_docs(relevant_filenames)
+    else:
+        # read all documents and calculate inverse document frequency
+        all_filenames = metadata["local_path_txt"]
+        print("reading all documents")
+        all_docs = doc_text_reader.read_docs(all_filenames)
+        print("calculating idf")
+        idf = calculate_idf(all_docs)
+        cache_idf(idf)
+    print("reading history")
+    history = read_history()
+    
+    results = []
+    
+    for q, query in enumerate(queries):
+        print("running query {} of {}".format(q, len(queries)))
+        user_id = query["id"]
+        print("user id: {}".format(user_id))
+        user_history = [x for x in history if x['id'] == user_id]
+        keywords = query["Keywords"]
+        print(keywords)
+        time_window = query["Time Window"]
+        municipalities = query["Municipalities"]
+        relevant_docs = select_relevant_docs(municipalities, time_window, all_docs, metadata)
+        print("segmenting documents")
+        doc_sections = segment_docs(relevant_docs)
+        print("scoring documents")
+        doc_sections_scores = score_doc_sections(
+            doc_sections,
+            keywords, idf,
+            use_idf_for_doc_tokens=use_idf_for_doc_tokens,
+            threshold_similarity=threshold_similarity)
+        top_k_sections = select_top_k(doc_sections, doc_sections_scores, k, user_history)
+        print("~~~~")
+        print("~~~~")
+        print(re.sub("(\n *(\n)+ *)", "\n\n",
+                     re.sub("\u2022", "", top_k_sections[0][1]["section_text"])))
+        print("====")
+        print("====")
+        print("~~~~")
+        print("~~~~")
+        print(re.sub("(\n *(\n)+ *)", "\n\n",
+                     re.sub("\u2022", "", top_k_sections[1][1]["section_text"])))
+        print("====")
+        print("====")
+        results = update_with_top_k(results, top_k_sections, query)
+        history = update_with_top_k(history, top_k_sections, query)
+        print("")
+        print("")
+        
+    print("sending emails")
+    send_emails(reformat_results(results))
+    # write_history(history)
+    print("finished")
+
+
+def send_first_email():
+    vectors = setup_word_vectors()
+    run_queries(
+        use_cached_idf=True,
+        query_source="quick",
+        use_idf_for_doc_tokens=False, # this makes a difference
+        threshold_similarity=0 # this doesn't make much of a difference
+    )
+
 
 if __name__=='__main__':
     # TODO: contextual vectors
