@@ -2,6 +2,7 @@ from datetime import datetime
 from autolocal import AUTOLOCAL_HOME
 from  subprocess import run
 import os
+import sys
 
 # get timestamp and job id
 timestamp = datetime.utcnow.isoformat()
@@ -13,7 +14,9 @@ legistar_scraper_path = os.path.join(AUTOLOCAL_HOME, 'autolocal', 'scraping', 'l
 log_path = os.path.join(scraping_dir, 'log.out')
 
 # build and run command with logging
-scraper_command = [legistar_scraper_path, '--job_id', timestamp, '>', log_path]
+args = sys.argv[1:]
+print(args)
+scraper_command = [legistar_scraper_path, '--job_id', timestamp]  + args + ['>', log_path]
 run(scraper_command)
 
 # move log to s3 bucket
