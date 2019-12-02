@@ -97,7 +97,10 @@ class LegistarScraper(object):
             ('bodies', 'ctl00_ContentPlaceHolder1_lstBodies_Input', 'ctl00_ContentPlaceHolder1_lstBodies_DropDown')
         ]
 
-        page_signature = self._get_page_signature()
+        # try:
+        #     page_signature = self._get_page_signature()
+        # except:
+        #     print('unable to read page signature, aborting: {}'.format(self.city_name))
 
         for field, input_id, dropdown_id in dropdown_ids:
             dropdown_xpath = "//div[@id='{}']/div/ul/li".format(dropdown_id)
@@ -121,8 +124,8 @@ class LegistarScraper(object):
                 try:
                     i = filter_options.index(filter_args[field])
                 except ValueError:
-                    print('scraper: unable to find item {} in list {}, aborting'.format(
-                        filter_args[field], field))
+                    print('scraper: unable to find item {} in list {}, aborting:'.format(
+                        filter_args[field], field), self.city_name)
                     return []
                 filter_elm = elms[i]
             else:
