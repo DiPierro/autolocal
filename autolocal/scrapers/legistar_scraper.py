@@ -17,6 +17,7 @@ import time
 from datetime import datetime
 
 import os, sys
+from shutil import rmtree
 
 from autolocal.databases import S3DocumentManager
 from autolocal import AUTOLOCAL_HOME
@@ -363,6 +364,7 @@ if __name__=='__main__':
             s3_dir = 's3://legistar-scraper-logs/legistar_scraper/' + job_id
             aws_cmd = ['aws', 's3', 'mv', save_dir, s3_dir, '--recursive']
             run(aws_cmd)
+            rmtree(save_dir)
     except:
         pass
 
