@@ -149,6 +149,7 @@ class LegistarScraper(object):
                 pages, pagelinks = self._get_page_links(self.driver)                
                 page_signature = self._get_page_signature()
             except NoSuchElementException:
+                print('scraper: could not find data table on page, aborting: {}'.format(self.city_name))
                 return []
 
             # click  through pages
