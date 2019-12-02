@@ -5,7 +5,7 @@ import os
 import sys
 
 # get timestamp and job id
-timestamp = datetime.utcnow.isoformat()
+timestamp = datetime.utcnow().isoformat()
 job_id = 'legistar_scraper_' + timestamp
 
 # get directories
