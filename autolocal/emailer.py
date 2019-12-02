@@ -5,6 +5,7 @@ import json
 import urllib
 import urllib.request
 import pickle
+import re
 
 # def read_results():
 #     return pickle.load(open("results.p", "rb"))
@@ -17,20 +18,43 @@ def extract_emails(result):
     # buf = response.read()
     # result = json.loads(buf.decode('utf-8'))
     for x in range(0, len(result)):
-        email = []
-        print('user id: ' + result[0]['user_id'])
-        # email_address = 'autolocalnews@gmail.com'
-        email_address = 'chstock@stanford.edu'
-        email.append(email_address)
-        for y in range(0, len(result[x]['document_sections'])):
-            notice = []
-            notice.append('Type of document: ' + result[x]['document_sections'][y]['doc_name'] + '\n')
-            notice.append('Link to document: ' + result[x]['document_sections'][y]['doc_url'] + '\n')
-            notice.append('Relevant page number: ' + result[x]['document_sections'][y]['doc_url'] + '\n')
-            notice.append('Excerpt: ' + result[x]['document_sections'][y]['text'] + '\n')
-            email.append(notice)
-        emailsToSend.append(email)
+        for email_address in ['promo@erindb.com']:#, 'patwei@stanford.edu', 'chstock@stanford.edu']:
+            email = []
+            print('user id: ' + result[0]['user_id'])
+            # email_address = 'autolocalnews@gmail.com'
+            email.append(email_address)
+            for y in range(0, len(result[x]['document_sections'])):
+                section_text = result[x]['document_sections'][y]['text']
+                # section_text = re.sub("\n+", "", section_text)
+                notice = []
+                notice.append('Keywords: ' + ", ".join(result[x]['document_sections'][y]['keywords']) + '\n')
+                notice.append('Type of document: ' + result[x]['document_sections'][y]['doc_name'] + '\n')
+                notice.append('Link to document: ' + result[x]['document_sections'][y]['doc_url'] + '\n')
+                notice.append('Relevant page number: ' + str(result[x]['document_sections'][y]['page_number']) + '\n')
+                notice.append('Excerpt: ' + section_text + '\n')
+                email.append(notice)
+            emailsToSend.append(email)
     return emailsToSend
+
+
+
+# def sendemail(from_addr, to_addr_list, cc_addr_list, bcc_addr_list, subject,
+#             message, login, password):
+#     header  = 'From: %s\n' % from_addr
+#     header += 'To: %s\n' % ','.join(to_addr_list)
+#     header += 'Cc: %s\n' % ','.join(cc_addr_list)
+#     header += 'Subject: %s\n\n' % subject
+#     message = header + message
+
+#     server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
+#     server.login(login, password)
+#     server.sendmail(from_addr,
+#         to_addr_list + cc_addr_list + bcc_addr_list,
+#         message)
+#     server.quit()
+#     # In case of authentication errors, tag this page to "on"
+#     # You might have to do it multiple times
+
 
 def send_emails(results=None):
     emailsToSend = extract_emails(results) #contains elements of format: [email_address, [title, url, blurb]]
@@ -45,7 +69,18 @@ def send_emails(results=None):
         for x in range(1, len(emailsToSend[0])):
             print(emailsToSend[0])
             print(x)
-            message = (message + emailsToSend[0][x][0] + '\n' + emailsToSend[0][x][1] + '\n' + emailsToSend[0][x][2] + '\n' + emailsToSend[0][x][3] + '\n\n\n')
+            # header  = 'From: %s\n' % from_addr
+            # header += 'To: %s\n' % ','.join(to_addr_list)
+            # header += 'Cc: %s\n' % ','.join(cc_addr_list)
+            header = 'Subject: %s\n\n' % emailsToSend[0][x][0]
+            message = header + message
+            message = (
+                message +
+                emailsToSend[0][x][0] + '\n' +
+                emailsToSend[0][x][1] + '\n' +
+                emailsToSend[0][x][2] + '\n' +
+                emailsToSend[0][x][3] + '\n' +
+                emailsToSend[0][x][4] + '\n\n\n')
         server.sendmail(email_user, emailsToSend[0][0], message)
         emailsToSend.pop(0);
     server.quit()
