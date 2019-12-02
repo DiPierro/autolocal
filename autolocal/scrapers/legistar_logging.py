@@ -21,4 +21,4 @@ run(scraper_command)
 # move log to s3 bucket
 s3_path = 's3://legistar-scraper-logs/legistar_scraper/{}/log.out'.format(job_id)
 aws_cmd = ['aws', 's3', 'mv', log_path, s3_path]
-run(aws_command)
+run(aws_cmd)
