@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="e">
+
+  <head>
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+  </head>
+  <div class="container">
+    <form id="contact" action="" method="post">
+      <h3>Auto Local News</h3>
+      <h4>Sign up for alerts when local documents appear</h4>
+      <fieldset>
+        <input placeholder="Your name" type="text" tabindex="1" required autofocus>
+      </fieldset>
+      <fieldset>
+        <input placeholder="Your Email Address" type="email" tabindex="2" required>
+      </fieldset>
+      <!-- <fieldset>
+        <input placeholder="Your Phone Number (optional)" type="tel" tabindex="3" required>
+      </fieldset>
+      <fieldset>
+        <input placeholder="Your Web Site (optional)" type="url" tabindex="4" required>
+      </fieldset> -->
+
+      <script language="JavaScript">
+        function toggle(source) {
+          checkboxes = document.getElementsByName('foo');
+          for(var i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+          }
+        }
+      </script>
+
+      <h2>Area(s) of interest</h2>
+      <input type="checkbox" onClick="toggle(this)" /> Select all<br/>
+      <input type="checkbox" name="foo" value="cupertino"> Cupertino<br/>
+      <input type="checkbox" name="foo" value="hayward"> Hayward<br/>
+      <input type="checkbox" name="foo" value="mountain_view"> Mountain View<br/>
+      <input type="checkbox" name="foo" value="san_jose"> San Jose<br/>
+      <input type="checkbox" name="foo" value="santa_clara"> Santa Clara<br/>
+      <input type="checkbox" name="foo" value="sunnyvale"> Sunnyvale<br/>
+
+      <h2>Time window of interest</h2>
+      <input type="checkbox" name="not_foo" value="bar1"> upcoming only<br/>
+      <input type="checkbox" name="not_foo" value="bar2"> past only<br/>
+      <input type="checkbox" name="not_foo" value="bar2"> all<br/>
+
+      <h2>Keywords of interest</h2>
+      <fieldset>
+        <textarea placeholder="Type keywords you would like to see (separated by commas)" tabindex="5" required></textarea>
+      </fieldset>
+
+      <fieldset>
+        <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+      </fieldset>
+
+      <p class="copyright">Adapted from design by <a href="https://colorlib.com" target="_blank" title="Colorlib">Colorlib</a></p>
+    </form>
+  </div>
+</html>
