@@ -15,8 +15,9 @@ log_path = os.path.join(scraping_dir, 'log.out')
 
 # build and run command with logging
 args = sys.argv[1:]
-scraper_command = ['python', legistar_scraper_path, '--job_id', timestamp]  + args + ['>', log_path]
-run(scraper_command)
+scraper_command = ['python', legistar_scraper_path, '--job_id', timestamp]  + args
+with open(log_path, 'w') as f:
+    scraper_process = run(scraper_command, stdout=f)
 
 # move log to s3 bucket
 s3_path = 's3://legistar-scraper-logs/legistar_scraper/{}/log.out'.format(job_id)
