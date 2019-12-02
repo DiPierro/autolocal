@@ -299,7 +299,6 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--city_list", default=cities_csv_path)
-    parser.add_argument("--out", default='')
     parser.add_argument("--year", default=str(datetime.utcnow().year))
     parser.add_argument("--bodies")
     parser.add_argument("--no_download", action='store_true')
@@ -309,14 +308,16 @@ if __name__=='__main__':
     job_id = 'legistar_scraper_' + args.job_id
 
     # report amazon instance details
-    for flag_name, flag in [
-        ('AWS instance id', '--instance-id'),
-        ('hostname', '--public-hostname')]:
-        try:
+    using_aws = False
+    try:
+        for flag_name, flag in [
+            ('AWS instance id', '--instance-id'),
+            ('hostname', '--public-hostname')]:
             res = run(['ec2metadata', flag], capture_output=True).stdout.decode("utf-8")
             print('{}: {}'.format(flag_name, res))
-        except:
-            pass
+        using_aws = True
+    except:
+        pass
 
     # report
     print(os.path.abspath(__file__))
@@ -327,12 +328,9 @@ if __name__=='__main__':
 
 
     # scraper_configuration
-    if args.logging:
-        log_path = os.path.join(logs_dir, job_id + '.log')
-    if args.out:
-        save_dir = args.out
-    else:
-        save_dir = os.path.join(scraping_dir, job_id)
+    # if args.logging:
+        # log_path = os.path.join(logs_dir, job_id + '.log')
+    save_dir = os.path.join(scraping_dir, job_id)
 
     # add query filters
     filters = {}
@@ -353,12 +351,21 @@ if __name__=='__main__':
     for _, city_args in city_df.iterrows():        
         city_args = dict(city_args)        
         city_args['save_dir'] = save_dir
-        if args.logging:
-            city_args['log_path'] = log_path
+        # if args.logging:
+            # city_args['log_path'] = log_path
         _, doc_list_csv = scrape_city(city_args, filters)            
         if doc_list_csv and not args.no_download:
             print('Adding documents to database: {}'.format(doc_list_csv))
             documents.add_docs_from_csv(doc_list_csv)
+
+    # move local data to S3
+    try:
+        if using_aws:    
+            s3_dir = 's3://legistar-scraper-logs/legistar_scraper/' + job_id
+            aws_cmd = ['aws', 's3', 'mv', save_dir, s3_dir, '--recursive']
+            run(aws_cmd)
+    except:
+        pass
 
     # import argparse
     # parser = argparse.ArgumentParser()
