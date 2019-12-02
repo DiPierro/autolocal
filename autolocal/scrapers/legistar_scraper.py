@@ -97,11 +97,6 @@ class LegistarScraper(object):
             ('bodies', 'ctl00_ContentPlaceHolder1_lstBodies_Input', 'ctl00_ContentPlaceHolder1_lstBodies_DropDown')
         ]
 
-        # try:
-        #     page_signature = self._get_page_signature()
-        # except:
-        #     print('unable to read page signature, aborting: {}'.format(self.city_name))
-
         for field, input_id, dropdown_id in dropdown_ids:
             dropdown_xpath = "//div[@id='{}']/div/ul/li".format(dropdown_id)
             
