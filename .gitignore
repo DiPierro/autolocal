@@ -5,6 +5,7 @@
 *.pyc
 *.tar.gz
 *.log
+*.out
 *.pem
 */__pycache__/*
 notebooks/.ipynb_checkpoints/*
