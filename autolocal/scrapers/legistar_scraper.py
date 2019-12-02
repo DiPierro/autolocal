@@ -308,12 +308,15 @@ if __name__=='__main__':
     args = parser.parse_args()
     job_id = 'legistar_scraper_' + args.job_id
 
-
     # report amazon instance details
-    for flag_name, flag in [('AWS instance id', '--instance-id'), ('hostname', '--public-hostname')]:
+    for flag_name, flag in [
+        ('AWS instance id', '--instance-id'),
+        ('hostname', '--public-hostname')]:
         try:
             res = run(['ec2metadata', flag], capture_output=True).stdout.decode("utf-8")
             print('{}: {}'.format(flag_name, res))
+        except:
+            pass
 
     # report
     print(os.path.abspath(__file__))
