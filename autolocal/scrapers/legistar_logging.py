@@ -16,6 +16,7 @@ log_path = os.path.join(scraping_dir, 'log.out')
 # build and run command with logging
 args = sys.argv[1:]
 scraper_command = ['python', legistar_scraper_path, '--job_id', timestamp]  + args
+
 with open(log_path, 'w') as f:
     scraper_process = run(scraper_command, stdout=f)
 

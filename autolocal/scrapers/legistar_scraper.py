@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 import selenium as se
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 
 from tqdm import tqdm
 import time
@@ -85,7 +85,8 @@ class LegistarScraper(object):
                 sig_match = new_sig in [page_signature, '']         
             except StaleElementReferenceException:
                 sig_match = False    
-
+            except NoSuchElementException:
+                sig_match = False
         return
 
     def scrape_all_pages(self, **filter_args):
