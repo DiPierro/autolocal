@@ -144,9 +144,14 @@ class LegistarScraper(object):
             # increase page count
             c += 1
 
-            # get page links, if any
-            pages, pagelinks = self._get_page_links(self.driver)
-            page_signature = self._get_page_signature()
+            # get page links, if any            
+            try:
+                pages, pagelinks = self._get_page_links(self.driver)                
+                page_signature = self._get_page_signature()
+            except NoSuchElementException:
+                return []
+
+            # click  through pages
             if pages:
                 try:
                     # click on the integer we want
