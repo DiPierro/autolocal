@@ -10,13 +10,14 @@ from urllib.parse import urlparse
 import selenium as se
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 
 from tqdm import tqdm
 import time
 from datetime import datetime
 
 import os, sys
+from shutil import rmtree
 
 from autolocal.databases import S3DocumentManager
 from autolocal import AUTOLOCAL_HOME
@@ -85,7 +86,8 @@ class LegistarScraper(object):
                 sig_match = new_sig in [page_signature, '']         
             except StaleElementReferenceException:
                 sig_match = False    
-
+            except NoSuchElementException:
+                sig_match = False
         return
 
     def scrape_all_pages(self, **filter_args):
@@ -94,8 +96,6 @@ class LegistarScraper(object):
             ('years', 'ctl00_ContentPlaceHolder1_lstYears_Input', 'ctl00_ContentPlaceHolder1_lstYears_DropDown'),
             ('bodies', 'ctl00_ContentPlaceHolder1_lstBodies_Input', 'ctl00_ContentPlaceHolder1_lstBodies_DropDown')
         ]
-
-        page_signature = self._get_page_signature()
 
         for field, input_id, dropdown_id in dropdown_ids:
             dropdown_xpath = "//div[@id='{}']/div/ul/li".format(dropdown_id)
@@ -119,8 +119,8 @@ class LegistarScraper(object):
                 try:
                     i = filter_options.index(filter_args[field])
                 except ValueError:
-                    print('scraper: unable to find item {} in list {}, aborting'.format(
-                        filter_args[field], field))
+                    print('scraper: unable to find item {} in list {}, aborting:'.format(
+                        filter_args[field], field), self.city_name)
                     return []
                 filter_elm = elms[i]
             else:
@@ -144,9 +144,15 @@ class LegistarScraper(object):
             # increase page count
             c += 1
 
-            # get page links, if any
-            pages, pagelinks = self._get_page_links(self.driver)
-            page_signature = self._get_page_signature()
+            # get page links, if any            
+            try:
+                pages, pagelinks = self._get_page_links(self.driver)                
+                page_signature = self._get_page_signature()
+            except NoSuchElementException:
+                print('scraper: could not find data table on page, aborting: {}'.format(self.city_name))
+                return []
+
+            # click  through pages
             if pages:
                 try:
                     # click on the integer we want
@@ -292,29 +298,43 @@ def scrape_city(city_args, filter_args):
 if __name__=='__main__':    
     import argparse
     import pandas as pd
+    from subprocess import run
     logs_dir = os.path.join(AUTOLOCAL_HOME, 'logs')
     scraping_dir = os.path.join(AUTOLOCAL_HOME, 'data', 'scraping')
     cities_csv_path = os.path.join(scraping_dir, 'cities.csv')
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--city_list", default=cities_csv_path)
-    parser.add_argument("--out", default='')
     parser.add_argument("--year", default=str(datetime.utcnow().year))
     parser.add_argument("--bodies")
     parser.add_argument("--no_download", action='store_true')
-    parser.add_argument("--logging", action='store_true')
     parser.add_argument("--job_id", default=datetime.utcnow().isoformat())
     args = parser.parse_args()
     job_id = 'legistar_scraper_' + args.job_id
 
+    # report amazon instance details
+    using_aws = False
+    try:
+        for flag_name, flag in [
+            ('AWS instance id', '--instance-id'),
+            ('hostname', '--public-hostname')]:
+            res = run(['ec2metadata', flag], capture_output=True).stdout.decode("utf-8")
+            print('{}: {}'.format(flag_name, res))
+        using_aws = True
+    except:
+        pass
+
+    # report usage
+    print("Usage:\n{0}\n".format(" ".join([x for x in sys.argv])))
+    print("All settings used:")
+    for k,v in sorted(vars(args).items()):
+        print("{0}: {1}".format(k,v))
+
 
     # scraper_configuration
-    if args.logging:
-        log_path = os.path.join(logs_dir, job_id + '.log')
-    if args.out:
-        save_dir = args.out
-    else:
-        save_dir = os.path.join(scraping_dir, job_id)
+    # if args.logging:
+        # log_path = os.path.join(logs_dir, job_id + '.log')
+    save_dir = os.path.join(scraping_dir, job_id)
 
     # add query filters
     filters = {}
@@ -335,12 +355,22 @@ if __name__=='__main__':
     for _, city_args in city_df.iterrows():        
         city_args = dict(city_args)        
         city_args['save_dir'] = save_dir
-        if args.logging:
-            city_args['log_path'] = log_path
+        # if args.logging:
+            # city_args['log_path'] = log_path
         _, doc_list_csv = scrape_city(city_args, filters)            
         if doc_list_csv and not args.no_download:
             print('Adding documents to database: {}'.format(doc_list_csv))
             documents.add_docs_from_csv(doc_list_csv)
+
+    # move local data to S3
+    try:
+        if using_aws:    
+            s3_dir = 's3://legistar-scraper-logs/legistar_scraper/' + job_id
+            aws_cmd = ['aws', 's3', 'mv', save_dir, s3_dir, '--recursive']
+            run(aws_cmd)
+            rmtree(save_dir)
+    except:
+        pass
 
     # import argparse
     # parser = argparse.ArgumentParser()

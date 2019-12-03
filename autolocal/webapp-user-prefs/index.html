@@ -43,9 +43,8 @@
 				                time_window: the_time_window,
 				                keywords: self.keywords().split(','),
                         municipalities: the_municipalities,
-				          }
-
-				$.ajax({
+				          }				
+        $.ajax({
             url: 'https://cors-anywhere.herokuapp.com/https://iiyouepoxb.execute-api.us-west-2.amazonaws.com/Dev/postautolocalnews',
             cache: false,
             type: 'POST',
@@ -74,8 +73,8 @@
 </head>
 <div class="container">
   <form id="contact" action="" method="post">
-    <h3>Auto Local News</h3>
-    <h4>Sign up for alerts when local documents appear</h4>
+    <h3>CityCouncilor</h3>
+    <h4>Enter your email address and search queries below. We will periodically send you emails about upcoming public meetings relevant to you!</h4>
     <fieldset>
       <input placeholder="Your Email Address" type="email" tabindex="2" data-bind='value: id' required>
     </fieldset>
