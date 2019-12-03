@@ -1,172 +1,108 @@
-# Import statements
+#!/usr/bin/env python
+# coding: utf-8
 
+# In[1]:
+
+
+from allennlp.commands.elmo import ElmoEmbedder
+import boto3
 import pandas as pd
+from datetime import datetime, timedelta
+from io import BytesIO
+from autolocal.parsers.nlp import Tokenizer
+import pickle
 import numpy as np
-from gensim.models.word2vec import Word2Vec
-import gensim.downloader as gensim
+from  tqdm import tqdm
+import os
 from sklearn.metrics.pairwise import cosine_similarity
 import json
-
-from datetime import *
-import os
-from autolocal.parsers.nlp import Tokenizer
-from gensim.parsing.preprocessing import *
-
-from autolocal.databases import S3DocumentManager
-import boto3
-from decimal import *
-from  tqdm import tqdm
-
-import re
-import editdistance
-import pickle
 from autolocal.emailer import send_emails
+import editdistance
+import re
 
-from collections import Counter
+def single_vector_per_doc(vectors):
+    # vectors is a list of np arrays where:
+    # dims: (LAYERS(3), TOKENS(varies), DIMENSIONS(1024))
+    """
+    https://towardsdatascience.com/elmo-helps-to-further-improve-your-word-embeddings-c6ed2c9df95f
+    In the ELMo paper, there are 3 layers of word embedding,
+    layer zero is the character-based context independent layer,
+    followed by two Bi-LSTM layers. The authors have empirically
+    shown that the word vectors generated from the first Bi-LSTM
+    layer can better capture the syntax, and the second layer can
+    capture the semantics better.
+    """
+    vectors = np.concatenate([v[2] for v in vectors], 0)
+    return vectors
 
-# set up word vectors
-# (this takes a loooong time)
-def setup_word_vectors():
-    s3 = boto3.resource('s3', region_name='us-west-1')
-    bucket = s3.Bucket('autolocal-documents')
-    body = bucket.Object('gensim_data.p').get()['Body'].read()
-    return pickle.loads(body)
+s3 = boto3.resource('s3')
+autolocal_docs_bucket = s3.Bucket('autolocal-documents')
+def read_doc(s3_path):
+    try:
+        return autolocal_docs_bucket.Object(s3_path).get()['Body'].read().decode("ascii", "ignore")
+    except:
+        return None
+
+
+# In[ ]:
+
 
 def read_metadata():
     table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-documents')
     s3_client = boto3.client('s3')
     metadata = pd.DataFrame(table.scan()["Items"])
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
+    metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: x[:-3]+"pkl")
     return metadata
-
-casing = "lower_non_acronyms"
-# casing = "lower_non_acronyms"
-# TODO: is lowercasing necessary?
-
-def casing_function():
-    if casing=="cased":
-        return lambda x: x
-    elif casing=="lower":
-        return lambda x: x.lower()
-    elif casing=="lower_non_acronyms":
-        return lambda x: x if x.isupper() else x.lower()
-    else:
-        raise Exception
-
-preprocess_filters = [
-    casing_function(),
-    strip_punctuation,
-    strip_numeric,
-    strip_non_alphanum,
-    strip_multiple_whitespaces,
-#     strip_numeric,
-    remove_stopwords,
-#     strip_short
-]
-
-class DocTextReader():
-    def __init__(self, log_every=100):
-        self.log_every = log_every
-        s3 = boto3.resource('s3', region_name='us-west-1')
-        self.bucket = s3.Bucket('autolocal-documents')
-
-    def read_document_string(self, s3_path):
-        return self.bucket.Object(s3_path).get()['Body'].read()
-
-    def read_docs(self, s3_paths):
-        # read all documents that we know about
-        # tokenize each document
-        # return list of documents
-
-        documents = {}
-        n_docs_total = len(s3_paths)
-
-        i = 0
-        n_docs_read = 0
-        for s3_path in s3_paths:
-            try:
-                doc_string = self.read_document_string(s3_path)
-                doc_tokens = preprocess_string(doc_string, filters=preprocess_filters)
-                documents[s3_path] = {
-                    "original_text": doc_string,
-                    "tokens": doc_tokens
-                }
-            except Exception as e:
-                if i < 10:
-                    print("Key not found: {}".format(s3_path))
-                elif i == 10:
-                    print("More than 10 keys not found")
-                    print(e)
-                    break
-                i+=1
-            if n_docs_read % self.log_every == 0:
-                print("{} of {} documents read".format(n_docs_read, n_docs_total))
-            n_docs_read+=1
-
-        return documents
+metadata = read_metadata()
 
 
-def read_queries(query_source):
-    if query_source == "actual":
-        table = boto3.resource('dynamodb', region_name='us-west-2').Table('autoLocalNews')
-    elif query_source == "quick":
-        table = boto3.resource('dynamodb', region_name='us-west-1').Table('quick_queries')
-    else:
-        raise Exception
-    queries = table.scan()["Items"]
-    return queries
-
-def read_history():
-    # try:
-    #     table = boto3.resource('dynamodb', region_name='us-west-1').Table('history')
-    #     history = table.scan()["Items"]
-    # except:
-    #     history = []
-    # return history
-    return []
+# In[ ]:
 
 
-def read_cached_idf():
-    s3 = boto3.resource('s3', region_name='us-west-1')
-    bucket = s3.Bucket('autolocal-documents')
-    idf = json.load(bucket.Object('idf_{}.json'.format(casing)).get()['Body'])
-    return idf
+def read(s3_path):
+    print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
+    return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'rb'))
 
-def cache_idf(idf):
-    s3 = boto3.resource('s3')
-    object = s3.Object('autolocal-documents', 'idf_{}.json'.format(casing))
-    object.put(Body=json.dumps(idf))
+def write(array, s3_path):
+    pickle.dump(array, open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'wb'))
+
+def sentence_split(s):
+    sentences = re.split('[.\n!?"\f]', s)
+    return [s for s in sentences if len(s.strip())>0]
+
+def tokenize(s):
+    tokens = re.findall(r'\w+', s)
+    return tokens
 
 
-def calculate_idf(all_docs): 
-    # for each word, how many unique docs does it show up in?
-    
-    doc_freq = {}
-    for document in all_docs: 
-        tokens = all_docs[document]["tokens"]
-        for token in tokens:
-            if token in doc_freq:
-                doc_freq[token] += 1
-            else:
-                doc_freq[token] = 1
-    
-    inverse_doc_freq = {}
-    for word in doc_freq:
-        inverse_doc_freq[word] = 1./doc_freq[word]
-    
-    return inverse_doc_freq
+# In[ ]:
 
-# TODO: add ending date (low priority)
-time_windows = {
+
+starting_dates_for_filtering = {
     'upcoming_only': datetime.now() + timedelta(days=0.5),
     'upcoming': datetime.now() + timedelta(days=0.5),
     'this_week': datetime.now() - timedelta(weeks=1),
     'this_year': datetime.now() - timedelta(days=365),
     'this_month': datetime.now() - timedelta(weeks=5),
     'past_six_months':datetime.now() - timedelta(days=183),
+    'last_six_months':datetime.now() - timedelta(days=183),
     'past': None,
     'all': None
 }
+
+
+# In[ ]:
+
+
+def read_queries():
+    table = boto3.resource('dynamodb', region_name='us-west-2').Table('autoLocalNews')
+    queries = table.scan()["Items"]
+    return queries
+
+
+# In[ ]:
+
 
 def find_relevant_filenames(queries, metadata): 
     
@@ -181,7 +117,7 @@ def find_relevant_filenames(queries, metadata):
             
     relevant_filenames = set()
     for time_window in municipalities_by_time_window:
-        starting_date = time_windows[time_window]
+        starting_date = starting_dates_for_filtering[time_window]
         potential_documents = metadata
         if starting_date:
             potential_documents = potential_documents[potential_documents["date"] >= starting_date]
@@ -191,9 +127,63 @@ def find_relevant_filenames(queries, metadata):
     return relevant_filenames
 
 
+# In[ ]:
+
+
+def read_docs(s3_paths):
+    log_every = 100
+
+    documents = {}
+    n_docs_total = len(s3_paths)
+
+    i = 0
+    n_docs_read = 0
+    for s3_path in s3_paths:
+        try:
+            doc_string = read_doc(s3_path)
+            doc_sentences = sentence_split(doc_string)
+            doc_tokens = []
+            for sentence in doc_sentences:
+                sentence_tokens = tokenize(sentence)
+                doc_tokens.append(sentence_tokens)
+            filename_pkl = s3_path[:-3] + "pkl"
+            try:
+                vectors = read(filename_pkl)
+                documents[s3_path] = {
+                    "original_text": doc_string,
+                    "sentences": doc_sentences,
+#                     "tokens": doc_tokens,
+                    "vectors": vectors
+                }
+            except:
+                print('missing vectors for: {}'.format(s3_path))
+        except Exception as e:
+            if i < 10:
+                print("Key not found: {}".format(s3_path))
+            elif i == 10:
+                print("More than 10 keys not found")
+                print(e)
+                break
+            i+=1
+        if n_docs_read % log_every == 0:
+            print("{} of {} documents read".format(n_docs_read, n_docs_total))
+        n_docs_read+=1
+
+    return documents
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
 def select_relevant_docs(municipalities, time_window, all_docs, metadata):
     # filter metadata to only those files that match the query municipality and time_window
-    starting_date = time_windows[time_window]
+    starting_date = starting_dates_for_filtering[time_window]
     potential_documents = metadata
     if starting_date:
         potential_documents = potential_documents[potential_documents["date"] >= starting_date]
@@ -211,142 +201,200 @@ def select_relevant_docs(municipalities, time_window, all_docs, metadata):
     return docs_to_return
 
 
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+# TODO: [PRIORITY] include section numbers, extract overlapping sections, enforce no overlaps in returned content
 # TODO: Play with section length
 # TODO: smart sectioning that's sensitive to multiple line breaks and other section break signals
-# TODO: extract sections that overlap with each other
 def segment_docs(relevant_docs):
-    doc_sections = []
-    approx_section_length = 50 # tokens
-    min_section_length = 5
+    min_section_length = 50 # tokens
+    # TODO: this cuts of end of doc
     
+    sections = []
     for doc in relevant_docs:
-        doc_tokens = doc["tokens"]
-        original_text = doc["original_text"].decode('utf-8')
-        filename = doc["filename"]
-        
-        doc_section_lines = []
-        doc_section_tokens = []
-        starting_page = 0
-        starting_line = 0
+        original_text = doc["original_text"]
         pages = original_text.split('\f')
+        page_numbers = []
         for p, page in enumerate(pages):
-            lines = page.split('\n')
-            for lnum, line in enumerate(lines):
-                line_tokens = preprocess_string(line, filters=preprocess_filters)
-                doc_section_tokens += line_tokens
-                doc_section_lines.append(line)
-                if len(doc_section_tokens) >= approx_section_length:
-                    section_text = '\n'.join(doc_section_lines)
-                    section_text = re.sub("(\n *(\n)+ *)", "\n\n", section_text)
-                    section_text = re.sub("\u2022", "\n\n", section_text)
-                    section_text = re.sub("\n+", "\n", section_text)
-                    doc_sections.append({
-                        **doc,
-                        'starting_page': starting_page,
-                        'starting_line': starting_line,
-                        'ending_page': p,
-                        'ending_line': lnum,
-                        'section_text': section_text,
-                        'section_tokens': doc_section_tokens
+            page_sentences = sentence_split(page)
+            # for each sentence, what page was it on?
+            for sentence in page_sentences:
+                sentence_tokens = tokenize(sentence)
+                page_numbers.append(p+1)
+        doc_sentences = doc["sentences"]
+        doc_sentences_with_extra = doc["vectors"]["sentences"]
+        doc_vectors_with_extra = doc["vectors"]["vectors"]
+        nonempty_sentence_indices = [i for i in range(len(doc_sentences_with_extra)) if len(doc_sentences_with_extra[i].strip())>0]
+        doc_vectors = [doc_vectors_with_extra[i] for i in nonempty_sentence_indices]
+        section = []
+        section_tokens = 0
+        if (len(doc_sentences) == len(doc_vectors)):
+            for i in range(len(doc_sentences)):
+                sentence = doc_sentences[i]
+                page = page_numbers[i]
+                sentence_vectors = doc_vectors[i]
+                sentence_tokens = tokenize(sentence)
+                section.append({
+                    "sentence": sentence,
+                    "page": page,
+                    "sentence_vectors": sentence_vectors,
+                    "sentence_tokens": sentence_tokens
+                })
+                section_tokens += len(sentence_tokens)
+                if section_tokens >= min_section_length:
+                    section_text = ". ".join([s["sentence"].strip() for s in section])
+                    sections.append({
+                        "sentences": section,
+                        "section_text": section_text,
+                        "filename": doc["filename"],
+                        "url": doc["url"]
                     })
-                    doc_section_lines = []
-                    doc_section_tokens = []
-                    # have we reached the last line of this page?
-                    if lnum == (len(lines)-1):
-                        # next section starts at top of next page
-                        starting_page = p+1
-                        starting_line = 0
-                    else:
-                        # next section starts on next line of this page
-                        starting_page = p
-                        starting_line = lnum+1
-        # end of the document
-        if len(doc_section_tokens) >= min_section_length:
-            doc_sections.append({
-                **doc,
-                'starting_page': starting_page,
-                'starting_line': starting_line,
-                'ending_page': p,
-                'ending_line': lnum,
-                'section_text': '\n'.join(doc_section_lines),
-                'section_tokens': doc_section_tokens
-            })
+                    section = []
+                    section_tokens = 0
+    return sections
+
+
+# In[ ]:
+
+
+#             page_tokens = simple_tokenizer.tokenize(page)
+#             for t in page_tokens:
+#                 page_numbers.append(p+1)
+#         doc_tokens = doc["tokens"]
+#         vectors = select_layer(doc["vectors"])
+# #         print(vectors.shape)
+#         filename = doc["filename"]
+#         n_tokens = len(doc_tokens)
+# #         print(n_tokens)
+#         tokens_per_section = 100
+#         n_sections = n_tokens // tokens_per_section
+# #         n_sections = int(np.floor(tokens_per_section / n_tokens))
+# #         print(n_sections)
+#         for s in range(n_sections):
+#             start_index = s*tokens_per_section
+#             end_index = ((s+1)*tokens_per_section)
+#             section_tokens = doc_tokens[start_index:end_index]
+#             section_vectors = vectors[start_index:end_index,]
+#             section_start_page = page_numbers[start_index]
+#             section_end_page = page_numbers[min(len(page_numbers), end_index)-1]
+#             doc_sections.append({
+#                 'filename': doc['filename'],
+#                 'url': doc['url'],
+#                 'start_page': section_start_page,
+#                 'end_page': section_end_page,
+#                 'text': " ".join(section_tokens),
+# #                 'tokens': section_tokens,
+#                 'vectors': section_vectors
+#             })
             
-    return doc_sections
+#     return doc_sections
+
+
+# In[ ]:
+
+
+# doc_sections = segment_docs(relevant_docs)
+# print("sections: {}".format(len(doc_sections)))
+# print(doc_sections[0]['section_text'])
+
+
+# In[ ]:
+
+
+casing = "lower_non_acronyms"
+# casing = "lower_non_acronyms"
+# TODO: is lowercasing necessary?
+
+def casing_function():
+    if casing=="cased":
+        return lambda x: x
+    elif casing=="lower":
+        return lambda x: x.lower()
+    elif casing=="lower_non_acronyms":
+        return lambda x: x if x.isupper() else x.lower()
+    else:
+        raise Exception
+
+
+# In[ ]:
+
 
 # TODO: use vectors to find closes words to keywords
 # TODO: why do shorter documents get higher scores?
-def score_doc_sections(doc_sections, keywords, idf, use_idf_for_doc_tokens=False, threshold_similarity=-1, use_idf_for_keywords=True):
-    # vectorize etc.
-    # only consider keywords that have idf weights
-    keywords = [k.strip() for k in keywords]
-    new_keywords = []
-    for k in keywords:
+def score_doc_sections(doc_sections, orig_keywords, elmo):
+    orig_keywords = [k.strip() for k in orig_keywords]
+    keywords = []
+    for k in orig_keywords:
         words = k.split(" ")
         for word in words:
-            new_keywords.append(word)
-    keywords = new_keywords
-    fix_case = casing_function()
-    keywords = [fix_case(k) for k in keywords]
-    keywords = [keyword for keyword in keywords if (keyword in idf and keyword in vectors)]
-    print(keywords)
-    # TODO: if all keywords are cased, and we lowercase everything, but there's no lowercased word vectors, we have a problem
-    keyword_vectors = np.array([vectors[keyword] for keyword in keywords])
-    keyword_weights = np.array([idf[keyword] for keyword in keywords])
-    # keyword_weights = np.array([np.log(idf[keyword]) for keyword in keywords])
+            keywords.append(word)
+    keyword_vectors = single_vector_per_doc([elmo.embed_sentence(keywords)])
+#     keyword_weights = []
+#     fix_case = casing_function()
+# #     idf_smoothing_count = 10
+#     for k in keywords:
+# #         words = k.split(" ")
+# #         if len(words) > 1:
+# #             keyword_weights.append(1./idf_smoothing_count)
+# #         else:
+# #             k = fix_case(k)
+# #             if k in idf:
+# #                 keyword_weights.append(1./(1./idf[k]+idf_smoothing_count))
+# #             else:
+# #                 keyword_weights.append(1./idf_smoothing_count)
     doc_sections_scores = []
-    old_scores = []
     for s, section in enumerate(doc_sections):
-        score = None
-        section_tokens = section["section_tokens"]
-
-        counter = Counter(section_tokens)
-        tf = []
-        for k in keywords:
-            if k in counter:
-                tf.append(float(counter[k])/len(section_tokens))
-            else:
-                tf.append(0)
-        tf = np.array(tf)
-        old_school_score = np.sum(tf*np.log(keyword_weights))
-        old_scores.append(old_school_score)
-
-        section_tokens = section_tokens[:50]
-        # TODO: Zipf to figure out what the cutoff should be for normal communication
-        # If the number of unique tokens in the section is too small, it's probably not an interesting section
-        if len(set(section_tokens))<20:
+        section_vectors = single_vector_per_doc([s["sentence_vectors"] for s in section["sentences"]])
+        section_text = section['section_text']
+        no_keywords_found = True
+        for k in orig_keywords:
+            if bool(re.search("([^\w]|^)" + k + "([^\w]|$)", section_text)):
+#             if k in section_text:
+                # TODO: consider casing
+                no_keywords_found = False
+        for k in orig_keywords:
+            if k.islower():
+                if bool(re.search("([^\w]|^)" + k + "([^\w]|$)", section_text.lower())):
+                    no_keywords_found = False
+        if no_keywords_found:
             score = 0
+        elif section_vectors.shape[0]>0:
+            similarities = cosine_similarity(section_vectors, keyword_vectors)
+#             if threshold_similarity > -1:
+#                 similarities = similarities*(similarities>threshold_similarity)
+            keyword_similarities = np.mean(similarities, axis=0)
+#             score = np.sum(keyword_similarities*keyword_weights)
+            score = np.mean(keyword_similarities)
         else:
-            section_vectors = np.array([vectors[t] for t in section_tokens if (t in idf and t in vectors)])
-            if section_vectors.shape[0]>0:
-                similarities = cosine_similarity(section_vectors, keyword_vectors)
-                similarities = similarities*(similarities>threshold_similarity)
-                if use_idf_for_doc_tokens:
-                    section_weights = np.array([idf[t] for t in section_tokens if (t in idf and t in vectors)])
-                    keyword_similarities = np.average(similarities, axis=0, weights=section_weights)
-                else:
-                    keyword_similarities = np.mean(similarities, axis=0)
-                if use_idf_for_keywords:
-                    score = np.sum(keyword_similarities*keyword_weights)
-                else:
-                    score = np.sum(keyword_similarities)
+            score = 0
         doc_sections_scores.append(score)
-
-    # doc_sections_scores = np.array(doc_sections_scores)
-    # old_scores = np.array(old_scores)
-    # if (np.max(doc_sections_scores) - np.min(doc_sections_scores) > 0):
-    #     doc_sections_scores = doc_sections_scores / (np.max(doc_sections_scores) - np.min(doc_sections_scores))
-    # if (np.max(old_scores) - np.min(old_scores) > 0):
-    #     old_scores = old_scores / (np.max(old_scores) - np.min(old_scores))
-    # old_school_score_weight = 0.5
-    # doc_sections_scores = doc_sections_scores + (old_school_score_weight * old_scores)
-    # # doc_sections_scores = doc_sections_scores + doc_sections_scores
 
     return doc_sections_scores
 
+
+# In[ ]:
+
+
+# doc_sections_scores = score_doc_sections(
+#     doc_sections,
+#     keywords
+# )
+# # doc_sections_scores
+
+
+# In[ ]:
+
+
 def text_is_too_similar(a, b):
     # if there are only 2 edits to get from one text to the other, it's not good
-    return editdistance.eval(a, b) < 500
+    return editdistance.eval(a, b) < 50
 
 # make sure we're not giving similar text among the top k (e.g. shows up on both minutes and agenda)
 def check_repeated_text(top_k, section_text):
@@ -360,21 +408,21 @@ def select_top_k(doc_sections, doc_sections_scores, k, user_history):
     top_k = []
     text_returned = []
     for x in sorted_sections:
-        filename = x[1]["filename"]
-        starting_page = x[1]["starting_page"]
-        starting_line = x[1]["starting_line"]
-        ending_page = x[1]["ending_page"]
-        ending_line = x[1]["ending_line"]
-        section_text = x[1]["section_text"]
-        # debugging parameter -- DO send the same thing multiple times if we're debugging
-        if filename in [x['filename'] for x in user_history]:
-            print("this user has already seen their top file ({})".format(filename))
-        elif check_repeated_text(top_k, section_text):
-            print("this excpert has already been returned")
-        else:
-            top_k.append(x)
-        if len(top_k) >= k:
-            break
+        score = x[0]
+        if score > 0:
+            filename = x[1]["filename"]
+            starting_page = x[1]["sentences"][0]["page"]
+            ending_page = x[1]["sentences"][-1]["page"]
+            section_text = x[1]["section_text"]
+            # debugging parameter -- DO send the same thing multiple times if we're debugging
+            if filename in [x[1]['filename'] for x in user_history]:
+                print("this user has already seen their top file ({})".format(filename))
+            elif check_repeated_text(top_k, section_text):
+                print("this excpert has already been returned")
+            else:
+                top_k.append(x)
+            if len(top_k) >= k:
+                break
     return top_k
 
 def update_with_top_k(history, top_k_sections, query):
@@ -384,50 +432,6 @@ def update_with_top_k(history, top_k_sections, query):
         history.append(x)
     return history
 
-# TODO make this do something
-def write_history(history):
-    dynamodb = boto3.resource('dynamodb', region_name='us-west-1')
-    try:
-        table = dynamodb.Table('history')
-        table.scan()
-    except:
-        table_args = {
-            'TableName': 'history',
-            'KeySchema': [
-                {
-                    'AttributeName': 'section_id',
-                    'KeyType': 'HASH'
-                }
-            ],
-            'AttributeDefinitions': [
-                {
-                    'AttributeName': 'section_id',
-                    'AttributeType': 'S'
-                }        
-            ],
-            'ProvisionedThroughput':
-            {
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
-            }
-        }
-        table = dynamodb.create_table(**table_args)
-    with table.batch_writer() as batch:
-        for i, item in enumerate(history):
-            item['section_id'] = "{},{},{},{},{},{}".format(
-                item['filename'],
-                item['id'],
-                item['starting_page'],
-                item['starting_line'],
-                item['ending_page'],
-                item['ending_line']
-            )
-            batch.put_item(Item=item)
-
-
-# dict_keys(['original_text', 'tokens', 'filename', 'starting_page', 'starting_line', 'ending_page', 'ending_line', 'section_text', 'section_tokens', 'Municipalities', 'id', 'Keywords', 'Time Window'])
-
-# emailer.send_emails
 
 # 'original_text', 'tokens', 'filename', 'starting_page', 'starting_line', 'ending_page', 'ending_line', 'section_text', 'section_tokens', 'Municipalities', 'id', 'Keywords', 'Time Window'
 def reformat_results(results):
@@ -449,42 +453,32 @@ def reformat_results(results):
             "doc_url": result['url'],
             "doc_name": os.path.basename(result['filename']),
             "user_id": username,
-            "page_number": result['starting_page'],
+            "page_number": result["sentences"][0]["page"],
             "keywords": keywords,
             "text": result['section_text'].encode('ascii', errors='ignore').decode('ascii')
         })
     return [reformatted_results[r] for r in reformatted_results]
 
 # vectors = setup_word_vectors()
-def run_queries(use_cached_idf = False, query_source="actual", k=3, use_idf_for_doc_tokens=False, threshold_similarity=-1, use_idf_for_keywords=True): 
+def run_queries(elmo, k=3): 
     print("reading queries")
-    queries = read_queries(query_source)
+    queries = read_queries()
     queries = [q for q in queries if ('Status' in q and q['Status'] == 'just_submitted')]
     print(queries)
     print("reading metadata")
     metadata = read_metadata()
-    print("setting up reader")
-    doc_text_reader = DocTextReader(log_every=100)
-    if use_cached_idf:
-        # used cached idf and only read relevant documents
-        print("loading cached idf")
-        idf = read_cached_idf()
-        print("finding relevant filenames")
-        relevant_filenames = find_relevant_filenames(queries, metadata)
-        # (not actually *all*, but all the ones we care about for queries)
-        print("reading relevant documents")
-        all_docs = doc_text_reader.read_docs(relevant_filenames)
-    else:
-        # read all documents and calculate inverse document frequency
-        all_filenames = metadata["local_path_txt"]
-        print("reading all documents")
-        all_docs = doc_text_reader.read_docs(all_filenames)
-        print("calculating idf")
-        idf = calculate_idf(all_docs)
-        cache_idf(idf)
+    # print("setting up reader")
+    # doc_text_reader = DocTextReader(log_every=100)
+    print("finding relevant filenames")
+    relevant_filenames = find_relevant_filenames(queries, metadata)
+    # (not actually *all*, but all the ones we care about for queries)
+    print("reading relevant documents")
+    # all_docs = doc_text_reader.read_docs(relevant_filenames)
+    all_docs = read_docs(relevant_filenames)
     print("reading history")
-    history = read_history()
-    
+    # history = read_history()
+    history = []
+
     results = []
     
     for q, query in enumerate(queries):
@@ -502,52 +496,27 @@ def run_queries(use_cached_idf = False, query_source="actual", k=3, use_idf_for_
         print("scoring documents")
         doc_sections_scores = score_doc_sections(
             doc_sections,
-            keywords, idf,
-            use_idf_for_doc_tokens=use_idf_for_doc_tokens,
-            threshold_similarity=threshold_similarity,
-            use_idf_for_keywords=use_idf_for_keywords)
+            keywords,
+            elmo
+        )
         top_k_sections = select_top_k(doc_sections, doc_sections_scores, k, user_history)
-        # print("~~~~")
-        # print("~~~~")
-        # print(re.sub("(\n *(\n)+ *)", "\n\n",
-        #              re.sub("\u2022", "", top_k_sections[0][1]["section_text"])))
-        # print("====")
-        # print("====")
-        # print("~~~~")
-        # print("~~~~")
-        # print(re.sub("(\n *(\n)+ *)", "\n\n",
-        #              re.sub("\u2022", "", top_k_sections[1][1]["section_text"])))
-        # print("====")
-        # print("====")
         results = update_with_top_k(results, top_k_sections, query)
         history = update_with_top_k(history, top_k_sections, query)
-        # print("")
-        # print("")
         
     print("sending emails")
-    send_emails(reformat_results(results))
-    write_history(history)
+    r = reformat_results(results)
+    print(r)
+    send_emails(r)
+    # write_history(history)
     print("finished")
 
 
-def send_first_email():
-    vectors = setup_word_vectors()
-    run_queries(
-        use_cached_idf=True,
-        query_source="quick",
-        use_idf_for_doc_tokens=False, # this makes a difference
-        threshold_similarity=0 # this doesn't make much of a difference
-    )
-
-
 if __name__=='__main__':
-    # TODO: contextual vectors
-    vectors = setup_word_vectors()
+    elmo = ElmoEmbedder()
+
     run_queries(
-        use_cached_idf=True,
-        query_source="actual",
-        use_idf_for_doc_tokens=False,
-        threshold_similarity=-1,
-        use_idf_for_keywords=False
+        elmo=elmo,
+        k=5
     )
+
 
