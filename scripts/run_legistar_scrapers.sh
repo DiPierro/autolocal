@@ -1,5 +1,5 @@
 #!/bin/bash
-source /home/ubuntu/autolocal/conda_init.sh
+source /home/ubuntu/autolocal/scripts/conda_init.sh
 echo $PATH
 conda activate autolocal
 echo $PYTHONPATH
