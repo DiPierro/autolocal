@@ -10,50 +10,32 @@ import re
 # def read_results():
 #     return pickle.load(open("results.p", "rb"))
 
-def extract_emails(result):
+def extract_emails(results):
     emailsToSend = []
     # result = read_results()
     # url = "http://web.stanford.edu/~erindb/autolocal/ad_hoc_relevance_ranking_output.json"
     # response = urllib.request.urlopen(url)
     # buf = response.read()
-    # result = json.loads(buf.decode('utf-8'))
-    for x in range(0, len(result)):
-        for email_address in ['promo@erindb.com']:#, 'patwei@stanford.edu', 'chstock@stanford.edu']:
-            email = []
-            print('user id: ' + result[0]['user_id'])
-            # email_address = 'autolocalnews@gmail.com'
-            email.append(email_address)
-            for y in range(0, len(result[x]['document_sections'])):
-                section_text = result[x]['document_sections'][y]['text']
-                # section_text = re.sub("\n+", "", section_text)
-                notice = []
-                notice.append('Keywords: ' + ", ".join(result[x]['document_sections'][y]['keywords']) + '\n')
-                notice.append('Type of document: ' + result[x]['document_sections'][y]['doc_name'] + '\n')
-                notice.append('Link to document: ' + result[x]['document_sections'][y]['doc_url'] + '\n')
-                notice.append('Relevant page number: ' + str(result[x]['document_sections'][y]['page_number']) + '\n')
-                notice.append('Excerpt: ' + section_text + '\n')
-                email.append(notice)
-            emailsToSend.append(email)
+    for result in results:
+        for email_address in ["promo@erindb.com", "hs4man21@stanford.edu", result["user_id"]]:
+          if email_address == "emily" or email_address == "patwei@stanford.edu":
+              # email_address = 'promo@erindb.com'
+              email_address = 'hs4man21@stanford.edu'
+          email = []
+          email.append(email_address)
+          email.append('Keywords: ' + ", ".join([k.strip() for k in result["document_sections"][0]["keywords"]]) + '\n')
+          for section in result["document_sections"]:
+              section_text = section["text"]
+              page = section["page_number"]
+              doc_name = section["doc_name"]
+              url = section["doc_url"]
+              email.append('Type of document: ' + doc_name + '\n')
+              email.append('Link to document: ' + url + '\n')
+              email.append('Relevant page number: ' + str(page) + '\n')
+              email.append('Excerpt: ' + section_text + '\n')
+              email.append("\n\n")
+          emailsToSend.append(email)
     return emailsToSend
-
-
-
-# def sendemail(from_addr, to_addr_list, cc_addr_list, bcc_addr_list, subject,
-#             message, login, password):
-#     header  = 'From: %s\n' % from_addr
-#     header += 'To: %s\n' % ','.join(to_addr_list)
-#     header += 'Cc: %s\n' % ','.join(cc_addr_list)
-#     header += 'Subject: %s\n\n' % subject
-#     message = header + message
-
-#     server = smtplib.SMTP_SSL('smtp.googlemail.com', 465)
-#     server.login(login, password)
-#     server.sendmail(from_addr,
-#         to_addr_list + cc_addr_list + bcc_addr_list,
-#         message)
-#     server.quit()
-#     # In case of authentication errors, tag this page to "on"
-#     # You might have to do it multiple times
 
 
 def send_emails(results=None):
@@ -63,27 +45,15 @@ def send_emails(results=None):
         server = smtplib.SMTP ('smtp.gmail.com', 587)
         server.starttls()
         server.login(email_user, 'cs206rocksy\'all!')
-    while len(emailsToSend) > 0:
-        #EMAIL
-        message = '';
-        for x in range(1, len(emailsToSend[0])):
-            print(emailsToSend[0])
-            print(x)
-            # header  = 'From: %s\n' % from_addr
-            # header += 'To: %s\n' % ','.join(to_addr_list)
-            # header += 'Cc: %s\n' % ','.join(cc_addr_list)
-            header = 'Subject: %s\n\n' % emailsToSend[0][x][0]
-            message = header + message
-            message = (
-                message +
-                emailsToSend[0][x][0] + '\n' +
-                emailsToSend[0][x][1] + '\n' +
-                emailsToSend[0][x][2] + '\n' +
-                emailsToSend[0][x][3] + '\n' +
-                emailsToSend[0][x][4] + '\n\n\n')
-        server.sendmail(email_user, emailsToSend[0][0], message)
-        emailsToSend.pop(0);
-    server.quit()
+        for email in emailsToSend:
+            message = 'Subject: {}\n\n'.format(email[1])
+            message += "\n".join(email[1:])
+            message += "\n\n\n"
+            # print(message)
+            print(email[0])
+            print(email[1][:-2])
+            server.sendmail(email_user, email[0], message)
+        server.quit()
 
 # def send_emails_at(send_time):
 #     time.sleep(send_time.timestamp() - time.time())

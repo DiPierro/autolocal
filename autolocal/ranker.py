@@ -61,7 +61,7 @@ metadata = read_metadata()
 
 
 def read(s3_path):
-    print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
+    # print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
     return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'rb'))
 
 def write(array, s3_path):
@@ -464,7 +464,7 @@ def run_queries(elmo, k=3):
     print("reading queries")
     queries = read_queries()
     queries = [q for q in queries if ('Status' in q and q['Status'] == 'just_submitted')]
-    print(queries)
+    # print(queries)
     print("reading metadata")
     metadata = read_metadata()
     # print("setting up reader")
@@ -505,7 +505,7 @@ def run_queries(elmo, k=3):
         
     print("sending emails")
     r = reformat_results(results)
-    print(r)
+    # print(r)
     send_emails(r)
     # write_history(history)
     print("finished")
