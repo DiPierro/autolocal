@@ -73,8 +73,8 @@
 </head>
 <div class="container">
   <form id="contact" action="" method="post">
-    <h3>CityCouncilor</h3>
-    <h4>Enter your email address and search queries below. We will periodically send you emails about upcoming public meetings relevant to you!</h4>
+    <h3>CityCouncilor</h3>    
+    <h4>Stay informed of city meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
     <fieldset>
       <input placeholder="Your Email Address" type="email" tabindex="2" data-bind='value: id' required>
     </fieldset>
@@ -122,13 +122,13 @@
     <fieldset>
       <h2>Time window of interest</h2>
       <input type="checkbox" name="not_foo" value="upcoming_only" onclick="onlyOne(this)"> Upcoming<br/>
-      <input type="checkbox" name="not_foo" value="this_week" onclick="onlyOne(this)"> Past Week<br/>
+<!--       <input type="checkbox" name="not_foo" value="this_week" onclick="onlyOne(this)"> Past Week<br/>
       <input type="checkbox" name="not_foo" value="this_month" onclick="onlyOne(this)"> Past Month<br/>
       <input type="checkbox" name="not_foo" value="last_six_months" onclick="onlyOne(this)"> Past 6 Months<br/>
-    </fieldset>
+ -->    </fieldset>
 
     <fieldset>
-      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" data-bind="click: $root.POSTautoLocalNews" > Save </button>
+      <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" data-bind="click: $root.POSTautoLocalNews" > Subscribe to Email Alerts </button>
       <span style ="color: darkolivegreen" data-bind='text : SuccessMessage' />
     </fieldset>
 
