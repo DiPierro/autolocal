@@ -52,7 +52,7 @@ def send_emails(results=None, args={}):
       server.login(from_address, 'cs206rocksy\'all!')
       for to_address in emails_to_send:
         for keywords in emails_to_send[to_address]:
-          message = 'Subject: {}\n\n'.format(keywords)
+          message = 'Subject: {} to {}: {}\n\n'.format(start_date, end_date, keywords)
           sections = emails_to_send[to_address][keywords]
           if start_date and end_date:
             message += "from: {} to {}".format(start_date, end_date) + "\n"

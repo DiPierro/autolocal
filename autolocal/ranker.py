@@ -83,10 +83,13 @@ def parse_dates(start_date, end_date):
     }
     if start_date:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        print(start_date)
     else:
         start_date = starting_dates_for_filtering['upcoming']
     if end_date:
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        print(end_date)
+    assert(start_date < end_date)
     return start_date, end_date
 
 def find_relevant_filenames(queries, metadata, start_date=None, end_date=None):
@@ -100,9 +103,11 @@ def find_relevant_filenames(queries, metadata, start_date=None, end_date=None):
     relevant_filenames = set()
 
     potential_documents = metadata
+    print("start", start_date)
+    print("end", end_date)
     potential_documents = potential_documents[potential_documents["date"] >= start_date]
     if end_date:
-        potential_documents = potential_documents[potential_documents["date"] >= end_date]
+        potential_documents = potential_documents[potential_documents["date"] <= end_date]
 
     potential_documents = potential_documents[[(c in cities) for c in potential_documents["city"]]]
     relevant_filenames.update(potential_documents['local_path_txt'])
