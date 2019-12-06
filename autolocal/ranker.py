@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 from allennlp.commands.elmo import ElmoEmbedder
 import boto3
 import pandas as pd
@@ -19,6 +16,7 @@ import json
 from autolocal.emailer import send_emails
 import editdistance
 import re
+import argparse
 
 def single_vector_per_doc(vectors):
     # vectors is a list of np arrays where:
@@ -35,17 +33,13 @@ def single_vector_per_doc(vectors):
     vectors = np.concatenate([v[2] for v in vectors], 0)
     return vectors
 
-s3 = boto3.resource('s3')
-autolocal_docs_bucket = s3.Bucket('autolocal-documents')
 def read_doc(s3_path):
+    s3 = boto3.resource('s3')
+    autolocal_docs_bucket = s3.Bucket('autolocal-documents')
     try:
         return autolocal_docs_bucket.Object(s3_path).get()['Body'].read().decode("ascii", "ignore")
     except:
         return None
-
-
-# In[ ]:
-
 
 def read_metadata():
     table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-documents')
@@ -54,17 +48,12 @@ def read_metadata():
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
     metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: x[:-3]+"pkl")
     return metadata
-metadata = read_metadata()
 
-
-# In[ ]:
-
-
-def read(s3_path):
+def read_vectors(s3_path):
     # print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
     return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'rb'))
 
-def write(array, s3_path):
+def write_vectors(array, s3_path):
     pickle.dump(array, open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'wb'))
 
 def sentence_split(s):
@@ -75,60 +64,49 @@ def tokenize(s):
     tokens = re.findall(r'\w+', s)
     return tokens
 
-
-# In[ ]:
-
-
-starting_dates_for_filtering = {
-    'upcoming_only': datetime.now() + timedelta(days=0.5),
-    'upcoming': datetime.now() + timedelta(days=0.5),
-    'this_week': datetime.now() - timedelta(weeks=1),
-    'this_year': datetime.now() - timedelta(days=365),
-    'this_month': datetime.now() - timedelta(weeks=5),
-    'past_six_months':datetime.now() - timedelta(days=183),
-    'last_six_months':datetime.now() - timedelta(days=183),
-    'past': None,
-    'all': None
-}
-
-
-# In[ ]:
-
-
 def read_queries():
-    table = boto3.resource('dynamodb', region_name='us-west-2').Table('autoLocalNews')
+    table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-user-queries')
     queries = table.scan()["Items"]
     return queries
 
+def parse_dates(start_date, end_date):
+    starting_dates_for_filtering = {
+        'upcoming_only': datetime.now(),
+        'upcoming': datetime.now(),
+        'this_week': datetime.now() - timedelta(weeks=1),
+        'this_year': datetime.now() - timedelta(days=365),
+        'this_month': datetime.now() - timedelta(weeks=5),
+        'past_six_months':datetime.now() - timedelta(days=183),
+        'last_six_months':datetime.now() - timedelta(days=183),
+        'past': None,
+        'all': None
+    }
+    if start_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+    else:
+        start_date = starting_dates_for_filtering['upcoming']
+    if end_date:
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+    return start_date, end_date
 
-# In[ ]:
+def find_relevant_filenames(queries, metadata, start_date=None, end_date=None):
 
-
-def find_relevant_filenames(queries, metadata): 
+    cities = set()
     
     # filter metadata to only those files that match the query municipality and time_window
-    municipalities_by_time_window = {}
     for query in queries:
-        time_window = query['Time Window']
-        if time_window in municipalities_by_time_window:
-            municipalities_by_time_window[time_window].update(query['Municipalities'])
-        else:
-            municipalities_by_time_window[time_window] = set(query['Municipalities'])
+        cities.update(query["Municipalities"])
             
     relevant_filenames = set()
-    for time_window in municipalities_by_time_window:
-        starting_date = starting_dates_for_filtering[time_window]
-        potential_documents = metadata
-        if starting_date:
-            potential_documents = potential_documents[potential_documents["date"] >= starting_date]
-        cities = municipalities_by_time_window[time_window]
-        potential_documents = potential_documents[[(c in cities) for c in potential_documents["city"]]]
-        relevant_filenames.update(potential_documents['local_path_txt'])
+
+    potential_documents = metadata
+    potential_documents = potential_documents[potential_documents["date"] >= start_date]
+    if end_date:
+        potential_documents = potential_documents[potential_documents["date"] >= end_date]
+
+    potential_documents = potential_documents[[(c in cities) for c in potential_documents["city"]]]
+    relevant_filenames.update(potential_documents['local_path_txt'])
     return relevant_filenames
-
-
-# In[ ]:
-
 
 def read_docs(s3_paths):
     log_every = 100
@@ -148,11 +126,10 @@ def read_docs(s3_paths):
                 doc_tokens.append(sentence_tokens)
             filename_pkl = s3_path[:-3] + "pkl"
             try:
-                vectors = read(filename_pkl)
+                vectors = read_vectors(filename_pkl)
                 documents[s3_path] = {
                     "original_text": doc_string,
                     "sentences": doc_sentences,
-#                     "tokens": doc_tokens,
                     "vectors": vectors
                 }
             except:
@@ -171,22 +148,13 @@ def read_docs(s3_paths):
 
     return documents
 
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-def select_relevant_docs(municipalities, time_window, all_docs, metadata):
+def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, end_date=None):
     # filter metadata to only those files that match the query municipality and time_window
-    starting_date = starting_dates_for_filtering[time_window]
     potential_documents = metadata
-    if starting_date:
-        potential_documents = potential_documents[potential_documents["date"] >= starting_date]
+    if start_date:
+        potential_documents = potential_documents[potential_documents["date"] >= start_date]
+    if end_date:
+        potential_documents = potential_documents[potential_documents["date"] >= end_date]
     potential_documents = potential_documents[[(c in municipalities) for c in potential_documents["city"]]]
     # filter all docs to only filenames in subset of metadata
     filenames = list(potential_documents['local_path_txt'])
@@ -199,16 +167,6 @@ def select_relevant_docs(municipalities, time_window, all_docs, metadata):
             docs_to_return.append({**all_docs[f], 'filename':f, 'url':u})
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
     return docs_to_return
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
 
 # TODO: [PRIORITY] include section numbers, extract overlapping sections, enforce no overlaps in returned content
 # TODO: Play with section length
@@ -260,71 +218,15 @@ def segment_docs(relevant_docs):
                     section_tokens = 0
     return sections
 
-
-# In[ ]:
-
-
-#             page_tokens = simple_tokenizer.tokenize(page)
-#             for t in page_tokens:
-#                 page_numbers.append(p+1)
-#         doc_tokens = doc["tokens"]
-#         vectors = select_layer(doc["vectors"])
-# #         print(vectors.shape)
-#         filename = doc["filename"]
-#         n_tokens = len(doc_tokens)
-# #         print(n_tokens)
-#         tokens_per_section = 100
-#         n_sections = n_tokens // tokens_per_section
-# #         n_sections = int(np.floor(tokens_per_section / n_tokens))
-# #         print(n_sections)
-#         for s in range(n_sections):
-#             start_index = s*tokens_per_section
-#             end_index = ((s+1)*tokens_per_section)
-#             section_tokens = doc_tokens[start_index:end_index]
-#             section_vectors = vectors[start_index:end_index,]
-#             section_start_page = page_numbers[start_index]
-#             section_end_page = page_numbers[min(len(page_numbers), end_index)-1]
-#             doc_sections.append({
-#                 'filename': doc['filename'],
-#                 'url': doc['url'],
-#                 'start_page': section_start_page,
-#                 'end_page': section_end_page,
-#                 'text': " ".join(section_tokens),
-# #                 'tokens': section_tokens,
-#                 'vectors': section_vectors
-#             })
-            
-#     return doc_sections
-
-
-# In[ ]:
-
-
-# doc_sections = segment_docs(relevant_docs)
-# print("sections: {}".format(len(doc_sections)))
-# print(doc_sections[0]['section_text'])
-
-
-# In[ ]:
-
-
-casing = "lower_non_acronyms"
-# casing = "lower_non_acronyms"
-# TODO: is lowercasing necessary?
-
-def casing_function():
+def set_casing(x, casing="lower_non_acronyms"):
     if casing=="cased":
-        return lambda x: x
+        return x
     elif casing=="lower":
-        return lambda x: x.lower()
+        return x.lower()
     elif casing=="lower_non_acronyms":
-        return lambda x: x if x.isupper() else x.lower()
+        return (x if x.isupper() else x.lower())
     else:
         raise Exception
-
-
-# In[ ]:
-
 
 # TODO: use vectors to find closes words to keywords
 # TODO: why do shorter documents get higher scores?
@@ -336,19 +238,19 @@ def score_doc_sections(doc_sections, orig_keywords, elmo):
         for word in words:
             keywords.append(word)
     keyword_vectors = single_vector_per_doc([elmo.embed_sentence(keywords)])
-#     keyword_weights = []
-#     fix_case = casing_function()
-# #     idf_smoothing_count = 10
-#     for k in keywords:
-# #         words = k.split(" ")
-# #         if len(words) > 1:
-# #             keyword_weights.append(1./idf_smoothing_count)
-# #         else:
-# #             k = fix_case(k)
-# #             if k in idf:
-# #                 keyword_weights.append(1./(1./idf[k]+idf_smoothing_count))
-# #             else:
-# #                 keyword_weights.append(1./idf_smoothing_count)
+    # keyword_weights = []
+    # fix_case = casing_function()
+    # idf_smoothing_count = 10
+    # for k in keywords:
+    #     words = k.split(" ")
+    #     if len(words) > 1:
+    #         keyword_weights.append(1./idf_smoothing_count)
+    #     else:
+    #         k = fix_case(k)
+    #         if k in idf:
+    #             keyword_weights.append(1./(1./idf[k]+idf_smoothing_count))
+    #         else:
+    #             keyword_weights.append(1./idf_smoothing_count)
     doc_sections_scores = []
     for s, section in enumerate(doc_sections):
         section_vectors = single_vector_per_doc([s["sentence_vectors"] for s in section["sentences"]])
@@ -356,8 +258,8 @@ def score_doc_sections(doc_sections, orig_keywords, elmo):
         no_keywords_found = True
         for k in orig_keywords:
             if bool(re.search("([^\w]|^)" + k + "([^\w]|$)", section_text)):
-#             if k in section_text:
-                # TODO: consider casing
+            # if k in section_text:
+            #     TODO: consider casing
                 no_keywords_found = False
         for k in orig_keywords:
             if k.islower():
@@ -367,30 +269,16 @@ def score_doc_sections(doc_sections, orig_keywords, elmo):
             score = 0
         elif section_vectors.shape[0]>0:
             similarities = cosine_similarity(section_vectors, keyword_vectors)
-#             if threshold_similarity > -1:
-#                 similarities = similarities*(similarities>threshold_similarity)
+            # if threshold_similarity > -1:
+            #     similarities = similarities*(similarities>threshold_similarity)
             keyword_similarities = np.mean(similarities, axis=0)
-#             score = np.sum(keyword_similarities*keyword_weights)
+            # score = np.sum(keyword_similarities*keyword_weights)
             score = np.mean(keyword_similarities)
         else:
             score = 0
         doc_sections_scores.append(score)
 
     return doc_sections_scores
-
-
-# In[ ]:
-
-
-# doc_sections_scores = score_doc_sections(
-#     doc_sections,
-#     keywords
-# )
-# # doc_sections_scores
-
-
-# In[ ]:
-
 
 def text_is_too_similar(a, b):
     # if there are only 2 edits to get from one text to the other, it's not good
@@ -403,7 +291,7 @@ def check_repeated_text(top_k, section_text):
             return True
     return False
 
-def select_top_k(doc_sections, doc_sections_scores, k, user_history):
+def select_top_k(doc_sections, doc_sections_scores, k):
     sorted_sections = sorted(zip(doc_sections_scores, doc_sections), key=lambda pair: pair[0], reverse=True)
     top_k = []
     text_returned = []
@@ -414,10 +302,7 @@ def select_top_k(doc_sections, doc_sections_scores, k, user_history):
             starting_page = x[1]["sentences"][0]["page"]
             ending_page = x[1]["sentences"][-1]["page"]
             section_text = x[1]["section_text"]
-            # debugging parameter -- DO send the same thing multiple times if we're debugging
-            if filename in [x[1]['filename'] for x in user_history]:
-                print("this user has already seen their top file ({})".format(filename))
-            elif check_repeated_text(top_k, section_text):
+            if check_repeated_text(top_k, section_text):
                 print("this excpert has already been returned")
             else:
                 top_k.append(x)
@@ -432,65 +317,30 @@ def update_with_top_k(history, top_k_sections, query):
         history.append(x)
     return history
 
-
-# 'original_text', 'tokens', 'filename', 'starting_page', 'starting_line', 'ending_page', 'ending_line', 'section_text', 'section_tokens', 'Municipalities', 'id', 'Keywords', 'Time Window'
-def reformat_results(results):
-    reformatted_results = {}
-    # one per query
-    for result in results:
-        username = result['id']
-        keywords = result['Keywords']
-        query_id = username + ",".join(keywords) + ",".join(result['Municipalities']) + ",".join(result['Time Window'])
-        if query_id not in reformatted_results:
-            reformatted_results[query_id] = {
-                'user_id': username,
-                'document_sections': []
-            }
-        reformatted_results[query_id]['document_sections'].append({
-            # TODO
-            "section_id": "000",
-            # TODO
-            "doc_url": result['url'],
-            "doc_name": os.path.basename(result['filename']),
-            "user_id": username,
-            "page_number": result["sentences"][0]["page"],
-            "keywords": keywords,
-            "text": result['section_text'].encode('ascii', errors='ignore').decode('ascii')
-        })
-    return [reformatted_results[r] for r in reformatted_results]
-
-# vectors = setup_word_vectors()
-def run_queries(elmo, k=3): 
+def run_queries(elmo, input_args):
+    k = input_args.k 
+    start_date, end_date = parse_dates(input_args.start_date, input_args.end_date)
     print("reading queries")
     queries = read_queries()
     queries = [q for q in queries if ('Status' in q and q['Status'] == 'just_submitted')]
-    # print(queries)
     print("reading metadata")
     metadata = read_metadata()
-    # print("setting up reader")
-    # doc_text_reader = DocTextReader(log_every=100)
     print("finding relevant filenames")
-    relevant_filenames = find_relevant_filenames(queries, metadata)
-    # (not actually *all*, but all the ones we care about for queries)
+    relevant_filenames = find_relevant_filenames(queries, metadata, start_date = start_date, end_date = end_date)
     print("reading relevant documents")
-    # all_docs = doc_text_reader.read_docs(relevant_filenames)
+    # (not actually *all*, but all the ones we care about for queries)
     all_docs = read_docs(relevant_filenames)
-    print("reading history")
-    # history = read_history()
-    history = []
 
     results = []
     
     for q, query in enumerate(queries):
         print("running query {} of {}".format(q, len(queries)))
         user_id = query["id"]
-        print("user id: {}".format(user_id))
-        user_history = [x for x in history if x['id'] == user_id]
+        email_address = query["email_address"]
+        print("email address: {}".format(email_address))
         keywords = query["Keywords"]
-        print(keywords)
-        time_window = query["Time Window"]
         municipalities = query["Municipalities"]
-        relevant_docs = select_relevant_docs(municipalities, time_window, all_docs, metadata)
+        relevant_docs = select_relevant_docs(municipalities, all_docs, metadata)
         print("segmenting documents")
         doc_sections = segment_docs(relevant_docs)
         print("scoring documents")
@@ -499,24 +349,50 @@ def run_queries(elmo, k=3):
             keywords,
             elmo
         )
-        top_k_sections = select_top_k(doc_sections, doc_sections_scores, k, user_history)
+        top_k_sections = select_top_k(doc_sections, doc_sections_scores, k)
         results = update_with_top_k(results, top_k_sections, query)
-        history = update_with_top_k(history, top_k_sections, query)
         
     print("sending emails")
-    r = reformat_results(results)
-    # print(r)
-    send_emails(r)
-    # write_history(history)
+    send_emails(results, args)
     print("finished")
 
-
 if __name__=='__main__':
+
+    parser = argparse.ArgumentParser(description='Section documents and rank by relevance to queries')
+
+    parser.add_argument('--email', type=str, required=True,
+        help='Who should I send emails to?\nUse `--email P` to send to the actual addresses in the queries.')
+
+    parser.add_argument('--start_date', type=str, default=None,
+        help="".join([
+            'Documents have dates associated with them. ',
+            'What is the earliest date of the documents that we should return?\n',
+            'Format is YYYY-MM-DD, e.g. 2019-12-4 for December 4, 2019.\n',
+            'Default is to include Minutes from meetings that took place this ',
+            'past week and Agendas for upcoming meetings'
+        ]))
+
+    parser.add_argument('--end_date', type=str, default=None,
+        help="".join([
+            'Documents have dates associated with them. ',
+            'What is the latest date of the documents that we should return?\n',
+            'Format is YYYY-MM-DD, e.g. 2019-12-4 for December 4, 2019.\n',
+            'Default is to include *all* documents after the start date.'
+        ]))
+
+    parser.add_argument('--k', type=int, default=5,
+        help="".join([
+            'We will return the top k results. Default is k=5.'
+        ]))
+
+    args = parser.parse_args()
+    print(args)
+
     elmo = ElmoEmbedder()
 
     run_queries(
         elmo=elmo,
-        k=5
+        input_args=args
     )
 
 
