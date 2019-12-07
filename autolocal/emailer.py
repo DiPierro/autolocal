@@ -33,7 +33,7 @@ def extract_emails(results, email_address):
     emails_to_send[email_address][keywords_str].append("\n".join([
       'Type of document: {}'.format(doc_name),
       'Link to document: {}'.format(url),
-      'Relevant page number: '.format(page),
+      'Relevant page number: {}'.format(page),
       'Excerpt: {}'.format(section_text),
       "\n\n"
     ]))
@@ -59,7 +59,7 @@ def send_emails(results=None, args={}):
           message += "\n".join(sections)
           message += "\n\n\n"
           server.sendmail(from_address, to_address, message)
-          myfilename = "emails/" + start_date + "_" + end_date + ".txt"
+          myfilename = "../data/emails/" + start_date + "_" + end_date + ".txt"
           open(myfilename, "w").write(message)
       server.quit()
 
