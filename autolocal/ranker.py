@@ -18,6 +18,9 @@ import editdistance
 import re
 import argparse
 
+def get_local_pkl(s3_path):
+    return os.path.join("../data/pkls/", os.path.basename(s3_path))
+
 def single_vector_per_doc(vectors):
     # vectors is a list of np arrays where:
     # dims: (LAYERS(3), TOKENS(varies), DIMENSIONS(1024))
@@ -60,12 +63,17 @@ def read_metadata(args):
     metadata = pd.DataFrame(data)
     print('docs/san-jose/San-Jose_2019-09-24_City-Council_Agenda.txt' in list(metadata['local_path_txt']))
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
-    metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: x[:-3]+"pkl")
+    metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: "vectors"+x[4:-3]+"pkl")
     return metadata
 
-def read_vectors(s3_path):
-    # print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
-    return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'rb'))
+def read_vectors(pkl_filename):
+    try:
+        return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(pkl_filename)), 'rb'))
+    except:
+        s3 = boto3.resource('s3')
+        s3.meta.client.download_file('autolocal-documents', pkl_filename, get_local_pkl(pkl_filename))
+        # print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
+        return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(pkl_filename)), 'rb'))
 
 def write_vectors(array, s3_path):
     pickle.dump(array, open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'wb'))
@@ -138,6 +146,7 @@ def read_docs(s3_paths):
     i = 0
     n_docs_read = 0
     for s3_path in s3_paths:
+        pkl_path = "vectors" + s3_path[4:-3] + "pkl"
         try:
             doc_string = read_doc(s3_path)
             doc_sentences = sentence_split(doc_string)
@@ -145,16 +154,15 @@ def read_docs(s3_paths):
             for sentence in doc_sentences:
                 sentence_tokens = tokenize(sentence)
                 doc_tokens.append(sentence_tokens)
-            filename_pkl = s3_path[:-3] + "pkl"
             try:
-                vectors = read_vectors(filename_pkl)
+                vectors = read_vectors(pkl_path)
                 documents[s3_path] = {
                     "original_text": doc_string,
                     "sentences": doc_sentences,
                     "vectors": vectors
                 }
             except:
-                print('missing vectors for: {}'.format(s3_path))
+                print('missing vectors for: {}'.format(pkl_path))
         except Exception as e:
             if i < 10:
                 print("Key not found: {}".format(s3_path))

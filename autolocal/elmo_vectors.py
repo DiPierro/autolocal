@@ -22,6 +22,8 @@ elmo = ElmoEmbedder()
 
 
 # In[36]:
+def write_local(array, s3_path):
+    pickle.dump(array, open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'wb'))
 
 
 def read_metadata():
@@ -87,32 +89,52 @@ s3.meta.client.download_file('autolocal-documents', 'cities.csv', 'tmp.txt')
 # In[ ]:
 
 
+def sentence_split(s):
+    sentences = re.split('[.\n!?"\f]', s)
+    return [s for s in sentences if len(s.strip())>0]
+
+def tokenize(s):
+    tokens = re.findall(r'\w+', s)
+    return tokens
+
+def read_doc(s3_path):
+    s3 = boto3.resource('s3')
+    autolocal_docs_bucket = s3.Bucket('autolocal-documents')
+    try:
+        return autolocal_docs_bucket.Object(s3_path).get()['Body'].read().decode("ascii", "ignore")
+    except:
+        return None
+
+
+count = 0
 print("processing docs")
 for i, row in tqdm(metadata_subset.iterrows()):
-    txt_filename = row['local_path_txt']
-    pkl_filename = row['local_path_pkl']
-    try:
-        s3.Object('autolocal-documents', pkl_filename).load()
-        print("already uploaded: {}".format(pkl_filename))
-    except:
+    if count >= int(sys.argv[1]):
+        txt_filename = row['local_path_txt']
+        pkl_filename = row['local_path_pkl']
         try:
-            read_local(pkl_filename)
-            print("already processed: {}".format(pkl_filename))
+            s3.Object('autolocal-documents', pkl_filename).load()
+            print("already uploaded: {}".format(pkl_filename))
         except:
-            print("processing doc")
-            doc_string = read_doc(txt_filename)
-            if doc_string:
-                sentences = sentence_spit(doc_string)
-                vectors = []
-                for sentence in sentences:
-                    sentence_tokens = tokenize(sentence)
-                    sentence_vectors = elmo.embed_sentence(sentence_tokens)
-                    vectors.append(sentence_vectors)
-                write({"sentences": sentences, "vectors": vectors}, pkl_filename)
-        print("uploading doc")
-        s3 = boto3.resource('s3')
-        s3.meta.client.upload_file(get_local_pkl(pkl_filename), 'autolocal-documents', pkl_filename)
-
+            try:
+                read_local(pkl_filename)
+                print("already processed: {}".format(pkl_filename))
+            except:
+                print("processing doc")
+                doc_string = read_doc(txt_filename)
+                if doc_string:
+                    sentences = sentence_split(doc_string)
+                    vectors = []
+                    for sentence in sentences:
+                        sentence_tokens = tokenize(sentence)
+                        sentence_vectors = elmo.embed_sentence(sentence_tokens)
+                        vectors.append(sentence_vectors)
+                    write_local({"sentences": sentences, "vectors": vectors}, pkl_filename)
+            print("uploading doc")
+            s3 = boto3.resource('s3')
+            s3.meta.client.upload_file(get_local_pkl(pkl_filename), 'autolocal-documents', pkl_filename)
+        print("completed document {} of {}".format(count, metadata_subset.shape[0]))
+    count+=1
 
 # In[ ]:
 

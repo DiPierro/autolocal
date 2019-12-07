@@ -8,7 +8,7 @@ import pickle
 import re
 import os
 
-def read_results():
+def read_password():
     return open('password.txt', 'r').read()
 
 def extract_emails(results, email_address):
@@ -59,6 +59,8 @@ def send_emails(results=None, args={}):
           message += "\n".join(sections)
           message += "\n\n\n"
           server.sendmail(from_address, to_address, message)
+          myfilename = "emails/" + start_date + "_" + end_date + ".txt"
+          open(myfilename, "w").write(message)
       server.quit()
 
 # def send_emails_at(send_time):
