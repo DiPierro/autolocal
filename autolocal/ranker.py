@@ -41,10 +41,24 @@ def read_doc(s3_path):
     except:
         return None
 
-def read_metadata():
+def read_metadata(args):
+    # start_date = [int(d) for d in args.start_date.split("-")]
+    # end_date = [int(d) for d in args.end_date.split("-")]
+    # for year in range(start_date[0], end_date[0]):
+    #     for month in range(start_date[1], end_date[1]):
+    #         for day in range(start_date[2], end_date[2]):
     table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-documents')
     s3_client = boto3.client('s3')
-    metadata = pd.DataFrame(table.scan()["Items"])
+
+    response = table.scan()
+    data = response['Items']
+
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response['Items'])
+
+    metadata = pd.DataFrame(data)
+    print('docs/san-jose/San-Jose_2019-09-24_City-Council_Agenda.txt' in list(metadata['local_path_txt']))
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
     metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: x[:-3]+"pkl")
     return metadata
@@ -92,17 +106,16 @@ def parse_dates(start_date, end_date):
     assert(start_date < end_date)
     return start_date, end_date
 
-def find_relevant_filenames(queries, metadata, start_date=None, end_date=None):
+def find_relevant_filenames(queries, metadata, start_date=None, end_date=None, agenda_only=False):
 
     cities = set()
     
     # filter metadata to only those files that match the query municipality and time_window
     for query in queries:
         cities.update(query["Municipalities"])
-            
-    relevant_filenames = set()
 
     potential_documents = metadata
+
     print("start", start_date)
     print("end", end_date)
     potential_documents = potential_documents[potential_documents["date"] >= start_date]
@@ -110,8 +123,11 @@ def find_relevant_filenames(queries, metadata, start_date=None, end_date=None):
         potential_documents = potential_documents[potential_documents["date"] <= end_date]
 
     potential_documents = potential_documents[[(c in cities) for c in potential_documents["city"]]]
-    relevant_filenames.update(potential_documents['local_path_txt'])
-    return relevant_filenames
+
+    if agenda_only:
+        potential_documents = potential_documents[potential_documents["doc_type"]=="Agenda"]
+
+    return list(potential_documents['local_path_txt'])
 
 def read_docs(s3_paths):
     log_every = 100
@@ -329,9 +345,10 @@ def run_queries(elmo, input_args):
     queries = read_queries()
     queries = [q for q in queries if ('Status' in q and q['Status'] == 'just_submitted')]
     print("reading metadata")
-    metadata = read_metadata()
+    metadata = read_metadata(input_args)
     print("finding relevant filenames")
-    relevant_filenames = find_relevant_filenames(queries, metadata, start_date = start_date, end_date = end_date)
+    relevant_filenames = find_relevant_filenames(queries, metadata, start_date = start_date, end_date = end_date, agenda_only=input_args.agenda_only)
+    print(relevant_filenames)
     print("reading relevant documents")
     # (not actually *all*, but all the ones we care about for queries)
     all_docs = read_docs(relevant_filenames)
@@ -388,6 +405,11 @@ if __name__=='__main__':
     parser.add_argument('--k', type=int, default=5,
         help="".join([
             'We will return the top k results. Default is k=5.'
+        ]))
+
+    parser.add_argument('--agenda_only', action='store_true',
+        help="".join([
+            "If this flag is included, return only agenda documents, no minutes."
         ]))
 
     args = parser.parse_args()
