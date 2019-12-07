@@ -8,8 +8,8 @@ import pickle
 import re
 import os
 
-# def read_results():
-#     return pickle.load(open("results.p", "rb"))
+def read_results():
+    return open('password.txt', 'r').read()
 
 def extract_emails(results, email_address):
   # emailsToSend = []
@@ -49,7 +49,7 @@ def send_emails(results=None, args={}):
       from_address = 'autolocalnews@gmail.com'
       server = smtplib.SMTP ('smtp.gmail.com', 587)
       server.starttls()
-      server.login(from_address, 'cs206rocksy\'all!')
+      server.login(from_address, read_password())
       for to_address in emails_to_send:
         for keywords in emails_to_send[to_address]:
           message = 'Subject: {} to {}: {}\n\n'.format(start_date, end_date, keywords)
