@@ -13,21 +13,13 @@
                 var self = this;
 
 			          self.id = ko.observable("");
-                self.time_window = ko.observable("");
                 self.keywords = ko.observableArray("");
                 self.SuccessMessage = ko.observable("");
                 self.municipalities = ko.observableArray([]);
 
             self.POSTautoLocalNews = function () {
 
-                  var the_time_window = "";
-                  checkboxes = document.getElementsByName('not_foo');
-                  for(var i=0, n=checkboxes.length;i<n;i++) {
-                    if(checkboxes[i].checked == true) {
-                      the_time_window = checkboxes[i].value;
-                      break;
-                    }
-                  }
+                  var failed = false;
 
                   var the_municipalities = [];
                   checkboxes = document.getElementsByName('foo');
@@ -40,11 +32,11 @@
 				          var CustomerDetail = {
 
 				                id: self.id(),
-				                time_window: the_time_window,
 				                keywords: self.keywords().split(','),
                         municipalities: the_municipalities,
-				          }				
+				          }
         $.ajax({
+            async: false,
             url: 'https://cors-anywhere.herokuapp.com/https://iiyouepoxb.execute-api.us-west-2.amazonaws.com/Dev/postautolocalnews',
             cache: false,
             type: 'POST',
@@ -53,14 +45,15 @@
             success: function (data) {
               self.SuccessMessage(data)
 							       self.id('');
-							       self.time_window('');
 							       self.keywords('');
                      self.municipalities('');
             }
 					}).fail(
                   function(xhr, textStatus, err){
+                         failed = true;
 					               alert("Error happened "+err);
                   });
+                  if(failed==false)window.location.href = "landing.html";
             };
         }
 
@@ -68,12 +61,11 @@
             ko.applyBindings(viewModel);
          });
 
-
     </script>
 </head>
 <div class="container">
   <form id="contact" action="" method="post">
-    <h3>CityCouncilor</h3>    
+    <h3>CityCouncilor</h3>
     <h4>Stay informed of city meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
     <fieldset>
       <input placeholder="Your Email Address" type="email" tabindex="2" data-bind='value: id' required>
@@ -88,15 +80,6 @@
         for(var i=0, n=checkboxes.length;i<n;i++) {
           checkboxes[i].checked = source.checked;
         }
-      }
-    </script>
-
-    <script language="JavaScript">
-      function onlyOne(checkbox) {
-        var checkboxes = document.getElementsByName('not_foo')
-        checkboxes.forEach((item) => {
-          if (item !== checkbox) item.checked = false
-        })
       }
     </script>
 
@@ -120,12 +103,8 @@
     <input type="checkbox" name="foo" value="Sunnyvale"> Sunnyvale<br/>
 
     <fieldset>
-      <h2>Time window of interest</h2>
-      <input type="checkbox" name="not_foo" value="upcoming_only" onclick="onlyOne(this)"> Upcoming<br/>
-<!--       <input type="checkbox" name="not_foo" value="this_week" onclick="onlyOne(this)"> Past Week<br/>
-      <input type="checkbox" name="not_foo" value="this_month" onclick="onlyOne(this)"> Past Month<br/>
-      <input type="checkbox" name="not_foo" value="last_six_months" onclick="onlyOne(this)"> Past 6 Months<br/>
- -->    </fieldset>
+      <span></span>
+    </fieldset>
 
     <fieldset>
       <button name="submit" type="submit" id="contact-submit" data-submit="...Sending" data-bind="click: $root.POSTautoLocalNews" > Subscribe to Email Alerts </button>

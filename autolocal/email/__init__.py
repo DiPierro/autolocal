@@ -1,2 +1,2 @@
 from .senders import SESSender
-from .formats import Email
+from .email_formats import Email

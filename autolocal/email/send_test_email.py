@@ -4,7 +4,7 @@ RECIPIENT = "chstock@stanford.edu"
 
 SUBJECT = 'Welcome to CityCouncilor!'
 BODY_TEXT = ("Welcome to CityCouncilor!\r\n"
-             "This email was sent from test_ses_emailer.py with Amazon SES using the "
+             "This email was sent from send_test_email.py with Amazon SES using the "
              "AWS SDK for Python (Boto)."
             )
 
@@ -12,7 +12,7 @@ BODY_HTML = """<html>
 <head></head>
 <body>
   <h1>Welcome to CityCouncilor!</h1>
-  <p>This email was sent with
+  <p>This email was sent from send_test_email.py with
     <a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the
     <a href='https://aws.amazon.com/sdk-for-python/'>
       AWS SDK for Python (Boto)</a>.</p>

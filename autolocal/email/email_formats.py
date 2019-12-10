@@ -41,7 +41,3 @@ class Email(object):
         # send email
         message = engine.send_email(self)
         return message
-
-
-class WelcomeEmail(Email):
-    pass
