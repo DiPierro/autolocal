@@ -1,7 +1,5 @@
 SENDER_NAME = "CityCouncilor Agenda Bot"
 SENDER_ADDRESS = 'agendabot@citycouncilor.com'
-RECIPIENT = "chstock@stanford.edu"
-
 SUBJECT = 'Welcome to CityCouncilor!'
 BODY_TEXT = ("Welcome to CityCouncilor!\r\n"
              "This email was sent from send_test_email.py with Amazon SES using the "
@@ -20,14 +18,31 @@ BODY_HTML = """<html>
 </html>
             """    
 
+
 from autolocal.email import Email
 
-m = Email(
-        recipient_address=RECIPIENT,
-        subject=SUBJECT,        
-        body_html=BODY_HTML,
-        body_text=BODY_TEXT,
-        sender_name=SENDER_NAME,
-        sender_address=SENDER_ADDRESS)
 
-m.send(sender_args={'logging_address': None})
+def send_email(destination):
+    m = Email(
+          recipient_address=destination,
+          subject=SUBJECT,        
+          body_html=BODY_HTML,
+          body_text=BODY_TEXT,
+          sender_name=SENDER_NAME,
+          sender_address=SENDER_ADDRESS)
+
+    m.send(sender_args={'logging_address': None})
+
+
+if __name__=='__main__':
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument('destination', default='success')
+    args = parser.parse_args()
+
+    if args.destination in ['success', 'bounce', 'ooto', 'complaint']:
+        destination = '{}@simulator.amazonses.com'.format(args.destination)
+    else:
+        destination = args.destination
+
+    send_email(destination)

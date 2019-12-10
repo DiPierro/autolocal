@@ -22,12 +22,14 @@ class SESSender(EmailSender):
         self,
         aws_region='us-west-2',
         charset='UTF-8',
-        logging_address='autolocalnews@gmail.com'
+        logging_address='autolocalnews@gmail.com',
+        configuration_set='autolocal-mailbot',
         ):
         
         self.client = boto3.client('ses',region_name=aws_region)
         self.charset = charset
         self.logging_address = logging_address
+        self.configuration_set = configuration_set
         
 
     def send_email(
@@ -61,12 +63,19 @@ class SESSender(EmailSender):
             # specify sender
             source = '{} <{}>'.format(email.sender_name, email.sender_address)
 
+            # assemble message
+            contents = {
+                'Destination': destination,
+                'Message': message,
+                'Source': source
+            }
+
+            # add configuration set
+            if self.configuration_set:
+                contents['ConfigurationSetName'] = self.configuration_set
+
             # send email
-            response = self.client.send_email(
-                Destination=destination,
-                Message=message,
-                Source=source,
-            )
+            response = self.client.send_email(**contents)
 
         # Display an error if something goes wrong. 
         except ClientError as e:
