@@ -4,64 +4,15 @@
     <title></title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <meta charset="utf-8" />
-    <!-- <script src="jquery-3.1.1.min.js"></script>
-    <script src="knockout-3.4.2.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            var customerDetailsViewModel = function() {
-                var self = this;
-
-			          self.id = ko.observable("");
-                self.keywords = ko.observableArray("");
-                self.SuccessMessage = ko.observable("");
-                self.municipalities = ko.observableArray([]);
-
-            self.POSTautoLocalNews = function () {
-
-                  var the_municipalities = [];
-                  checkboxes = document.getElementsByName('foo');
-                  for(var i=0, n=checkboxes.length;i<n;i++) {
-                    if(checkboxes[i].checked == true) {
-                      the_municipalities.push(checkboxes[i].value);
-                    }
-                  }
-
-				          var CustomerDetail = {
-
-				                id: self.id(),
-				                keywords: self.keywords().split(','),
-                        municipalities: the_municipalities,
-				          }
-        $.ajax({
-            url: 'https://cors-anywhere.herokuapp.com/https://iiyouepoxb.execute-api.us-west-2.amazonaws.com/Dev/postautolocalnews',
-            cache: false,
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data: ko.toJSON(CustomerDetail),
-            success: function (data) {
-              self.SuccessMessage(data)
-							       self.id('');
-							       self.keywords('');
-                     self.municipalities('');
-            }
-					}).fail(
-                  function(xhr, textStatus, err){
-					               alert("Error happened "+err);
-                  });
-            };
-        }
-
-            var viewModel = new customerDetailsViewModel();
-            ko.applyBindings(viewModel);
-         });
-
-
-    </script> -->
 </head>
 <div class="container">
   <form id="contact" action="" method="post">
     <h3>CityCouncilor</h3>
+    <h4>
+        <a href="about.html">About</a> |
+        <a href="signup.html">Sign Up</a> |
+        <a href="unsubscribe.html">Unsubscribe</a>
+    </h4>    
     <h4>Thanks for signing up! You will now receive alerts catered to your interests. </h4>
   </form>
 </div>
