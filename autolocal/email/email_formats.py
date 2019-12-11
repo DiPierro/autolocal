@@ -22,8 +22,12 @@ class Email(object):
 
         self._init(**kwargs)
 
+
     def _init(self, **kwargs):  
         # Implement me      
+        pass
+
+    def add_unsubscribe_link(self):
         pass
 
     def send(
@@ -41,3 +45,10 @@ class Email(object):
         # send email
         message = engine.send_email(self)
         return message
+
+
+class EmailWithUnsubscribe(Email):
+
+    def _init(self):
+        pass
+
