@@ -49,11 +49,7 @@ class S3DocumentManager(DocumentManager):
         self.document_base_dir = 'docs'    
         self.local_tmp_dir = os.path.expanduser(local_tmp_dir)
         if not os.path.exists(self.local_tmp_dir):
-            os.mkdir(self.local_tmp_dir)
-        self.tmp_paths = {
-            ext: os.path.join(self.local_tmp_dir, 'doc.{}'.format(ext))
-                for ext in ['txt', 'pdf']
-            }
+            os.mkdir(self.local_tmp_dir)            
 
         # init resources
         self.table = boto3.resource('dynamodb').Table(db_name)
@@ -68,6 +64,9 @@ class S3DocumentManager(DocumentManager):
     """
     "Public" methods for reading and writing info from documents
     """
+
+    def _get_tmp_path(self, doc, ext):
+        return self.local_tmp_dir, '{}.{}'.format(self._get_doc_id(doc), ext)
 
     def _save_doc_to_s3(self, local_path, s3_path):
         return self.s3_client.upload_file(local_path, self.s3_bucket_name, s3_path)
@@ -123,7 +122,8 @@ class S3DocumentManager(DocumentManager):
     def _download_doc(self, doc):
         # download a document from given url to designated local location
         try:
-            tmp_path_pdf = self.tmp_paths['pdf']
+            self._get_doc_id(doc)
+            tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
             if os.path.exists(tmp_path_pdf):
                 os.remove(tmp_path_pdf)
             s3_path_pdf = doc['local_path_pdf']
@@ -147,8 +147,8 @@ class S3DocumentManager(DocumentManager):
             return
         # get paths
         try:
-            tmp_path_pdf = self.tmp_paths['pdf']
-            tmp_path_txt = self.tmp_paths['txt']
+            tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
+            tmp_path_txt = self._get_tmp_path(doc, 'txt')
             if os.path.exists(tmp_path_txt):
                 os.remove(tmp_path_txt)
             s3_path_txt = doc['local_path_txt']

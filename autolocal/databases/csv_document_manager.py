@@ -13,6 +13,7 @@ from tqdm import tqdm
 from autolocal.pdf2txt import pdf2txt
 from autolocal import nlp
 from autolocal.databases import DocumentManager
+from autolocal import AUTOLOCAL_HOME
 
 INDEX_VARS = ['keyword']
 METADATA_VARS = [
@@ -33,10 +34,10 @@ class CSVDocumentManager(DocumentManager):
     """    
     def __init__(
         self,
-        document_dir='../data/docs',
-        index_dir='../data/index',
-        metadata_path='../data/index/metadata.csv',
-        index_path='../data/index/index.pkl',
+        document_dir=os.path.join(AUTOLOCAL_HOME, 'data', 'docs'),
+        index_dir=os.path.join(AUTOLOCAL_HOME, 'data', 'index'),
+        metadata_path=os.path.join(AUTOLOCAL_HOME, 'data', 'index', 'metadata.csv'),
+        index_path=os.path.join(AUTOLOCAL_HOME, 'data', 'index', 'index.pkl'),
         force_build_metadata=False,
         force_build_index=False,
         tokenizer_args={},
