@@ -1,7 +1,6 @@
 *.DS_Store
 *.pdf
 *.txt
-*.html
 *.pyc
 *.tar.gz
 *.log
