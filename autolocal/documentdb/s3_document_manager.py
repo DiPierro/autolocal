@@ -141,9 +141,10 @@ class S3DocumentManager(DocumentManager):
             print('s3: object already exists: {}'.format(s3_path_pdf))
             return doc
         else:        
-            self._retrieve_url(url, tmp_path_pdf)
-            self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
             doc['download_timestamp'] = datetime.utcnow().isoformat()
+            self._retrieve_url(url, tmp_path_pdf)            
+            self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
+            os.remove(tmp_path_pdf)            
         return doc
 
     def _convert_doc(self, doc):
@@ -174,6 +175,10 @@ class S3DocumentManager(DocumentManager):
             return
         # copy to S3        
         self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
+        if os.path.exists(tmp_path_txt):
+            os.remove(tmp_path_txt)
+        if os.path.exists(tmp_path_pdf):
+            os.remove(tmp_path_pdf)
         return
 
     def add_doc(
