@@ -8,6 +8,7 @@
 *.pem
 *.zip
 */__pycache__/*
+*/.ssh/*
 notebooks/.ipynb_checkpoints/*
 data/*
 out/*
