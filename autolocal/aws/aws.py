@@ -1,7 +1,7 @@
 # AWS config
 
 try:
-    from .config import config
+    from autolocal.aws.config import config
 except:
     print('Make sure to specify your AWS resource names in config.py')
 
