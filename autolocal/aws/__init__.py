@@ -1,1 +1,1 @@
-from aws import config
+from .aws import config
