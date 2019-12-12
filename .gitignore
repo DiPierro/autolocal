@@ -9,10 +9,7 @@
 *.zip
 */__pycache__/*
 notebooks/.ipynb_checkpoints/*
-data/index/*
-data/docs/*
-data/scraping/*
-data/gis/*
+data/*
 aws/*
 out/*
 autolocal/parser/*
