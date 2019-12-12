@@ -37,7 +37,7 @@
 				          }
         $.ajax({
             async: false,
-            url: 'https://cors-anywhere.herokuapp.com/https://iiyouepoxb.execute-api.us-west-2.amazonaws.com/Dev/postautolocalnews',
+            url: 'https://cors-anywhere.herokuapp.com/https://2nr3b6lltj.execute-api.us-west-1.amazonaws.com/prod/subscribeQuery',
             cache: false,
             type: 'POST',
             contentType: 'application/json; charset=utf-8',
@@ -53,7 +53,7 @@
                          failed = true;
 					               alert("Error happened "+err);
                   });
-                  if(failed==false)window.location.href = "landing.html";
+                  // if(failed==false)window.location.href = "landing.html";
             };
         }
 

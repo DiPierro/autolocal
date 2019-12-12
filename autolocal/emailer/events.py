@@ -8,6 +8,7 @@ from datetime import datetime
 from hashlib import sha3_224
 
 from .email_formats import ConfirmSubscriptionEmail
+from .email_formats import UnsubscribeEmail
 
 
 SUPPORTED_MUNICIPALITIES = [
@@ -31,7 +32,7 @@ SUPPORTED_MUNICIPALITIES = [
 
 email_re = re.compile(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)')
 
-def Event(object):
+class Event(object):
     def __init__(self, event):
         # get event info
         self.event_timestamp = datetime.utcnow().isoformat()
@@ -52,10 +53,10 @@ def Event(object):
         data = self.event_data[key]
         if key=='email_address':
             try:
-                scrubbed_data = email_re.findall(data)[0]
+                data = email_re.findall(data)[0]
             except:
                 raise ValueError('Not a valid email address: {}'.format(data))
-            return scrubbed_data
+            return data
         elif key=='municipalities':
             try:
                 for elm in data:
@@ -63,11 +64,17 @@ def Event(object):
             except:
                 raise ValueError('Not a valid list of municipalities: {}'.format(data))
             return data
+        elif key=='query_id' or key=='qid':
+            try:
+                data = str(data)[:56]
+            except:
+                raise ValueError('Not a valid query_id: {}'.format(data))
+            return data
         else:
             return data
     
 
-def SubscribeEvent(Event):
+class SubscribeEvent(Event):
     """
     Functions related to a subscription event
 
@@ -75,15 +82,16 @@ def SubscribeEvent(Event):
     def _custom_init(self):
         self.form_keys = ['email_address', 'keywords', 'municipalities']
         record = {k: self._scrub_data(k) for k in self.form_keys}
-        record['id']: self._get_query_id(record)
+        record['id'] = self._get_query_id(record)
         metadata = {
             'subscribed_timestamp': self.event_timestamp,
-            'subscription_status_last_updated_timestamp': self.event_timestamp
+            'subscription_status_last_updated_timestamp': self.event_timestamp,
             'subscription_status': 'pending',
             'most_recent_digest_timestamp': 'none',
         }
         record.update(metadata)
         self.record = record
+        self.email_address = self.record['email_address']
 
     def _get_query_id(self, data):
         v_li = []
@@ -100,35 +108,41 @@ def SubscribeEvent(Event):
         self.queries.put_item(Item=self.record)
         pass
 
-    def send_confirmation_email(self,):
-        m = ConfirmSubscriptionEmail(self.record)
+    def send_confirmation_email(self):
+        m = ConfirmSubscriptionEmail(query=self.record)
         m.send()
         pass
 
 
-def ConfirmSubscriptionEvent(Event):
+class ConfirmSubscriptionEvent(Event):
     """
     Functions related to a confirm subscription event
     """    
-    def _custom_init(self):
-        #TODO
+    def _custom_init(self):        
+        self.query_id = self._scrub_data('qid')
+        self.query = self.queries.get_item(Key={'id':self.query_id})['Item']
+        self.email_address = self.query['email_address']
         pass
 
-    def update_db(self):
+    def subscribe_query(self):
         # updates subscription_status to 'subscribed'
-        #TODO
-        # 
+        metadata = {
+            'subscription_status_last_updated_timestamp': self.event_timestamp,
+            'subscription_status': 'subscribed',
+        }    
+        self.query.update(metadata)
+        self.queries.put_item(Item=self.query)
         pass
 
 
-def UnsubscribeEvent(Event):
+class UnsubscribeEvent(Event):
     """
     Functions related to an unsubscribe event
     """       
     def _custom_init(self):
         self.email_address = self._scrub_data('email_address')
 
-    def get_query_ids(self, email_address):
+    def get_query_ids(self):
         # scan signup table to get queries that contain email        
         fe = Key('email_address').eq(self.email_address)
         pe = 'id'
@@ -144,17 +158,23 @@ def UnsubscribeEvent(Event):
                 ExclusiveStartKey=response['LastEvaluatedKey']
                 )
             query_ids.extend(response['Items'])
-        return query_ids
+        return [q['id'] for q in query_ids]
 
-def unsubscribe_queries(self, query_ids):
-    metadata = {
-        'subscription_status_last_updated_timestamp': self.event_timestamp
-        'subscription_status': 'unsubscribed',
-    }
-    for qid in query_ids:
-        query = self.queries.get_item(Key={'id':qid})['Item']
-        query.update(metadata)
-        self.queries.put_item(Item=query)
-    pass
+    def unsubscribe_queries(self, query_ids):
+        metadata = {
+            'subscription_status_last_updated_timestamp': self.event_timestamp,
+            'subscription_status': 'unsubscribed',
+        }
+        for qid in query_ids:
+            query = self.queries.get_item(Key={'id':qid})['Item']
+            query.update(metadata)
+            self.queries.put_item(Item=query)
+        pass
+
+    def send_confirmation_email(self):
+        m = UnsubscribeEmail(email_address=self.email_address)
+        m.send()
+        pass
+
 
             

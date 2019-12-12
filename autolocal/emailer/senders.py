@@ -82,8 +82,6 @@ class SESSender(EmailSender):
             print(e.response['Error']['Message'])
             return e.response
         else:
-            print("Email sent! Message ID:"),
-            print(response['MessageId'])
             return response
 
 
