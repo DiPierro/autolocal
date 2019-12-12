@@ -3,7 +3,7 @@
 try:
     from autolocal.aws.config import config
 except:
-    print('Make sure to specify your AWS resource names in config.py')
+    raise ImportError('Make sure to specify your AWS resource names in config.py')
 
 class AWSConfig(object):
 
