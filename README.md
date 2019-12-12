@@ -1,6 +1,6 @@
 # autolocal
 ## Automated Local News
-This repository contains the code which runs [CityCouncilor](http://www.citycouncilor.com), an app which sends personalized email alerts about relevant upcoming public meetings.
+This repository contains the code which runs [CityCouncilor](http://www.citycouncilor.com), an app which sends personalized email alerts about relevant upcoming public meetings. 
 
 It also contains various other code used for prototyping and analysis.
 
@@ -15,6 +15,8 @@ It also contains various other code used for prototyping and analysis.
 `scripts` - various shell scripts
 
 ## Dependencies
+
+The project is built to work with specific Amazon Web Services resources (SES, DynamoDB, S3, API Gateway, AWS Lambda).
 
 Most of the code is written in Python 3; there is also some JavaScript/CSS/HTML. 
 
