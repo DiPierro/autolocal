@@ -18,6 +18,8 @@ It also contains various other code used for prototyping and analysis.
 
 ---`www`: website
 
+---`biglocaldocs`: a previous iteration of the app and website
+
 `scripts`: shell scripts
 
 ## Dependencies
@@ -34,4 +36,4 @@ The recommender requires `allennlp`, `editdistance`, and `sklearn`.
 
 The scraper requires `selenium` for Python with Firefox/Geckodriver, as well as `pdfminer.six` and `beautifulsoup`.
 
-Code in `www-biglocaldocuments` (not part of the current version of our app) requires `dash` and `flask`.
+Code in `biglocaldocs` (not part of the current version of our app) requires `dash` and `flask`.
