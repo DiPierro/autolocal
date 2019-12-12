@@ -72,7 +72,7 @@ class S3DocumentManager(DocumentManager):
     """
 
     def _get_tmp_path(self, doc, ext):
-        return self.local_tmp_dir, '{}.{}'.format(self._get_doc_id(doc), ext)
+        return os.path.join(self.local_tmp_dir, '{}.{}'.format(self._get_doc_id(doc), ext))
 
     def _save_doc_to_s3(self, local_path, s3_path):
         return self.s3_client.upload_file(local_path, self.s3_bucket_name, s3_path)
