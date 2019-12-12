@@ -356,7 +356,6 @@ if __name__=='__main__':
         _, doc_list_csv = scrape_city(city_args, filters)            
         if doc_list_csv and not args.no_download:
             print('Adding documents to database: {}'.format(doc_list_csv))
-            import pdb; pdb.set_trace()
             documents.add_docs_from_csv(doc_list_csv)
 
     # move local data to S3
