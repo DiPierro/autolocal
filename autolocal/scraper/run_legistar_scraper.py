@@ -10,7 +10,7 @@ job_id = 'legistar_scraper_' + timestamp
 
 # get directories
 scraping_dir = os.path.join(AUTOLOCAL_HOME, 'data', 'scraping')
-legistar_scraper_path = os.path.join(AUTOLOCAL_HOME, 'autolocal', 'scrapers', 'legistar_scraper.py')
+legistar_scraper_path = os.path.join(AUTOLOCAL_HOME, 'autolocal', 'scraper', 'legistar_scraper.py')
 log_path = os.path.join(scraping_dir, 'log.out')
 
 # build and run command with logging
