@@ -6,13 +6,19 @@ It also contains various other code used for prototyping and analysis.
 
 ## Directory structure
 
-`notebooks` - Jupyter notebooks for data analysis/exploratory stuff
+`notebooks`: Jupyter notebooks for data analysis/exploratory stuff
 
-`autolocal` - code	
+`autolocal` : code base
 
-`data` - some sample data for exploration
+---`mailer`: Email subscription management
 
-`scripts` - various shell scripts
+---`documentdb`: Document database management
+
+---`recommender`: NLP-based recommender algorithm
+
+---`www`: website
+
+`scripts`: shell scripts
 
 ## Dependencies
 
