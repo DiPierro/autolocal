@@ -10,7 +10,7 @@
 */__pycache__/*
 notebooks/.ipynb_checkpoints/*
 data/*
-aws/*
 out/*
+aws/credentials/*
+aws/environment/*
 autolocal/parser/*
-*/.idea/*

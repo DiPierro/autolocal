@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dfd4a420-2197-4c08-b0de-62b05a45936c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Procfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/csv_document_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/document_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/databases/s3_document_manager.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/elmo_vectors.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/elmo_vectors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/email_formats.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/email_formats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/events.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/lambda_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/lambda_function.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/lambda_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/lambda_handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/python/email_formats.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/python/email_formats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/python/events.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/python/events.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/python/lambda_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/python/lambda_handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/python/senders.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/python/senders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/send_test_email.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/send_test_email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/senders.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/senders.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/emailer/simple_emailer.py" beforeDir="false" afterPath="$PROJECT_DIR$/mailer/simple_emailer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/html_form/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/html_form/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsers/gridley_agenda_parser.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsers/nlp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ranker.py" beforeDir="false" afterPath="$PROJECT_DIR$/recommender/ranker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_thru_past.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/crawler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/gridley_scrapers.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/gridley_scrapers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/legistar_downloader.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/legistar_downloader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/legistar_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/legistar_scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scrapers/run_legistar_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/run_legistar_scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp-biglocaldocuments/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/www-biglocaldocuments/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp-biglocaldocuments/assets/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/www-biglocaldocuments/assets/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp-biglocaldocuments/scrape_and_launch_webapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/www-biglocaldocuments/scrape_and_launch_webapp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webapp-biglocaldocuments/webapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/www-biglocaldocuments/webapp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/about.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/jquery-3.1.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/knockout-3.4.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/landing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/linkbar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/unsubscribe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../requirements.txt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1UtYxXnkLHeW2BcDHLUE6CGteTE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dfd4a420-2197-4c08-b0de-62b05a45936c" name="Default Changelist" comment="" />
+      <created>1576177605787</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1576177605787</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="458" y="361" key="com.intellij.ide.util.TipDialog" timestamp="1576178273733">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="458" y="361" key="com.intellij.ide.util.TipDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576178273733" />
+  </component>
+</project>

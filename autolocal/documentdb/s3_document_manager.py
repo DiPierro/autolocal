@@ -6,12 +6,13 @@ import numpy as np
 from urllib.request import urlretrieve
 from tqdm import tqdm
 
-from autolocal import AUTOLOCAL_HOME
-from autolocal.documentdb import pdf2txt, DocumentManager
-
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
 import botocore
+
+from autolocal import AUTOLOCAL_HOME
+from autolocal.documentdb import pdf2txt, DocumentManager
+from autolocal.aws import config
 
 METADATA_VARS = [
     'city',
