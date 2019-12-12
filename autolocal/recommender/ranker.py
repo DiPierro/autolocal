@@ -16,6 +16,8 @@ from allennlp.commands.elmo import ElmoEmbedder
 import editdistance
 from sklearn.metrics.pairwise import cosine_similarity
 
+from autolocal.aws import aws_config
+
 def get_local_pkl(s3_path):
     return os.path.join("../data/pkls/", os.path.basename(s3_path))
 
@@ -35,8 +37,13 @@ def single_vector_per_doc(vectors):
     return vectors
 
 def read_doc(s3_path):
-    s3 = boto3.resource('s3')
-    autolocal_docs_bucket = s3.Bucket('autolocal-documents')
+    s3 = boto3.resource(
+        's3',
+        region_name=aws_config.region_name
+        )
+    autolocal_docs_bucket = s3.Bucket(
+        aws_config.s3_document_bucket_name
+        )
     try:
         return autolocal_docs_bucket.Object(s3_path).get()['Body'].read().decode("ascii", "ignore")
     except:
@@ -48,8 +55,14 @@ def read_metadata(args):
     # for year in range(start_date[0], end_date[0]):
     #     for month in range(start_date[1], end_date[1]):
     #         for day in range(start_date[2], end_date[2]):
-    table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-documents')
-    s3_client = boto3.client('s3')
+    table = boto3.resource(
+        'dynamodb',
+        region_name=aws_config.region_name,
+        ).Table(aws_config.db_document_table_name)
+    s3_client = boto3.client(
+        's3',
+        region_name=aws_config.region_name
+        )
 
     response = table.scan()
     data = response['Items']
@@ -69,7 +82,10 @@ def read_vectors(pkl_filename):
         return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(pkl_filename)), 'rb'))
     except:
         s3 = boto3.resource('s3')
-        s3.meta.client.download_file('autolocal-documents', pkl_filename, get_local_pkl(pkl_filename))
+        s3.meta.client.download_file(
+            aws_config.s3_document_bucket_name,
+            pkl_filename,
+            get_local_pkl(pkl_filename))
         # print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
         return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(pkl_filename)), 'rb'))
 
@@ -85,7 +101,10 @@ def tokenize(s):
     return tokens
 
 def read_queries():
-    table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-user-queries')
+    table = boto3.resource(
+        'dynamodb',
+        region_name=aws_config.region_name,
+        ).Table(aws_config.db_query_table_name)
     queries = table.scan()["Items"]
     return queries
 

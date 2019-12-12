@@ -7,28 +7,9 @@ from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime
 from hashlib import sha3_224
 
+from autolocal.aws import aws_config
 from .emails import ConfirmSubscriptionEmail
 from .emails import UnsubscribeEmail
-
-
-SUPPORTED_MUNICIPALITIES = [
-    "Alameda",
-    "Burlingame",
-    "Cupertino",
-    "Hayward",
-    "Hercules",
-    "Metropolitan Transportation Commission",
-    "Mountain View",
-    "Oakland",
-    "San Francisco",
-    "San Jose",
-    "San Leandro",
-    "San Mateo County",
-    "Santa Clara",
-    "South San Francisco",
-    "Stockton",
-    "Sunnyvale",
-]
 
 email_re = re.compile(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)')
 
@@ -39,8 +20,14 @@ class Event(object):
         self.event_data = json.loads(event['body'])
 
         # get dynamodb table
-        self.queries = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-user-queries')
-        self.recommendations = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-recommendations')
+        self.queries = boto3.resource(
+            'dynamodb',
+            region_name=aws_config.region_name,
+            ).Table(aws_config.db_query_table_name)
+        self.recommendations = boto3.resource(
+            'dynamodb',
+            region_name=aws_config.region_name,
+            ).Table(aws_config.db_recommendation_table_name)
 
         # any other init functions
         self._custom_init()        
@@ -60,7 +47,7 @@ class Event(object):
         elif key=='municipalities':
             try:
                 for elm in data:
-                    assert(elm in SUPPORTED_MUNICIPALITIES)
+                    assert(elm in aws_config.supported_municipalities)
             except:
                 raise ValueError('Not a valid list of municipalities: {}'.format(data))
             return data

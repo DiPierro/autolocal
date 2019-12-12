@@ -1,5 +1,6 @@
 import boto3
-from botocore.exceptions import ClientError        
+from botocore.exceptions import ClientError       
+from autolocal.aws import aws_config 
 
 class Mailer(object):
     """
@@ -20,15 +21,16 @@ class SESMailer(Mailer):
 
     def __init__(
         self,
-        aws_region='us-west-2',
-        charset='UTF-8',
-        logging_address='autolocalnews@gmail.com',
-        configuration_set='autolocal-mailbot',
+        aws_region=aws_config.ses_region_name,
+        configuration_set=aws_config.ses_configuration_set,
+        charset='UTF-8',        
         ):
         
-        self.client = boto3.client('ses',region_name=aws_region)
+        self.client = boto3.client(
+            'ses',
+            region_name=aws_region
+            )
         self.charset = charset
-        self.logging_address = logging_address
         self.configuration_set = configuration_set
         
 
@@ -39,8 +41,6 @@ class SESMailer(Mailer):
         try:
             # specify recipients
             destination = {'ToAddresses': [email.recipient_address]}
-            if self.logging_address:
-                destination['BccAddresses'] = [self.logging_address]
 
             # specify message
             message = {

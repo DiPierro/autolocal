@@ -12,7 +12,7 @@ import botocore
 
 from autolocal import AUTOLOCAL_HOME
 from autolocal.documentdb import pdf2txt, DocumentManager
-from autolocal.aws import config
+from autolocal.aws import aws_config
 
 METADATA_VARS = [
     'city',
@@ -33,8 +33,9 @@ class S3DocumentManager(DocumentManager):
     """    
     def __init__(
         self,
-        s3_bucket_name='autolocal-documents',
-        db_name='autolocal-documents',
+        s3_bucket_name=aws_config.s3_document_bucket_name,
+        db_name=aws_config.db_document_table_name,
+        region_name=aws_config.region_name,
         document_base_dir='docs',
         local_tmp_dir=os.path.join(AUTOLOCAL_HOME, 'data', 'scraping', 'tmp'),
         tokenizer_args={},
@@ -48,9 +49,18 @@ class S3DocumentManager(DocumentManager):
             os.mkdir(self.local_tmp_dir)            
 
         # init resources
-        self.table = boto3.resource('dynamodb').Table(db_name)
-        self.s3 = boto3.resource('s3')
-        self.s3_client = boto3.client('s3')
+        self.table = boto3.resource(
+            'dynamodb',
+            region_name=region_name
+            ).Table(db_name)
+        self.s3 = boto3.resource(
+            's3',
+            region_name=region_name
+            )
+        self.s3_client = boto3.client(
+            's3',
+            region_name=region_name
+            )
 
         # load metadata from file if it exists
         self.metadata_vars = METADATA_VARS

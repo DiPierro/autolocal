@@ -11,6 +11,6 @@
 notebooks/.ipynb_checkpoints/*
 data/*
 out/*
-aws/credentials/*
-aws/environment/*
+aws/*
+autolocal/aws/config.py
 autolocal/parser/*
