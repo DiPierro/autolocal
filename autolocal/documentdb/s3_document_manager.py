@@ -1,8 +1,4 @@
 import os
-from collections import Counter
-from datetime import datetime
-import pickle as pkl
-from time import time
 from datetime import datetime
 
 import pandas as pd
@@ -10,9 +6,8 @@ import numpy as np
 from urllib.request import urlretrieve
 from tqdm import tqdm
 
-from autolocal.pdf2txt import pdf2txt
 from autolocal import AUTOLOCAL_HOME
-from autolocal.databases import DocumentManager
+from autolocal.documentdb import pdf2txt, DocumentManager
 
 import boto3
 from boto3.dynamodb.conditions import Key, Attr

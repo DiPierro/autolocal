@@ -14,3 +14,6 @@ data/docs/*
 data/scraping/*
 data/gis/*
 aws/*
+out/*
+autolocal/parser/*
+.idea/*

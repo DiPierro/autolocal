@@ -4,7 +4,6 @@
 Converts PDF text content (though not images containing text) to plain text, html, xml or "tags".
 """
 import argparse
-import logging
 import six
 import sys
 import pdfminer.settings

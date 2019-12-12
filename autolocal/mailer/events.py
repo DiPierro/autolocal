@@ -7,8 +7,8 @@ from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime
 from hashlib import sha3_224
 
-from .email_formats import ConfirmSubscriptionEmail
-from .email_formats import UnsubscribeEmail
+from .emails import ConfirmSubscriptionEmail
+from .emails import UnsubscribeEmail
 
 
 SUPPORTED_MUNICIPALITIES = [

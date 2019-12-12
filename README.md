@@ -1,31 +1,31 @@
 # autolocal
 ## Automated Local News
-A collection of tools for scraping, collecting, organizing, viewing, and analyzing municipal meeting minutes and agendas.
+This repository contains the code which runs [CityCouncilor](CityCouncilor.com), an app which sends personalized email alerts about relevant upcoming public meetings.
+
+It also contains various other code used for prototyping and analysis.
+
+
 
 ## Directory structure
+
 `notebooks` - Jupyter notebooks for data analysis/exploratory stuff
 
-`autolocal` - code
+`autolocal` - code	
 
 `data` - some sample data for exploration
 
+`scripts` - various shell scripts
+
 ## Dependencies
 
-This works with the following packages/versions:
+Most of the code is written in Python 3; there is also some JavaScript/CSS/HTML. 
 
-`python` 3.7
+The packages `numpy`, `pandas`, and `tqdm` are used ubiquitously.
 
-`dash` 1.3.0
+We assume `awscli` and `boto3` are installed, and that they has been configured in a role with sufficient permissions.
 
-`flask` 1.1.1
+The recommender requires `allennlp`, `editdistance`, and `sklearn`.
 
-`pdfminer` 20181108
+The scraper requires `selenium` for Python with Firefox/Geckodriver, as well as `pdfminer.six` and `beautifulsoup`.
 
-`pandas` 0.24.2
-
-`beautifulsoup` 4.8.0
-
-## Usage
-
-From the `autolocal` directory, run `python deploy_meeting_table.py`, then go to `localhost:8050` in your web browser. This should pull up the meeting table web application.
-
+Code in `www-biglocaldocuments` (not part of the current version of our app) requires `dash` and `flask`.

@@ -1,26 +1,22 @@
-import pandas as pd
-import numpy as np
-from urllib import parse
-from urllib import request
-import bs4 as bs
-from copy import  deepcopy
-
+import time
+from datetime import datetime
+import os
+import sys
 from urllib.parse import urlparse
+from copy import  deepcopy
+from shutil import rmtree
 
+import pandas as pd
+from numpy import nan
+from bs4 import BeautifulSoup
+from tqdm import tqdm
 import selenium as se
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
 from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 
-from tqdm import tqdm
-import time
-from datetime import datetime
-
-import os, sys
-from shutil import rmtree
-
-from autolocal.databases import S3DocumentManager
 from autolocal import AUTOLOCAL_HOME
+from autolocal.documentdb import S3DocumentManager
 
 
 class LegistarScraper(object):
@@ -181,7 +177,7 @@ class LegistarScraper(object):
         table_id='#ctl00_ContentPlaceHolder1_gridCalendar_ctl00'
         ):
         # find table in page
-        soup = bs.BeautifulSoup(page_source, features='lxml')
+        soup = BeautifulSoup(page_source, features='lxml')
         table = soup.select(table_id)[0]        
 
         # extract column headers
@@ -199,7 +195,7 @@ class LegistarScraper(object):
                 if td.find('a') and (td.a.get('href') is not None):
                     row_url.append(self.base_url+td.a.get('href'))
                 else:
-                    row_url.append(np.nan)
+                    row_url.append(nan)
                 if len(row_text)==num_cols and len(row_url)==num_cols:
                     text_data.append(row_text)
                     url_data.append(row_url)

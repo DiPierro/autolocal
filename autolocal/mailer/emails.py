@@ -1,4 +1,4 @@
-from .senders import SESSender
+from .mailers import SESMailer
 
 class Email(object):
 

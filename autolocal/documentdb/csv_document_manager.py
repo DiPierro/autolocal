@@ -10,10 +10,10 @@ import numpy as np
 from urllib.request import urlretrieve
 from tqdm import tqdm
 
-from autolocal.pdf2txt import pdf2txt
-from autolocal import nlp
-from autolocal.databases import DocumentManager
 from autolocal import AUTOLOCAL_HOME
+from autolocal.documentdb import pdf2txt, DocumentManager
+from autolocal.parser import nlp
+
 
 INDEX_VARS = ['keyword']
 METADATA_VARS = [

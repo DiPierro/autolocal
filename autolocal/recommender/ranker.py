@@ -1,22 +1,20 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from allennlp.commands.elmo import ElmoEmbedder
-import boto3
-import pandas as pd
-from datetime import datetime, timedelta
-from io import BytesIO
-from autolocal.parsers.nlp import Tokenizer
-import pickle
-import numpy as np
-from  tqdm import tqdm
-import os
-from sklearn.metrics.pairwise import cosine_similarity
-import json
-from autolocal.emailer import send_emails
-import editdistance
 import re
 import argparse
+import pickle
+import json
+import os
+from datetime import datetime, timedelta
+
+import boto3
+import numpy as np
+import pandas as pd
+from  tqdm import tqdm
+from allennlp.commands.elmo import ElmoEmbedder
+import editdistance
+from sklearn.metrics.pairwise import cosine_similarity
 
 def get_local_pkl(s3_path):
     return os.path.join("../data/pkls/", os.path.basename(s3_path))
@@ -383,7 +381,8 @@ def run_queries(elmo, input_args):
         results = update_with_top_k(results, top_k_sections, query)
         
     print("sending emails")
-    send_emails(results, args)
+    # this will be handled by dynamodb/lambda function
+    # send_emails(results, args)
     print("finished")
 
 if __name__=='__main__':

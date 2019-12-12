@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError        
 
-class EmailSender(object):
+class Mailer(object):
     """
     Base class for an interface to send emails
     """
@@ -13,7 +13,7 @@ class EmailSender(object):
         pass
 
 
-class SESSender(EmailSender):
+class SESMailer(Mailer):
     """
     Class to send emails via Amazon SES.
     """    

@@ -1,17 +1,10 @@
 import os
-from collections import Counter
 from datetime import datetime
-import threading
-import pickle as pkl
-from time import time
 
 import pandas as pd
-import numpy as np
 from urllib.request import urlretrieve
-from tqdm import tqdm
 
-from autolocal.pdf2txt import pdf2txt
-from autolocal import nlp
+from autolocal.documentdbb import pdf2txt
 
 INDEX_VARS = ['keyword']
 METADATA_VARS = [

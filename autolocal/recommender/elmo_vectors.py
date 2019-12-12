@@ -3,20 +3,16 @@
 
 # In[1]:
 
-
 import re
-
-from allennlp.commands.elmo import ElmoEmbedder
-import boto3
-import pandas as pd
-from datetime import datetime, timedelta
-from io import BytesIO
-from autolocal.parsers.nlp import Tokenizer
-import pickle
-import numpy as np
-from  tqdm import tqdm
 import os
 import sys
+import pickle
+from datetime import datetime
+
+import boto3
+import pandas as pd
+from allennlp.commands.elmo import ElmoEmbedder
+from  tqdm import tqdm
 
 elmo = ElmoEmbedder()
 

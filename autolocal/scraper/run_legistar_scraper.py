@@ -1,8 +1,8 @@
 from datetime import datetime
-from autolocal import AUTOLOCAL_HOME
 from  subprocess import run
 import os
 import sys
+from autolocal import AUTOLOCAL_HOME
 
 # get timestamp and job id
 timestamp = datetime.utcnow().isoformat()
