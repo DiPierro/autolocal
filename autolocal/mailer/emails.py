@@ -52,7 +52,7 @@ class ConfirmSubscriptionEmail(Email):
         # get information from query
         query = kwargs['query']
         qid = query['id']
-        url = 'subscribe.citycouncilor.com?qid={}'.format(qid)
+        url = 'https://t8srcd3tv2.execute-api.us-west-1.amazonaws.com/prod/confirmSubscription?qid={}'.format(qid)
         keywords = ', '.join(query['keywords'])
         municipalities = ', '.join(query['municipalities'])
 
