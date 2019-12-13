@@ -37,7 +37,7 @@ def lambda_handler_subscribe(aws_event, context):
 
 def lambda_handler_confirm_subscription(aws_event, context):
     try:
-        event = ConfirmSubscriptionEvent(aws_event)
+        event = ConfirmSubscriptionEvent(aws_event['queryStringParameters'])
     except Exception as e:
         return {
                 'statusCode': 200,
