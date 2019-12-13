@@ -36,7 +36,7 @@ class Email(object):
 
         # initialize engine
         if sender=='SES':
-            engine = SESSender(**sender_args)
+            engine = SESMailer(**sender_args)
         else:
             raise ValueError('Sender not known: {}'.format(sender))
         
