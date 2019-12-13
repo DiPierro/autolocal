@@ -7,7 +7,7 @@ from boto3.dynamodb.conditions import Key, Attr
 from datetime import datetime
 from hashlib import sha3_224
 
-from autolocal.aws import aws_config
+from .aws import aws_config
 from .emails import ConfirmSubscriptionEmail
 from .emails import UnsubscribeEmail
 
@@ -17,7 +17,6 @@ class Event(object):
     def __init__(self, event):
         # get event info
         self.event_timestamp = datetime.utcnow().isoformat()
-        self.event_data = json.loads(event['body'])
 
         # get dynamodb table
         self.queries = boto3.resource(
@@ -67,6 +66,8 @@ class SubscribeEvent(Event):
 
     """
     def _custom_init(self):
+        self.event_data = event
+
         self.form_keys = ['email_address', 'keywords', 'municipalities']
         record = {k: self._scrub_data(k) for k in self.form_keys}
         record['id'] = self._get_query_id(record)
@@ -104,8 +105,9 @@ class SubscribeEvent(Event):
 class ConfirmSubscriptionEvent(Event):
     """
     Functions related to a confirm subscription event
-    """    
+    """
     def _custom_init(self):        
+        self.event_data = event
         self.query_id = self._scrub_data('qid')
         self.query = self.queries.get_item(Key={'id':self.query_id})['Item']
         self.email_address = self.query['email_address']

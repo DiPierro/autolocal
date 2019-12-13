@@ -52,7 +52,7 @@ class ConfirmSubscriptionEmail(Email):
         # get information from query
         query = kwargs['query']
         qid = query['id']
-        url = 'http://citycouncilor.com/subconfirmed.html?qid={}'.format(qid)
+        url = 'subscribe.citycouncilor.com?qid={}'.format(qid)
         keywords = ', '.join(query['keywords'])
         municipalities = ', '.join(query['municipalities'])
 

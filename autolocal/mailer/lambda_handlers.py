@@ -47,7 +47,7 @@ def lambda_handler_confirm_subscription(aws_event, context):
     return {
         'statusCode': 200,
         'body': json.dumps(''.join([
-            'Email address has been subscribed: {}).'.format(event.email_address)
+            'Email address has been subscribed: {}.'.format(event.email_address)
         ]))
     }
 
