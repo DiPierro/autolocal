@@ -14,18 +14,14 @@
     <script src="knockout-3.4.2.js"></script>
 		<script type="text/javascript">
         $(document).ready(function() {
-
             var customerDetailsViewModel = function() {
                 var self = this;
-
 			          self.id = ko.observable("");
 								self.id2 = ko.observable("");
                 self.keywords = ko.observableArray("");
                 self.SuccessMessage = ko.observable("");
                 self.municipalities = ko.observableArray([]);
-
 								self.unsubscribe = function () {
-
 						          var CustomerDetail = {
 						                email_address: self.id2(),
 						          }
@@ -45,9 +41,7 @@
 		                  });
 		            };
 						self.POSTautoLocalNews = function () {
-
                   var failed = false;
-
                   var the_municipalities = [];
                   checkboxes = document.getElementsByName('foo');
                   for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -55,9 +49,7 @@
                       the_municipalities.push(checkboxes[i].value);
                     }
                   }
-
 				          var CustomerDetail = {
-
 				                email_address: self.id(),
 				                keywords: self.keywords().split(','),
                         municipalities: the_municipalities,
@@ -82,11 +74,9 @@
                   //if(failed==false)window.location.href = "landing.html";
             };
         }
-
             var viewModel = new customerDetailsViewModel();
             ko.applyBindings(viewModel);
          });
-
     </script>
 	</head>
 	<body class="is-preload">
@@ -149,8 +139,8 @@
 								    <h4>Stay informed of city meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
 										<form method="post" action="#">
 											<div class="row gtr-uniform">
-												<div class="col-6 col-12-xsmall"><input type="email" name="name" id="name" placeholder="Your Email Address" tabindex="2" data-bind='value: id' required/></div>
-												<div class="col-6 col-12-xsmall"><input type="text" name="email" id="email" placeholder="Keywords (separated by commas)" tabindex="1" data-bind='value: keywords' required autofocus/></div>
+												<div class="col-6 col-12-xsmall"><input type="email" name="name" id="name" placeholder="Your Email Address" tabindex="1" data-bind='value: id' required/></div>
+												<div class="col-6 col-12-xsmall"><input type="text" name="email" id="email" placeholder="Keywords (separated by commas)" tabindex="2" data-bind='value: keywords' required/></div>
 
 												<script language="JavaScript">
 										      function toggle(source) {
@@ -250,7 +240,7 @@
 										<h3>Unsubscribe</h3>
 										<h4>To unsubscribe from all email, please enter your email address below.</h4>
 										<div class="row gtr-uniform">
-											<div class="col-6 col-12-xsmall"><input placeholder="Your Email Address" type="email" tabindex="1" data-bind='value: id2' required></div>
+											<div class="col-6 col-12-xsmall"><input placeholder="Your Email Address" type="email" data-bind='value: id2' required></div>
 											<div class="col-12">
 												<ul class="actions">
 													<li><input type="submit" class="primary" id="email-submit" value="Unsubscribe" data-submit="...Sending" data-bind="click: $root.unsubscribe"/></li>
