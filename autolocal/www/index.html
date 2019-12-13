@@ -36,7 +36,7 @@
 		            contentType: 'application/json; charset=utf-8',
 		            data: ko.toJSON(CustomerDetail),
 		            success: function (data) {
-		              self.SuccessMessage(data)
+		              self.SuccessMessage(data["body"])
 									       self.id2('');
 		            }
 							}).fail(
@@ -69,7 +69,7 @@
             contentType: 'application/json; charset=utf-8',
             data: ko.toJSON(CustomerDetail),
             success: function (data) {
-              self.SuccessMessage(data)
+              self.SuccessMessage(data["body"])
 							       self.id('');
 							       self.keywords('');
                      self.municipalities('');
