@@ -14,18 +14,14 @@
     <script src="knockout-3.4.2.js"></script>
 		<script type="text/javascript">
         $(document).ready(function() {
-
             var customerDetailsViewModel = function() {
                 var self = this;
-
 			          self.id = ko.observable("");
 								self.id2 = ko.observable("");
                 self.keywords = ko.observableArray("");
                 self.SuccessMessage = ko.observable("");
                 self.municipalities = ko.observableArray([]);
-
 								self.unsubscribe = function () {
-
 						          var CustomerDetail = {
 						                email_address: self.id2(),
 						          }
@@ -45,9 +41,7 @@
 		                  });
 		            };
 						self.POSTautoLocalNews = function () {
-
                   var failed = false;
-
                   var the_municipalities = [];
                   checkboxes = document.getElementsByName('foo');
                   for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -55,9 +49,7 @@
                       the_municipalities.push(checkboxes[i].value);
                     }
                   }
-
 				          var CustomerDetail = {
-
 				                email_address: self.id(),
 				                keywords: self.keywords().split(','),
                         municipalities: the_municipalities,
@@ -82,11 +74,9 @@
                   //if(failed==false)window.location.href = "landing.html";
             };
         }
-
             var viewModel = new customerDetailsViewModel();
             ko.applyBindings(viewModel);
          });
-
     </script>
 	</head>
 	<body class="is-preload">
@@ -149,8 +139,8 @@
 								    <h4>Stay informed of city meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
 										<form method="post" action="#">
 											<div class="row gtr-uniform">
-												<div class="col-6 col-12-xsmall"><input type="email" name="name" id="name" placeholder="Your Email Address" tabindex="2" data-bind='value: id' required/></div>
-												<div class="col-6 col-12-xsmall"><input type="text" name="email" id="email" placeholder="Keywords (separated by commas)" tabindex="1" data-bind='value: keywords' required autofocus/></div>
+												<div class="col-6 col-12-xsmall"><input type="email" name="name" id="name" placeholder="Your Email Address" tabindex="1" data-bind='value: id' required/></div>
+												<div class="col-6 col-12-xsmall"><input type="text" name="email" id="email" placeholder="Keywords (separated by commas)" tabindex="2" data-bind='value: keywords' required/></div>
 
 												<script language="JavaScript">
 										      function toggle(source) {
@@ -160,86 +150,115 @@
 										        }
 										      }
 										    </script>
-
-												<h3>Area(s) of interest</h3>
-												<div>
-												<label class="container1">Select All
-  												<input type="checkbox" onClick="toggle(this)" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Alameda
-  												<input type="checkbox" name="foo" value="Alameda" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Burlingame
-  												<input type="checkbox" name="foo" value="Burlingame" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Cupertino
-  												<input type="checkbox" name="foo" value="Cupertino" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Hayward
-  												<input type="checkbox" name="foo" value="Hayward" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Hercules
-  												<input type="checkbox" name="foo" value="Hercules" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Metropolitan Transportation Commission
-  												<input type="checkbox" name="foo" value="Metropolitan Transportation Commission" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Mountain View
-  												<input type="checkbox" name="foo" value="Mountain View" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Oakland
-  												<input type="checkbox" name="foo" value="Oakland" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Francisco
-  												<input type="checkbox" name="foo" value="San Francisco" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Jose
-  												<input type="checkbox" name="foo" value="San Jose" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Leandro
-  												<input type="checkbox" name="foo" value="San Leandro" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Mateo County
-  												<input type="checkbox" name="foo" value="San Mateo County" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Santa Clara
-  												<input type="checkbox" name="foo" value="Santa Clara" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">South San Francisco
-  												<input type="checkbox" name="foo" value="South San Francisco" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Stockton
-  												<input type="checkbox" name="foo" value="Stockton" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-
+											</div>
+												<h3 class="margined">Area(s) of interest</h3>
+											<div class="row gtr-uniform">
+													<div class="checkcol">
+														<label class="container1">Select All
+															<input type="checkbox" onClick="toggle(this)">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+												<div class="checkrow">
+													<div class="checkcol">
+														<label class="container1">Alameda
+															<input type="checkbox" name="foo" value="Alameda">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Burlingame
+															<input type="checkbox" name="foo" value="Burlingame">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Cupertino
+															<input type="checkbox" name="foo" value="Cupertino">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Hayward
+															<input type="checkbox" name="foo" value="Hayward">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Hercules
+															<input type="checkbox" name="foo" value="Hercules">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Metropolitan Transportation Commission
+															<input type="checkbox" name="foo" value="Metropolitan Transportation Commission">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Mountain View
+															<input type="checkbox" name="foo" value="Mountain View">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Oakland
+															<input type="checkbox" name="foo" value="Oakland">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Francisco
+															<input type="checkbox" name="foo" value="San Francisco">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Jose
+															<input type="checkbox" name="foo" value="San Jose">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Leandro
+															<input type="checkbox" name="foo" value="San Leandro">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Mateo County
+															<input type="checkbox" name="foo" value="San Mateo County">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Santa Clara
+															<input type="checkbox" name="foo" value="Santa Clara">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">South San Francisco
+															<input type="checkbox" name="foo" value="South San Francisco">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Stockton
+															<input type="checkbox" name="foo" value="Stockton">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+												</div>
+												</div>
 												<div class="col-12">
 													<ul class="actions">
 														<li><input type="submit" class="primary" id="contact-submit" data-submit="...Sending" data-bind="click: $root.POSTautoLocalNews" value="Subscribe" /></li>
 														<span style ="color: darkolivegreen" data-bind='text : SuccessMessage' />
 													</ul>
 												</div>
-
-											</div>
-
-											</div>
 										</form>
-
 								  </form>
 								</div>
 							</section>
@@ -250,7 +269,7 @@
 										<h3>Unsubscribe</h3>
 										<h4>To unsubscribe from all email, please enter your email address below.</h4>
 										<div class="row gtr-uniform">
-											<div class="col-6 col-12-xsmall"><input placeholder="Your Email Address" type="email" tabindex="1" data-bind='value: id2' required></div>
+											<div class="col-6 col-12-xsmall"><input placeholder="Your Email Address" type="email" data-bind='value: id2' required></div>
 											<div class="col-12">
 												<ul class="actions">
 													<li><input type="submit" class="primary" id="email-submit" value="Unsubscribe" data-submit="...Sending" data-bind="click: $root.unsubscribe"/></li>
