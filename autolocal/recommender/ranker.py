@@ -219,9 +219,6 @@ def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, en
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
     return docs_to_return
 
-# TODO: [PRIORITY] include section numbers, extract overlapping sections, enforce no overlaps in returned content
-# TODO: Play with section length
-# TODO: smart sectioning that's sensitive to multiple line breaks and other section break signals
 def segment_docs(relevant_docs):
     min_section_length = 50 # tokens
     # TODO: this cuts of end of doc
@@ -280,7 +277,6 @@ def set_casing(x, casing="lower_non_acronyms"):
         raise Exception
 
 # TODO: use vectors to find closes words to keywords
-# TODO: why do shorter documents get higher scores?
 def score_doc_sections(doc_sections, orig_keywords, elmo):
     orig_keywords = [k.strip() for k in orig_keywords]
     keywords = []
@@ -289,19 +285,6 @@ def score_doc_sections(doc_sections, orig_keywords, elmo):
         for word in words:
             keywords.append(word)
     keyword_vectors = single_vector_per_doc([elmo.embed_sentence(keywords)])
-    # keyword_weights = []
-    # fix_case = casing_function()
-    # idf_smoothing_count = 10
-    # for k in keywords:
-    #     words = k.split(" ")
-    #     if len(words) > 1:
-    #         keyword_weights.append(1./idf_smoothing_count)
-    #     else:
-    #         k = fix_case(k)
-    #         if k in idf:
-    #             keyword_weights.append(1./(1./idf[k]+idf_smoothing_count))
-    #         else:
-    #             keyword_weights.append(1./idf_smoothing_count)
     doc_sections_scores = []
     for s, section in enumerate(doc_sections):
         section_vectors = single_vector_per_doc([s["sentence_vectors"] for s in section["sentences"]])
@@ -368,13 +351,8 @@ def update_with_top_k(results, top_k_sections, query):
         results.append(x)
     return results
 
-def write_results(results, query_id):
-    # update dynamo db table
-    table = boto3.resource(
-        'dynamodb',
-        region_name=aws_config.region_name,
-        ).Table(aws_config.db_recommendation_table_name)
-    # recommendataions = table.scan()["Items"]
+def write_results(results, query_id, batch):
+
     results_to_return = []
     for result in results:
         new_result = {
@@ -383,7 +361,8 @@ def write_results(results, query_id):
             'section_text': result['section_text']
         }
         results_to_return.append(new_result)
-    table.put_item(
+
+    batch.put_item(
        Item={
             'id': "{}_{}".format(query_id, datetime.now()),
             'email_address': result['email_address'],
@@ -418,9 +397,12 @@ def run_queries(elmo, input_args):
         keywords = query["keywords"]
         print("keywords: {}".format(keywords))
         municipalities = query["municipalities"]
+        print("municipalities: {}".format(municipalities))
         relevant_docs = select_relevant_docs(municipalities, all_docs, metadata)
+        print("{} relevant documents identified for this query".format(len(relevant_docs)))
         print("segmenting documents")
         doc_sections = segment_docs(relevant_docs)
+        print("{} document sections to choose from".format(len(doc_sections)))
         print("scoring documents")
         doc_sections_scores = score_doc_sections(
             doc_sections,
@@ -431,7 +413,14 @@ def run_queries(elmo, input_args):
         results = update_with_top_k(results, top_k_sections, query)
         if len(results) == 0:
             print("no results found")
-        write_results(results, query_id)
+        else:
+            # update dynamo db table
+            table = boto3.resource(
+                'dynamodb',
+                region_name=aws_config.region_name,
+                ).Table(aws_config.db_recommendation_table_name)
+            with table.batch_writer() as batch:
+                write_results(results, query_id, batch)
         
     # print("sending emails")
     # this will be handled by dynamodb/lambda function
