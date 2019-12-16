@@ -1,4 +1,6 @@
 from .mailers import SESMailer
+from urllib.parse import urlencode
+from autolocal.aws import aws_config 
 
 class Email(object):
 
@@ -51,8 +53,9 @@ class ConfirmSubscriptionEmail(Email):
         
         # get information from query
         query = kwargs['query']
-        qid = query['id']
-        url = 'https://t8srcd3tv2.execute-api.us-west-1.amazonaws.com/prod/confirmSubscription?qid={}'.format(qid)
+        api_url = aws_config.api_urls['confirmSubscription']
+        get_params = urlencode({'qid': query['id']})
+        url = '{}?{}'.format(api_url, get_params)
         keywords = ', '.join(query['keywords'])
         municipalities = ', '.join(query['municipalities'])
 
@@ -91,6 +94,46 @@ class ConfirmSubscriptionEmail(Email):
         self.sender_address = 'list-manager@citycouncilor.com'
 
 
+class ConfirmUnsubscribeEmail(Email):
+
+    def _custom_init(self, **kwargs):
+        
+        # get information from query
+        email_address = kwargs['email_address']        
+        api_url = aws_config.api_urls['confirmUnsubscribe']
+        get_params = urlencode({'email_address': email_address})
+        url = '{}?{}'.format(api_url, get_params)
+
+        # specify email contents
+        self.recipient_address = email_address
+        self.subject = 'CityCouncilor: Please Confirm Unsubscribe Request'
+        self.body_html = """
+        <html>
+        <head></head>
+        <body>
+        <h1>Please confirm your unsubscribe request</h1>
+        <h3>We received a request to unsubscribe this email address from all CityCouncilor messages.
+        To confirm, please click 
+        <a href={}>here</a>.
+        </h3>
+        <p>If you did not attempt to unsubscribe from CityCouncilor, simply ignore this message.
+        Feel free to email us with any questions at 
+        <a href='mailto:contact@citycouncilor.com'>contact@citycouncilor.com</a>.
+        </p>
+        </body>
+        </html>
+        """.format(url)
+        self.body_text = """
+        Please confirm your unsubscribe request\r\n
+        We received a request to unsubscribe this email address from all CityCouncilor messages.        
+        To confirm, please visit the following URL:\r\n        
+        {}\r\n
+        If you did not attempt to unsubscribe from CityCouncilor, simply ignore this message.
+        Feel free to email us with any questions at contact@citycouncilor.com.
+        """.format(url)
+        self.sender_name = 'CityCouncilor Agenda Bot'
+        self.sender_address = 'list-manager@citycouncilor.com'
+
 class UnsubscribeEmail(Email):
 
     def _custom_init(self, **kwargs):
@@ -123,7 +166,6 @@ class UnsubscribeEmail(Email):
         """.format(email_address)
         self.sender_name = 'CityCouncilor Agenda Bot'
         self.sender_address = 'list-manager@citycouncilor.com'
-
 
 
 
