@@ -72,7 +72,6 @@ def read_metadata(args):
         data.extend(response['Items'])
 
     metadata = pd.DataFrame(data)
-    print('docs/san-jose/San-Jose_2019-09-24_City-Council_Agenda.txt' in list(metadata['local_path_txt']))
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
     metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: "vectors"+x[4:-3]+"pkl")
     return metadata
@@ -122,13 +121,12 @@ def parse_dates(start_date, end_date):
     }
     if start_date:
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        print(start_date)
     else:
         start_date = starting_dates_for_filtering['upcoming']
     if end_date:
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
-        print(end_date)
-    assert(start_date < end_date)
+    if start_date and end_date:
+      assert(start_date <= end_date)
     return start_date, end_date
 
 def find_relevant_filenames(queries, metadata, start_date=None, end_date=None, agenda_only=False):
@@ -386,7 +384,9 @@ def run_queries(elmo, input_args):
         email_address = query["email_address"]
         print("email address: {}".format(email_address))
         keywords = query["Keywords"]
+        print(keywords)
         municipalities = query["Municipalities"]
+        print(municipalities)
         relevant_docs = select_relevant_docs(municipalities, all_docs, metadata)
         print("segmenting documents")
         doc_sections = segment_docs(relevant_docs)
