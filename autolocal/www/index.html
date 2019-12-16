@@ -5,27 +5,32 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
+	<head>		
 		<title>CityCouncilor</title>
 		<link rel="stylesheet" href="main.css" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-154585109-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-154585109-1');
+		</script>		
 		<script src="jquery-3.1.1.min.js"></script>
     <script src="knockout-3.4.2.js"></script>
 		<script type="text/javascript">
         $(document).ready(function() {
-
             var customerDetailsViewModel = function() {
                 var self = this;
-
 			          self.id = ko.observable("");
 								self.id2 = ko.observable("");
                 self.keywords = ko.observableArray("");
                 self.SuccessMessage = ko.observable("");
                 self.municipalities = ko.observableArray([]);
-
 								self.unsubscribe = function () {
-
 						          var CustomerDetail = {
 						                email_address: self.id2(),
 						          }
@@ -45,9 +50,7 @@
 		                  });
 		            };
 						self.POSTautoLocalNews = function () {
-
                   var failed = false;
-
                   var the_municipalities = [];
                   checkboxes = document.getElementsByName('foo');
                   for(var i=0, n=checkboxes.length;i<n;i++) {
@@ -55,9 +58,7 @@
                       the_municipalities.push(checkboxes[i].value);
                     }
                   }
-
 				          var CustomerDetail = {
-
 				                email_address: self.id(),
 				                keywords: self.keywords().split(','),
                         municipalities: the_municipalities,
@@ -82,11 +83,9 @@
                   //if(failed==false)window.location.href = "landing.html";
             };
         }
-
             var viewModel = new customerDetailsViewModel();
             ko.applyBindings(viewModel);
          });
-
     </script>
 	</head>
 	<body class="is-preload">
@@ -99,8 +98,8 @@
 				</header>
 				<nav id="nav">
 					<ul>
-						<li><a href="#first" class="active">About</a></li>
-						<li><a href="#second">Signup</a></li>
+						<li><a href="#first" class="active">Signup</a></li>
+						<li><a href="#second">About</a></li>
 						<li><a href="#third">Unsubscribe</a></li>
 						<li><a href="#fourth">Contact</a></li>
 					</ul>
@@ -122,15 +121,143 @@
 							<section id="first">
 								<div class="image main" data-position="center">
 									<img src="Map.png" alt="" />
-								</div>
+								</div>								
 								<div class="container">
 									<header class="major">
 										<h2>Welcome to CityCouncilor</h2>
 										<p>A tool to help journalists track and discover public meetings across city governments. </p>
-									</header>
-									<p>To sign up, journalists can enter keywords (eg. homelessness, wildfires, etc.) and geographic locations of interest, and CityCouncilor will send an email alert whenever an upcoming meeting agenda with relevant information comes up.</p>
-									<p>CityCouncilor is a project created out of Stanford University's Exploring Computational Journalism course. The creators of this project are Chris Stock, Erin Bennett, Holden Foreman, and Patricia Wei. We are advised by Stanford professors in both Journalism and Computer Science: RB Brenner, Krishna Bharat, Maneesh Agrawala, and Cheryl Phillips.
-									</p>
+									</header>									
+									<form id="contact" action="" method="post">
+								    <h4>Stay informed of upcoming city meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
+										<form method="post" action="#">
+											<div class="row gtr-uniform">
+												<div class="col-6 col-12-xsmall"><input type="email" name="name" id="name" placeholder="Your Email Address" tabindex="1" data-bind='value: id' required/></div>
+												<div class="col-6 col-12-xsmall"><input type="text" name="email" id="email" placeholder="Keywords (separated by commas)" tabindex="2" data-bind='value: keywords' required/></div>
+
+												<script language="JavaScript">
+										      function toggle(source) {
+										        checkboxes = document.getElementsByName('foo');
+										        for(var i=0, n=checkboxes.length;i<n;i++) {
+										          checkboxes[i].checked = source.checked;
+										        }
+										      }
+										    </script>
+											</div>
+												<h4 class="margined">Region(s) of interest</h4>
+											<div class="row gtr-uniform">
+													<div class="checkcol">
+														<label class="container1">Select All
+															<input type="checkbox" onClick="toggle(this)">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+												<div class="checkrow">
+													<div class="checkcol">
+														<label class="container1">Alameda
+															<input type="checkbox" name="foo" value="Alameda">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Burlingame
+															<input type="checkbox" name="foo" value="Burlingame">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Cupertino
+															<input type="checkbox" name="foo" value="Cupertino">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Hayward
+															<input type="checkbox" name="foo" value="Hayward">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Hercules
+															<input type="checkbox" name="foo" value="Hercules">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Metropolitan Transportation Commission
+															<input type="checkbox" name="foo" value="Metropolitan Transportation Commission">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Mountain View
+															<input type="checkbox" name="foo" value="Mountain View">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Oakland
+															<input type="checkbox" name="foo" value="Oakland">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Francisco
+															<input type="checkbox" name="foo" value="San Francisco">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Jose
+															<input type="checkbox" name="foo" value="San Jose">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Leandro
+															<input type="checkbox" name="foo" value="San Leandro">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">San Mateo County
+															<input type="checkbox" name="foo" value="San Mateo County">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Santa Clara
+															<input type="checkbox" name="foo" value="Santa Clara">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">South San Francisco
+															<input type="checkbox" name="foo" value="South San Francisco">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+													<div class="checkcol">
+														<label class="container1">Stockton
+															<input type="checkbox" name="foo" value="Stockton">
+															<span class="checkmark"></span>
+														</label>
+													</div>
+												</div>
+												</div>
+												<div class="col-12">
+													<ul class="actions">
+														<li><input type="submit" class="primary" id="contact-submit" data-submit="...Sending" data-bind="click: $root.POSTautoLocalNews" value="Subscribe" /></li>
+														<span style ="color: darkolivegreen" data-bind='text : SuccessMessage' />
+													</ul>
+												</div>
+										</form>
+								  </form>
+								</div>
+							</section>
+
+						<!-- Two -->
+							<section id="second">
+								<div class="container">								
 									<h3>Our story</h3>
 									<p>In our conversations with local journalists and data journalists, many of them told us that because local newsrooms must do a lot with little resources, it is difficult to keep track of stories. Important stories can often get lost among the many documents of the several committees within a local government.
 									</p>
@@ -141,116 +268,14 @@
 								</div>
 							</section>
 
-						<!-- Two -->
-							<section id="second">
-								<div class="container">
-									<form id="contact" action="" method="post">
-								    <h3>CityCouncilor</h3>
-								    <h4>Stay informed of city meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
-										<form method="post" action="#">
-											<div class="row gtr-uniform">
-												<div class="col-6 col-12-xsmall"><input type="email" name="name" id="name" placeholder="Your Email Address" tabindex="2" data-bind='value: id' required/></div>
-												<div class="col-6 col-12-xsmall"><input type="text" name="email" id="email" placeholder="Keywords (separated by commas)" tabindex="1" data-bind='value: keywords' required autofocus/></div>
-
-												<script language="JavaScript">
-										      function toggle(source) {
-										        checkboxes = document.getElementsByName('foo');
-										        for(var i=0, n=checkboxes.length;i<n;i++) {
-										          checkboxes[i].checked = source.checked;
-										        }
-										      }
-										    </script>
-
-												<h3>Area(s) of interest</h3>
-												<div>
-												<label class="container1">Select All
-  												<input type="checkbox" onClick="toggle(this)" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Alameda
-  												<input type="checkbox" name="foo" value="Alameda" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Burlingame
-  												<input type="checkbox" name="foo" value="Burlingame" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Cupertino
-  												<input type="checkbox" name="foo" value="Cupertino" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Hayward
-  												<input type="checkbox" name="foo" value="Hayward" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Hercules
-  												<input type="checkbox" name="foo" value="Hercules" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Metropolitan Transportation Commission
-  												<input type="checkbox" name="foo" value="Metropolitan Transportation Commission" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Mountain View
-  												<input type="checkbox" name="foo" value="Mountain View" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Oakland
-  												<input type="checkbox" name="foo" value="Oakland" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Francisco
-  												<input type="checkbox" name="foo" value="San Francisco" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Jose
-  												<input type="checkbox" name="foo" value="San Jose" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Leandro
-  												<input type="checkbox" name="foo" value="San Leandro" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">San Mateo County
-  												<input type="checkbox" name="foo" value="San Mateo County" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Santa Clara
-  												<input type="checkbox" name="foo" value="Santa Clara" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">South San Francisco
-  												<input type="checkbox" name="foo" value="South San Francisco" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-												<label class="container1">Stockton
-  												<input type="checkbox" name="foo" value="Stockton" checked="checked">
-  												<span class="checkmark"></span>
-												</label>
-
-												<div class="col-12">
-													<ul class="actions">
-														<li><input type="submit" class="primary" id="contact-submit" data-submit="...Sending" data-bind="click: $root.POSTautoLocalNews" value="Subscribe" /></li>
-														<span style ="color: darkolivegreen" data-bind='text : SuccessMessage' />
-													</ul>
-												</div>
-
-											</div>
-
-											</div>
-										</form>
-
-								  </form>
-								</div>
-							</section>
-
+						<!-- Three -->
 							<section id="third">
 								<div class="container">
 									<form id="contact2" action="" method="post">
 										<h3>Unsubscribe</h3>
 										<h4>To unsubscribe from all email, please enter your email address below.</h4>
 										<div class="row gtr-uniform">
-											<div class="col-6 col-12-xsmall"><input placeholder="Your Email Address" type="email" tabindex="1" data-bind='value: id2' required></div>
+											<div class="col-6 col-12-xsmall"><input placeholder="Your Email Address" type="email" data-bind='value: id2' required></div>
 											<div class="col-12">
 												<ul class="actions">
 													<li><input type="submit" class="primary" id="email-submit" value="Unsubscribe" data-submit="...Sending" data-bind="click: $root.unsubscribe"/></li>
@@ -266,9 +291,10 @@
 							<section id="fourth">
 								<div class="container">
 									<h3>Contact the Team</h3>
-									<p>We would love to hear from you! Contact us if you have any questions or if you would like to chat about the intersection of Journalism and Computer Science. </p>
-
-									<p>Email us at <b> contact@citycouncilor.com.</b>
+									<p>
+										CityCouncilor is a project created out of Stanford University's Exploring Computational Journalism course in fall 2019. It was created by Chris Stock, Erin Bennett, Holden Foreman, and Patricia Wei with advice from RB Brenner, Krishna Bharat, Maneesh Agrawala, and Cheryl Phillips, as well as local journalists in the San Francisco Bay Area.
+									</p>
+									<p>We would love to hear from you! Please contact us at <b> contact@citycouncilor.com</b>.
 									</p>
 								</div>
 							</section>
@@ -279,7 +305,7 @@
 					<section id="footer">
 						<div class="container">
 							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; CityCouncilor. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</div>
 					</section>

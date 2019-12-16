@@ -18,8 +18,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 from autolocal.aws import aws_config
 
-def get_local_pkl(s3_path):
-    return os.path.join("../data/pkls/", os.path.basename(s3_path))
+from autolocal import AUTOLOCAL_HOME
+
+def get_local_pkl_path(s3_path):
+    return os.path.join(AUTOLOCAL_HOME, "data/pkls", os.path.basename(s3_path))
 
 def single_vector_per_doc(vectors):
     # vectors is a list of np arrays where:
@@ -77,19 +79,21 @@ def read_metadata(args):
     return metadata
 
 def read_vectors(pkl_filename):
+    local_pkl_path = get_local_pkl_path(pkl_filename)
     try:
-        return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(pkl_filename)), 'rb'))
-    except:
+        return pickle.load(open(local_pkl_path, 'rb'))
+    except Exception as e:
+        print("failed to load local vectors")
+        print(e)
         s3 = boto3.resource('s3')
         s3.meta.client.download_file(
             aws_config.s3_document_bucket_name,
             pkl_filename,
-            get_local_pkl(pkl_filename))
-        # print(os.path.join("../data/pkls/", os.path.basename(s3_path)))
-        return pickle.load(open(os.path.join("../data/pkls/", os.path.basename(pkl_filename)), 'rb'))
+            local_pkl_path)
+        return pickle.load(open(local_pkl_path, 'rb'))
 
 def write_vectors(array, s3_path):
-    pickle.dump(array, open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'wb'))
+    pickle.dump(array, open(os.path.join(AUTOLOCAL_HOME, "data/pkls", os.path.basename(s3_path)), 'wb'))
 
 def sentence_split(s):
     sentences = re.split('[.\n!?"\f]', s)
@@ -135,7 +139,7 @@ def find_relevant_filenames(queries, metadata, start_date=None, end_date=None, a
     
     # filter metadata to only those files that match the query municipality and time_window
     for query in queries:
-        cities.update(query["Municipalities"])
+        cities.update(query["municipalities"])
 
     potential_documents = metadata
 
@@ -164,23 +168,26 @@ def read_docs(s3_paths):
         pkl_path = "vectors" + s3_path[4:-3] + "pkl"
         try:
             doc_string = read_doc(s3_path)
-            doc_sentences = sentence_split(doc_string)
-            doc_tokens = []
-            for sentence in doc_sentences:
-                sentence_tokens = tokenize(sentence)
-                doc_tokens.append(sentence_tokens)
-            try:
-                vectors = read_vectors(pkl_path)
-                documents[s3_path] = {
-                    "original_text": doc_string,
-                    "sentences": doc_sentences,
-                    "vectors": vectors
-                }
-            except:
-                print('missing vectors for: {}'.format(pkl_path))
+            if doc_string:
+                doc_sentences = sentence_split(doc_string)
+                doc_tokens = []
+                for sentence in doc_sentences:
+                    sentence_tokens = tokenize(sentence)
+                    doc_tokens.append(sentence_tokens)
+                try:
+                    vectors = read_vectors(pkl_path)
+                    documents[s3_path] = {
+                        "original_text": doc_string,
+                        "sentences": doc_sentences,
+                        "vectors": vectors
+                    }
+                except Exception as e:
+                    print('missing vectors for: {}'.format(pkl_path))
+                    print(e)
         except Exception as e:
             if i < 10:
-                print("Key not found: {}".format(s3_path))
+                print("Key not found in S3: {}".format(s3_path))
+                print(e)
             elif i == 10:
                 print("More than 10 keys not found")
                 print(e)
@@ -212,9 +219,6 @@ def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, en
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
     return docs_to_return
 
-# TODO: [PRIORITY] include section numbers, extract overlapping sections, enforce no overlaps in returned content
-# TODO: Play with section length
-# TODO: smart sectioning that's sensitive to multiple line breaks and other section break signals
 def segment_docs(relevant_docs):
     min_section_length = 50 # tokens
     # TODO: this cuts of end of doc
@@ -273,7 +277,6 @@ def set_casing(x, casing="lower_non_acronyms"):
         raise Exception
 
 # TODO: use vectors to find closes words to keywords
-# TODO: why do shorter documents get higher scores?
 def score_doc_sections(doc_sections, orig_keywords, elmo):
     orig_keywords = [k.strip() for k in orig_keywords]
     keywords = []
@@ -282,19 +285,6 @@ def score_doc_sections(doc_sections, orig_keywords, elmo):
         for word in words:
             keywords.append(word)
     keyword_vectors = single_vector_per_doc([elmo.embed_sentence(keywords)])
-    # keyword_weights = []
-    # fix_case = casing_function()
-    # idf_smoothing_count = 10
-    # for k in keywords:
-    #     words = k.split(" ")
-    #     if len(words) > 1:
-    #         keyword_weights.append(1./idf_smoothing_count)
-    #     else:
-    #         k = fix_case(k)
-    #         if k in idf:
-    #             keyword_weights.append(1./(1./idf[k]+idf_smoothing_count))
-    #         else:
-    #             keyword_weights.append(1./idf_smoothing_count)
     doc_sections_scores = []
     for s, section in enumerate(doc_sections):
         section_vectors = single_vector_per_doc([s["sentence_vectors"] for s in section["sentences"]])
@@ -354,42 +344,65 @@ def select_top_k(doc_sections, doc_sections_scores, k):
                 break
     return top_k
 
-def update_with_top_k(history, top_k_sections, query):
+def update_with_top_k(results, top_k_sections, query):
     for section in top_k_sections:
         x = section[1]
         x.update(query)
-        history.append(x)
-    return history
+        results.append(x)
+    return results
+
+def write_results(results, query_id, batch):
+
+    results_to_return = []
+    for result in results:
+        new_result = {
+            "start_page": result["sentences"][0]["page"],
+            'filename': result['filename'],
+            'section_text': result['section_text']
+        }
+        results_to_return.append(new_result)
+
+    batch.put_item(
+       Item={
+            'id': "{}_{}".format(query_id, datetime.now()),
+            'email_address': result['email_address'],
+            'query_id': result['id'],
+            'recommendataions': results_to_return,
+            'keywords': result['keywords'],
+            'municipalities': result['municipalities']
+        }
+    )
 
 def run_queries(elmo, input_args):
     k = input_args.k 
     start_date, end_date = parse_dates(input_args.start_date, input_args.end_date)
     print("reading queries")
     queries = read_queries()
-    queries = [q for q in queries if ('Status' in q and q['Status'] == 'just_submitted')]
+    queries = [q for q in queries if ('subscription_status' in q and q['subscription_status'] == 'subscribed')]
     print("reading metadata")
     metadata = read_metadata(input_args)
     print("finding relevant filenames")
     relevant_filenames = find_relevant_filenames(queries, metadata, start_date = start_date, end_date = end_date, agenda_only=input_args.agenda_only)
-    print(relevant_filenames)
     print("reading relevant documents")
     # (not actually *all*, but all the ones we care about for queries)
     all_docs = read_docs(relevant_filenames)
-
-    results = []
+    print("read {} relevant documents".format(len(all_docs)))
     
     for q, query in enumerate(queries):
+        results = []
         print("running query {} of {}".format(q, len(queries)))
-        user_id = query["id"]
+        query_id = query["id"]
         email_address = query["email_address"]
         print("email address: {}".format(email_address))
-        keywords = query["Keywords"]
-        print(keywords)
-        municipalities = query["Municipalities"]
-        print(municipalities)
+        keywords = query["keywords"]
+        print("keywords: {}".format(keywords))
+        municipalities = query["municipalities"]
+        print("municipalities: {}".format(municipalities))
         relevant_docs = select_relevant_docs(municipalities, all_docs, metadata)
+        print("{} relevant documents identified for this query".format(len(relevant_docs)))
         print("segmenting documents")
         doc_sections = segment_docs(relevant_docs)
+        print("{} document sections to choose from".format(len(doc_sections)))
         print("scoring documents")
         doc_sections_scores = score_doc_sections(
             doc_sections,
@@ -398,8 +411,18 @@ def run_queries(elmo, input_args):
         )
         top_k_sections = select_top_k(doc_sections, doc_sections_scores, k)
         results = update_with_top_k(results, top_k_sections, query)
+        if len(results) == 0:
+            print("no results found")
+        else:
+            # update dynamo db table
+            table = boto3.resource(
+                'dynamodb',
+                region_name=aws_config.region_name,
+                ).Table(aws_config.db_recommendation_table_name)
+            with table.batch_writer() as batch:
+                write_results(results, query_id, batch)
         
-    print("sending emails")
+    # print("sending emails")
     # this will be handled by dynamodb/lambda function
     # send_emails(results, args)
     print("finished")
