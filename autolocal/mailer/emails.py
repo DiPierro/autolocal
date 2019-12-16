@@ -90,8 +90,8 @@ class ConfirmSubscriptionEmail(Email):
         If you did not sign up for emails from CityCouncilor, simply ignore this message.
         Feel free to email us with any questions at contact@citycouncilor.com.
         """.format(url, keywords, municipalities)
-        self.sender_name = 'CityCouncilor Agenda Bot'
-        self.sender_address = 'list-manager@citycouncilor.com'
+        self.sender_name = aws_config.email_address['sender_name']
+        self.sender_address = aws_config.email_addresses['list_manager']
 
 
 class ConfirmUnsubscribeEmail(Email):
@@ -131,8 +131,8 @@ class ConfirmUnsubscribeEmail(Email):
         If you did not attempt to unsubscribe from CityCouncilor, simply ignore this message.
         Feel free to email us with any questions at contact@citycouncilor.com.
         """.format(url)
-        self.sender_name = 'CityCouncilor Agenda Bot'
-        self.sender_address = 'list-manager@citycouncilor.com'
+        self.sender_name = aws_config.email_address['sender_name']
+        self.sender_address = aws_config.email_addresses['list_manager']
 
 class UnsubscribeEmail(Email):
 
@@ -153,19 +153,26 @@ class UnsubscribeEmail(Email):
         <p>If you did not mean to unsubscribe, or if you change your mind, sign up for a new alert at
         <a href=CityCouncilor.com>CityCouncilor.com</a>.
         Feel free to email us with any questions at 
-        <a href='mailto:contact@citycouncilor.com'>contact@citycouncilor.com</a>.
+        <a href='mailto:{}'>{}</a>.
         </p>
         </body>
         </html>
-        """.format(email_address)
+        """.format(
+            email_address,
+            aws.config.email_address['contact'],
+            aws.config.email_address['contact']
+            )
         self.body_text = """
         You are now unsubscribed from CityCouncilor\r\n
         We won't email {} again.\r\n
         If you did not mean to unsubscribe, or if you change your mind, sign up for a new alert at CityCouncilor.com.
-        Feel free to email us with any questions at contact@citycouncilor.com.
-        """.format(email_address)
-        self.sender_name = 'CityCouncilor Agenda Bot'
-        self.sender_address = 'list-manager@citycouncilor.com'
+        Feel free to email us with any questions at {}.
+        """.format(
+            email_address,
+            aws.config.email_address['contact'],
+            )
+        self.sender_name = aws_config.email_address['sender_name']
+        self.sender_address = aws_config.email_addresses['list_manager']
 
 
 
