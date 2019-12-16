@@ -92,8 +92,29 @@ def read_vectors(pkl_filename):
             local_pkl_path)
         return pickle.load(open(local_pkl_path, 'rb'))
 
+def write_local(array, s3_path):
+        pickle.dump(array, open(os.path.join(AUTOLOCAL_HOME, "data/pkls/", os.path.basename(s3_path)), 'wb'))
+
 def write_vectors(array, s3_path):
     pickle.dump(array, open(os.path.join(AUTOLOCAL_HOME, "data/pkls", os.path.basename(s3_path)), 'wb'))
+
+def get_elmo_vectors(s3_path):
+    local_path = get_local_pkl_path(s3_path)
+  
+    txt_filename = 'docs' + s3_path[7:-3] + 'txt'
+    doc_string = read_doc(txt_filename)
+    if doc_string:
+      sentences = sentence_split(doc_string)
+      vectors = []
+      for sentence in sentences:
+        sentence_tokens = tokenize(sentence)
+        sentence_vectors = elmo.embed_sentence(sentence_tokens)
+        vectors.append(sentence_vectors)
+      print("writing local pkl file")
+      write_local({"sentences": sentences, "vectors": vectors}, local_path)
+      print("uploading doc")
+      s3 = boto3.resource('s3')
+      s3.meta.client.upload_file(local_path, 'autolocal-documents', s3_path)
 
 def sentence_split(s):
     sentences = re.split('[.\n!?"\f]', s)
@@ -175,15 +196,22 @@ def read_docs(s3_paths):
                     sentence_tokens = tokenize(sentence)
                     doc_tokens.append(sentence_tokens)
                 try:
+                  vectors = read_vectors(pkl_path)
+                except:
+                  try:
+                    print("vectorizing: {}".format(pkl_path))
+                    get_elmo_vectors(pkl_path)
                     vectors = read_vectors(pkl_path)
-                    documents[s3_path] = {
-                        "original_text": doc_string,
-                        "sentences": doc_sentences,
-                        "vectors": vectors
-                    }
-                except Exception as e:
+                  except Exception as e:
+                    vectors = None
                     print('missing vectors for: {}'.format(pkl_path))
                     print(e)
+                if vectors:
+                  documents[s3_path] = {
+                     "original_text": doc_string,
+                     "sentences": doc_sentences,
+                     "vectors": vectors
+                   }
         except Exception as e:
             if i < 10:
                 print("Key not found in S3: {}".format(s3_path))
@@ -202,6 +230,7 @@ def read_docs(s3_paths):
 def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, end_date=None):
     # filter metadata to only those files that match the query municipality and time_window
     potential_documents = metadata
+    start_date, end_date = parse_dates(start_date, end_date)
     if start_date:
         potential_documents = potential_documents[potential_documents["date"] >= start_date]
     if end_date:
@@ -216,6 +245,8 @@ def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, en
         u = urls[i]
         if f in all_docs:
             docs_to_return.append({**all_docs[f], 'filename':f, 'url':u})
+        else:
+            print(f)
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
     return docs_to_return
 
@@ -398,7 +429,7 @@ def run_queries(elmo, input_args):
         print("keywords: {}".format(keywords))
         municipalities = query["municipalities"]
         print("municipalities: {}".format(municipalities))
-        relevant_docs = select_relevant_docs(municipalities, all_docs, metadata)
+        relevant_docs = select_relevant_docs(municipalities, all_docs, metadata, input_args.start_date, input_args.end_date)
         print("{} relevant documents identified for this query".format(len(relevant_docs)))
         print("segmenting documents")
         doc_sections = segment_docs(relevant_docs)
@@ -411,6 +442,7 @@ def run_queries(elmo, input_args):
         )
         top_k_sections = select_top_k(doc_sections, doc_sections_scores, k)
         results = update_with_top_k(results, top_k_sections, query)
+        #print(results)
         if len(results) == 0:
             print("no results found")
         else:
