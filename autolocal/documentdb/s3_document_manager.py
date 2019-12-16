@@ -203,22 +203,31 @@ class S3DocumentManager(DocumentManager):
         # don't add the document if we already have it
         doc_id = self._get_doc_id(doc)
         doc['doc_id'] = doc_id
-        if self._query_db_by_doc_id(doc_id):
-            print('dynamodb: document already in database: {}'.format(doc_id))
-            return
+        #if self._query_db_by_doc_id(doc_id):
+        #    print('dynamodb: document already in database: {}'.format(doc_id))
+        #    return
 
         # get local paths to document        
         doc_paths = self._get_doc_paths(doc)
-        doc.update(doc_paths)
+        #doc.update(doc_paths)
 
-        # download doc from url
-        doc = self._download_doc(doc)          
+        if not self._s3_object_exists(doc_paths['local_path_pdf']):
+          # download doc from url
+          doc = self._download_doc(doc_paths)          
+          doc['local_path_pdf'] = doc_paths['local_path_pdf']
             
-        # convert to txt        
-        self._convert_doc(doc)
+        if not self._s3_object_exists(doc_paths['local_path_txt']):
+          # convert to txt        
+          self._convert_doc(doc_paths)
+          doc['local_path_txt'] = doc_paths['local_path_txt']
+
+        if not self._s3_object_exists(doc_paths['local_path_pkl']):
+          self._add_vectors(doc_paths)
+          doc['local_path_pkl'] = doc_paths['local_path_pkl']
 
         # add to metadata and index
-        self._add_doc_to_db(doc, batch)
+        if not self._query_db_by_doc_id(doc_id):
+          self._add_doc_to_db(doc, batch)
         
         # done
         print('dynamodb: added document: {}'.format(doc_id))
