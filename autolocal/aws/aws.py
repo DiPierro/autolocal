@@ -17,7 +17,8 @@ class AWSConfig(object):
         ses_region_name,
         ses_configuration_set,
         supported_municipalities,
-        api_urls
+        api_urls,
+        email_addresses
         ):
         
         self.db_document_table_name = str(db_document_table_name)
@@ -29,5 +30,6 @@ class AWSConfig(object):
         self.ses_configuration_set = str(ses_configuration_set)
         self.supported_municipalities = list(supported_municipalities)
         self.api_urls = dict(api_urls)
+        self.email_address = dict(email_addresses)
 
 aws_config = AWSConfig(**config)
