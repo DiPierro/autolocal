@@ -27,7 +27,7 @@ api_urls = {
 }
 
 email_addresses = {
-    'contact': 'contact@agendawatch.org',
+    'contact': 'agendawatch.team@gmail.com',
     'list_manager': 'list-manager@agendawatch.org',
     'agenda_bot': 'agenda-bot@agendawatch.org',
     'sender_name': 'Agenda Watch',

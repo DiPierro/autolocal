@@ -30,6 +30,6 @@ class AWSConfig(object):
         self.ses_configuration_set = str(ses_configuration_set)
         self.supported_municipalities = list(supported_municipalities)
         self.api_urls = dict(api_urls)
-        self.email_address = dict(email_addresses)
+        self.email_addresses = dict(email_addresses)
 
 aws_config = AWSConfig(**config)
