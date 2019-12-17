@@ -151,9 +151,7 @@ class S3DocumentManager(DocumentManager):
             self._retrieve_url(url, tmp_path_pdf)            
             self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
         except:
-            print('document manager: could not download and save document: {}'.format(doc['doc_id']))
-        finally:
-            os.remove(tmp_path_pdf)            
+            print('document manager: could not download and save document: {}'.format(doc['doc_id']))        
         return doc
 
     def _convert_doc(self, doc):
@@ -180,11 +178,6 @@ class S3DocumentManager(DocumentManager):
             self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
         except:
             print('document manager: unable to save to s3: {}.txt'.format(doc['doc_id']))        
-        finally:
-            if os.path.exists(tmp_path_txt):
-                os.remove(tmp_path_txt)
-            if os.path.exists(tmp_path_pdf):
-                os.remove(tmp_path_pdf)
         return
 
     def _add_vectors(self, doc):
@@ -194,13 +187,11 @@ class S3DocumentManager(DocumentManager):
 
       doc_string = self.get_doc_text(doc)
       if doc_string:
-        print("vectorizing doc")
+        print("vectorizing doc: {}".format(doc['doc_id']))
         vectors_data = self.vectorizer.vectorize(doc_string)
         pickle.dump(data_to_write, open(tmp_pkl_path, 'wb'))
-        print("uploading doc")
+        print("uploading doc: {}".format(doc['doc_id']))
         self.s3.meta.client.upload_file(tmp_pkl_path, self.s3_bucket_name, s3_pkl_path)
-      if os.path.exists(tmp_pkl_path):
-        os.remove(tmp_pkl_path)
 
     def get_doc_vectors(self, doc):
       # add document vectors if we don't already have them
@@ -286,7 +277,13 @@ class S3DocumentManager(DocumentManager):
                 print('document manager: unable to add {} format for {}'.format(doc_format, doc['doc_id']))
                 print(e)
                 break
-            
+
+        # clean up
+        for ext in self.doc_formats:
+            tmp_path = self._get_tmp_path(doc, ext)
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+
         # add record to metadata and index            
         self._add_doc_to_db(doc, batch)        
         
