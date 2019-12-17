@@ -147,6 +147,11 @@ class S3DocumentManager(DocumentManager):
             os.remove(tmp_path_pdf)            
         return doc
 
+    def _make_vectors(self, s3_path_txt):
+        local_pkl_path = os.path.join("../data/pkls/", os.path.basename(s3_path_txt[:-3]+"pkl"))
+        s3_pkl_path = "vectors"+s3_path_txt[4:-3]+"pkl"
+        pass
+
     def _convert_doc(self, doc):
         # convert a pdf to txt and save in designated location
         if not doc['doc_format']=='pdf':
@@ -174,12 +179,58 @@ class S3DocumentManager(DocumentManager):
             print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
             return
         # copy to S3        
-        self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
+        self._save_doc_to_s3(tmp_path_txt, s3_path_txt)
+        self._make_vectors(s3_path_txt)     
         if os.path.exists(tmp_path_txt):
             os.remove(tmp_path_txt)
         if os.path.exists(tmp_path_pdf):
             os.remove(tmp_path_pdf)
         return
+
+    def _text_file_is_on_s3(doc):
+        try:
+            self.s3.Object('autolocal-documents', doc['local_path_txt']).load()
+            True
+        except:
+            return False
+
+    def _vectors_file_is_on_s3(doc):
+        pkl_path = "vectors"+ (doc['local_path_txt'])[4:-3] +"pkl"
+        try:
+            self.s3.Object('autolocal-documents', pkl_path).load()
+            True
+        except:
+            return False
+
+    def _vectorize_doc(doc):
+        txt_path = doc['local_path_txt']
+        pkl_path = "vectors"+ txt_path[4:-3] +"pkl"
+        local_pkl_path = os.path.join("../data/pkls/", os.path.basename(txt_path))
+
+        def sentence_split(s):
+            sentences = re.split('[.\n!?"\f]', s)
+            return [s for s in sentences if len(s.strip())>0]
+
+        def tokenize(s):
+            tokens = re.findall(r'\w+', s)
+            return tokens
+
+        print("vectorizing doc")
+        autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
+        doc_string = autolocal_docs_bucket.Object(txt_path).get()['Body'].read()
+        # clear difficult characters
+        doc_string = doc_string.decode("ascii", "ignore")
+        if doc_string:
+            sentences = sentence_split(doc_string)
+            vectors = []
+            for sentence in sentences:
+                sentence_tokens = tokenize(sentence)
+                sentence_vectors = self.elmo.embed_sentence(sentence_tokens)
+                vectors.append(sentence_vectors)
+            data_to_write = {"sentences": sentences, "vectors": vectors}
+            pickle.dump(data_to_write, open(local_pkl_path, 'wb'))
+        print("uploading doc")
+        self.s3.meta.client.upload_file(local_pkl_path, self.s3_bucket_name, pkl_path)
 
     def add_doc(
         self,
@@ -205,23 +256,26 @@ class S3DocumentManager(DocumentManager):
         doc['doc_id'] = doc_id
         if self._query_db_by_doc_id(doc_id):
             print('dynamodb: document already in database: {}'.format(doc_id))
-            return
+        else:
+            # get local paths to document        
+            doc_paths = self._get_doc_paths(doc)
+            doc.update(doc_paths)
 
-        # get local paths to document        
-        doc_paths = self._get_doc_paths(doc)
-        doc.update(doc_paths)
+            # download doc from url
+            doc = self._download_doc(doc)
 
-        # download doc from url
-        doc = self._download_doc(doc)          
-            
-        # convert to txt        
-        self._convert_doc(doc)
+            # add to metadata and index
+            self._add_doc_to_db(doc, batch)   
 
-        # add to metadata and index
-        self._add_doc_to_db(doc, batch)
+            # done
+            print('dynamodb: added document: {}'.format(doc_id))  
         
-        # done
-        print('dynamodb: added document: {}'.format(doc_id))
+        if not self._text_file_is_on_s3(doc):
+            # convert to txt
+            self._convert_doc(doc)
+        
+        if not self._vectors_file_is_on_s3(doc):
+            self._vectorize_doc(doc)
         
         pass
 
