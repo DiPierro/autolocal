@@ -53,7 +53,7 @@ class DocumentManager():
         date = pd.to_datetime(doc['date']).strftime('%Y-%m-%d')
         city = doc['city'].title().replace(' ', '-')
         committee = doc['committee'].title().replace(' ', '-')
-        if isinstance(doc['meeting_type'], str):
+        if 'meeting_type' in doc and isinstance(doc['meeting_type'], str):
             meeting_type = doc['meeting_type'].title().replace(' ', '-')
         else:
             meeting_type = None

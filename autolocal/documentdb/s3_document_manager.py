@@ -270,7 +270,7 @@ class S3DocumentManager(DocumentManager):
                     raise NotImplementedError
 
                 # if successful, add s3 path to record
-                doc[local_path_key] = s3_path
+                doc[local_path_key] = local_path
             except Exception as e:                
                 # let us know if something doesn't work while adding a document
                 print('document manager: unable to add {} format for {}'.format(doc_format, doc['doc_id']))
