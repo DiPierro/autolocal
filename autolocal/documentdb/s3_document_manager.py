@@ -15,6 +15,8 @@ from autolocal.documentdb import pdf2txt, DocumentManager
 from autolocal.aws import aws_config
 from autolocal.parser.nlp import Vectorizer
 
+import pickle
+
 METADATA_VARS = [
     'city',
     'committee',
@@ -168,7 +170,9 @@ class S3DocumentManager(DocumentManager):
             s3_path_pdf = doc['local_path_pdf']
             self._load_doc_from_s3(s3_path_pdf, tmp_path_pdf)
             args = [tmp_path_pdf, '-o', tmp_path_txt]
-            pdf2txt(args)
+            print("parsing pdf document: {}".format(tmp_path_pdf))
+            pdf2txt.pdf2txt(args)
+            print("pdf parsed!")
         except Exception as e:
             print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
             print(e)
@@ -182,22 +186,22 @@ class S3DocumentManager(DocumentManager):
 
     def _add_vectors(self, doc):
       s3_txt_path = self._get_s3_path(doc, 'txt')
-      s3_pkl_path = self._get_s3_path(doc, 'pdf')
+      s3_pkl_path = self._get_s3_path(doc, 'pkl')
       tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
 
       doc_string = self.get_doc_text(doc)
       if doc_string:
         print("vectorizing doc: {}".format(doc['doc_id']))
         vectors_data = self.vectorizer.vectorize(doc_string)
-        pickle.dump(data_to_write, open(tmp_pkl_path, 'wb'))
+        pickle.dump(vectors_data, open(tmp_pkl_path, 'wb'))
         print("uploading doc: {}".format(doc['doc_id']))
         self.s3.meta.client.upload_file(tmp_pkl_path, self.s3_bucket_name, s3_pkl_path)
 
     def get_doc_vectors(self, doc):
       # add document vectors if we don't already have them
-      if not 'local_path_pkl' in doc:
+      s3_path = self._get_s3_path(doc, 'pkl')
+      if not self._s3_object_exists(s3_path):
         self.add_doc(doc)
-      s3_path = doc['local_path_pkl']
       tmp_path = self._get_tmp_path(doc, 'pkl')
       self._load_doc_from_s3(s3_path, tmp_path)
       vector_data = pickle.load(open(tmp_path, 'rb'))
@@ -240,6 +244,7 @@ class S3DocumentManager(DocumentManager):
 
         # create doc dict
         doc = self._create_doc(new_doc)
+        print("adding document to database: {}".format(self._get_doc_id(doc)))
 
         # do not add document if no url
         try:

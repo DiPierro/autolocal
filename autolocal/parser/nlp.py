@@ -17,8 +17,6 @@ class Vectorizer(object):
         return tokens
 
     def vectorize(self, string):
-
-        print("vectorizing doc")
         sentences = self.sentence_split(string)
         vectors = []
         for sentence in sentences:

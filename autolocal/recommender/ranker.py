@@ -132,7 +132,16 @@ def read_docs(doc_ids, document_manager):
   n_docs_read = 0
   for doc_id in doc_ids:
     doc = document_manager.get_doc_by_id(doc_id)
-    doc_string = document_manager.get_doc_text(doc)
+    try:
+      doc_string = document_manager.get_doc_text(doc)
+    except Exception as e:
+      print("could not read document {}".format(doc_id))
+      print(e)
+      print("adding document")
+      document_manager.add_doc(doc)
+      print("document added")
+      doc_string = document_manager.get_doc_text(doc)
+      print("document read")
     if doc_string:
       vector_data = document_manager.get_doc_vectors(doc)
       if vector_data:
@@ -166,7 +175,7 @@ def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, en
         if f in all_docs:
             docs_to_return.append({**all_docs[f], 'doc_id':f, 'url':u})
         else:
-            print(f)
+            print("file was not collected in 'all_docs': {}".format(f))
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
     return docs_to_return
 
