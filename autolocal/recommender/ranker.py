@@ -49,6 +49,7 @@ def read_doc(s3_path):
     try:
         return autolocal_docs_bucket.Object(s3_path).get()['Body'].read().decode("ascii", "ignore")
     except:
+        print('file not found on s3: {}'.format(s3_path))
         return None
 
 def read_metadata(args):
@@ -245,8 +246,6 @@ def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, en
         u = urls[i]
         if f in all_docs:
             docs_to_return.append({**all_docs[f], 'filename':f, 'url':u})
-        else:
-            print(f)
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
     return docs_to_return
 
@@ -463,8 +462,8 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser(description='Section documents and rank by relevance to queries')
 
-    parser.add_argument('--email', type=str, required=True,
-        help='Who should I send emails to?\nUse `--email P` to send to the actual addresses in the queries.')
+    #parser.add_argument('--email', type=str, required=True,
+    #    help='Who should I send emails to?\nUse `--email P` to send to the actual addresses in the queries.')
 
     parser.add_argument('--start_date', type=str, default=None,
         help="".join([
