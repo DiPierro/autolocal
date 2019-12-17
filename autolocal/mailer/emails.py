@@ -193,4 +193,11 @@ class UnsubscribeEmail(Email):
         self.sender_address = aws_config.email_addresses['list_manager']
 
 
+class RecommendationEmail(Email):
+    def _custom_init(self, **kwargs):
+        # Implement ME
+        pass
+
+
+
 
