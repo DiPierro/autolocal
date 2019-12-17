@@ -154,7 +154,7 @@ def read_docs(doc_ids, document_manager):
     if n_docs_read % log_every == 0:
         print("{} of {} documents read".format(n_docs_read, n_docs_total))
 
-    return documents
+  return documents
 
 def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, end_date=None):
     # filter metadata to only those files that match the query municipality and time_window
@@ -195,10 +195,7 @@ def segment_docs(relevant_docs):
                 sentence_tokens = tokenize(sentence)
                 page_numbers.append(p+1)
         doc_sentences = doc["sentences"]
-        doc_sentences_with_extra = doc["vectors"]["sentences"]
-        doc_vectors_with_extra = doc["vectors"]["vectors"]
-        nonempty_sentence_indices = [i for i in range(len(doc_sentences_with_extra)) if len(doc_sentences_with_extra[i].strip())>0]
-        doc_vectors = [doc_vectors_with_extra[i] for i in nonempty_sentence_indices]
+        doc_vectors = doc["vectors"]
         section = []
         section_tokens = 0
         if (len(doc_sentences) == len(doc_vectors)):
@@ -219,7 +216,7 @@ def segment_docs(relevant_docs):
                     sections.append({
                         "sentences": section,
                         "section_text": section_text,
-                        "filename": doc["filename"],
+                        "doc_id": doc["doc_id"],
                         "url": doc["url"]
                     })
                     section = []
@@ -293,7 +290,7 @@ def select_top_k(doc_sections, doc_sections_scores, k):
     for x in sorted_sections:
         score = x[0]
         if score > 0:
-            filename = x[1]["filename"]
+            doc_id = x[1]["doc_id"]
             starting_page = x[1]["sentences"][0]["page"]
             ending_page = x[1]["sentences"][-1]["page"]
             section_text = x[1]["section_text"]
@@ -318,7 +315,7 @@ def write_results(results, query_id, batch):
     for result in results:
         new_result = {
             "start_page": result["sentences"][0]["page"],
-            'filename': result['filename'],
+            'doc_id': result['doc_id'],
             'section_text': result['section_text']
         }
         results_to_return.append(new_result)
