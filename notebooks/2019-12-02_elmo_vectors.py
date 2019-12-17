@@ -8,11 +8,12 @@ import boto3
 import pandas as pd
 from datetime import datetime, timedelta
 from io import BytesIO
-from autolocal.parsers.nlp import Tokenizer
+from autolocal.parser.nlp import Tokenizer
 import pickle
 import numpy as np
 from  tqdm import tqdm
 import os
+import sys
 
 elmo = ElmoEmbedder()
 # dims: (LAYERS(3), TOKENS(6), DIMENSIONS(1024))
@@ -45,7 +46,15 @@ def read_doc(s3_path):
 def read_metadata():
     table = boto3.resource('dynamodb', region_name='us-west-1').Table('autolocal-documents')
     s3_client = boto3.client('s3')
-    metadata = pd.DataFrame(table.scan()["Items"])
+    
+    response = table.scan()
+    data = response['Items']
+
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response['Items'])
+
+    metadata = pd.DataFrame(data)
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
     metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: x[:-3]+"pkl")
     return metadata
@@ -56,10 +65,10 @@ metadata = read_metadata()
 
 
 def read(s3_path):
-    return np.load(os.path.join("pkls/", os.path.basename(s3_path)))
+    return np.load(os.path.join("../data/pkls/", os.path.basename(s3_path)))
 
 def write(array, s3_path):
-    pickle.dump(array, open(os.path.join("pkls/", os.path.basename(s3_path)), 'wb'))
+    pickle.dump(array, open(os.path.join("../data/pkls/", os.path.basename(s3_path)), 'wb'))
 
 
 # In[168]:
@@ -86,6 +95,7 @@ starting_dates_for_filtering = {
     'this_year': datetime.now() - timedelta(days=365),
     'this_month': datetime.now() - timedelta(weeks=5),
     'past_six_months':datetime.now() - timedelta(days=183),
+    'past_three_months':datetime.now() - timedelta(days=100),
     'past': None,
     'all': None
 }
@@ -94,26 +104,34 @@ starting_dates_for_filtering = {
 # In[170]:
 
 
-metadata_past_six_months = metadata[metadata["date"] >= starting_dates_for_filtering['past_six_months']]
+metadata_subset = metadata[metadata["date"] >= starting_dates_for_filtering['past_three_months']]
+metadata_subset = metadata_subset[metadata_subset["city"] == "San Jose"]
 
 
 # In[223]:
 
+print(metadata_subset.shape)
+
 
 count = 0
-for i, row in tqdm(metadata_past_six_months.iterrows()):
-    if count >= 0:
+print("processing docs")
+for i, row in tqdm(metadata_subset.iterrows()):
+    if count >= int(sys.argv[1]):
         txt_filename = row['local_path_txt']
         pkl_filename = row['local_path_pkl']
-        doc_string = read_doc(txt_filename)
-        if doc_string:
-            sentences = sentence_spit(doc_string)
-            vectors = []
-            for sentence in sentences:
-                sentence_tokens = tokenize(sentence)
-                sentence_vectors = elmo.embed_sentence(sentence_tokens)
-                vectors.append(sentence_vectors)
-            write({"sentences": sentences, "vectors": vectors}, pkl_filename)
+        try:
+            read(pkl_filename)
+            print("already proessed: {}".format(pkl_filename))
+        except:
+            doc_string = read_doc(txt_filename)
+            if doc_string:
+                sentences = sentence_spit(doc_string)
+                vectors = []
+                for sentence in sentences:
+                    sentence_tokens = tokenize(sentence)
+                    sentence_vectors = elmo.embed_sentence(sentence_tokens)
+                    vectors.append(sentence_vectors)
+                write({"sentences": sentences, "vectors": vectors}, pkl_filename)
     print(count)
     count += 1
 
