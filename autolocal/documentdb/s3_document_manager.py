@@ -72,14 +72,14 @@ class S3DocumentManager(DocumentManager):
     def _get_s3_path(self, doc, doc_format):                
         doc_path = os.path.join(
             doc_format,
-            '{}.{}'.format(self._compute_doc_id(doc), doc_format)
+            '{}.{}'.format(self._get_doc_id(doc), doc_format)
         )
         return doc_path
 
     def _get_tmp_path(self, doc, doc_format):
         tmp_path = os.path.join(
             self.local_tmp_dir,
-            '{}.{}'.format(self._compute_doc_id(doc), doc_format)
+            '{}.{}'.format(self._get_doc_id(doc), doc_format)
             )
         return tmp_path
 
@@ -129,13 +129,13 @@ class S3DocumentManager(DocumentManager):
         new_doc = {k: str(v) for k, v in new_doc.items()}        
         doc.update(new_doc)        
         # add doc id, now we're done
-        doc['doc_id'] = self._compute_doc_id(doc)        
+        doc['doc_id'] = self._get_doc_id(doc)        
         return doc
 
     def _download_doc(self, doc):
         # download a document from given url to designated local location
         try:
-            self._compute_doc_id(doc)
+            self._get_doc_id(doc)
             tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
             if os.path.exists(tmp_path_pdf):
                 os.remove(tmp_path_pdf)
