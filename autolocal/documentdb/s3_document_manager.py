@@ -138,65 +138,47 @@ class S3DocumentManager(DocumentManager):
         return doc
 
     def _download_doc(self, doc):
-        # download a document from given url to designated local location
-        try:
-            self._get_doc_id(doc)
-            tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
-            if os.path.exists(tmp_path_pdf):
-                os.remove(tmp_path_pdf)
-            s3_path_pdf = self._get_s3_path(doc, 'pdf')
-            url = doc['url']
-        except KeyError:
-            print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
-            return doc
-        try:
-            doc['download_timestamp'] = datetime.utcnow().isoformat()
-            self._retrieve_url(url, tmp_path_pdf)            
-            self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
-        except:
-            print('document manager: could not download and save document: {}'.format(doc['doc_id']))        
+        # download a document from given url to designated temp location, then moves to s3
+        tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
+        if os.path.exists(tmp_path_pdf):
+            os.remove(tmp_path_pdf)
+        s3_path_pdf = self._get_s3_path(doc, 'pdf')
+        doc['download_timestamp'] = datetime.utcnow().isoformat()
+        self._retrieve_url(doc['url'], tmp_path_pdf)            
+        self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
+        print("document manager: saved doc to s3: {}".format(s3_path_pdf))
         return doc
 
     def _convert_doc(self, doc):
-        try:
-            tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
-            tmp_path_txt = self._get_tmp_path(doc, 'txt')
-            if os.path.exists(tmp_path_txt):
-                os.remove(tmp_path_txt)
-            s3_path_txt = self._get_s3_path(doc, 'txt')
-        except KeyError:
-            print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
-            
-        try:
-            s3_path_pdf = doc['local_path_pdf']
-            self._load_doc_from_s3(s3_path_pdf, tmp_path_pdf)
-            args = [tmp_path_pdf, '-o', tmp_path_txt]
-            print("parsing pdf document: {}".format(tmp_path_pdf))
-            pdf2txt.pdf2txt(args)
-            print("pdf parsed!")
-        except Exception as e:
-            print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
-            print(e)
-            return
-        # copy to S3        
-        try:
-            self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
-        except:
-            print('document manager: unable to save to s3: {}.txt'.format(doc['doc_id']))        
-        return
+        # convert a PDF to TXT save txt to S3
+        # assumes PDF exists in S3, grabs it from there, converts locally on EC2
+        # then sends txt back to s3
+        tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
+        tmp_path_txt = self._get_tmp_path(doc, 'txt')
+        s3_path_txt = self._get_s3_path(doc, 'txt')
+        s3_path_pdf = doc['local_path_pdf']
+        self._load_doc_from_s3(s3_path_pdf, tmp_path_pdf)
+        args = [tmp_path_pdf, '-o', tmp_path_txt]
+        print("document manager: parsing pdf document: {}".format(tmp_path_pdf))
+        pdf2txt.pdf2txt(args)        
+        self._save_doc_to_s3(tmp_path_txt, s3_path_txt)                
+        print("document manager: saved doc to s3: {}".format(s3_path_txt))
 
     def _add_vectors(self, doc):
-      s3_txt_path = self._get_s3_path(doc, 'txt')
-      s3_pkl_path = self._get_s3_path(doc, 'pkl')
-      tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
-
-      doc_string = self.get_doc_text(doc)
-      if doc_string:
+        # vectorize a document and save vectors to s3
+        # assumes the txt file exists in s3, grabs it from there, converts locally on EC2
+        # then sends pkl back to s3
+        s3_pkl_path = self._get_s3_path(doc, 'pkl')
+        tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
+        doc_string = self.get_doc_text(doc)
+        if not doc_string:
+            return
         print("vectorizing doc: {}".format(doc['doc_id']))
         vectors_data = self.vectorizer.vectorize(doc_string)
         pickle.dump(vectors_data, open(tmp_pkl_path, 'wb'))
         print("uploading doc: {}".format(doc['doc_id']))
-        self.s3.meta.client.upload_file(tmp_pkl_path, self.s3_bucket_name, s3_pkl_path)
+        self._save_doc_to_s3(tmp_pkl_path, s3_pkl_path)                
+        print("document manager: saved doc to s3: {}".format(s3_path_txt))
 
     def get_doc_vectors(self, doc):
       # add document vectors if we don't already have them
@@ -225,6 +207,7 @@ class S3DocumentManager(DocumentManager):
     """
 
     def get_doc_text(self, doc):
+        # given a doc, pulls its txt file from S3 and returns the contents as a string
         s3_path_txt = self._get_s3_path(doc, 'txt')
         autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
         doc_string = autolocal_docs_bucket.Object(s3_path_txt).get()['Body'].read()
@@ -259,35 +242,38 @@ class S3DocumentManager(DocumentManager):
             # compute the "local path" (actually path on s3)
             local_path = self._get_s3_path(doc, doc_format)
             local_path_key = 'local_path_{}'.format(doc_format)
-            try:                
-                # don't proceed if this doc format already exists on S3
-                if self._s3_object_exists(local_path):
-                    doc[local_path_key] = local_path
-                    continue
 
+            # don't do anything if object is already in S3
+            if self._s3_object_exists(local_path):
+                print('document manager: found object, will not recreate it: {}'.format(local_path))
+                doc[local_path_key] = local_path
+                continue
+
+            try:                    
                 # do the right thing with this doc format
                 if doc_format=='pdf':
-                    self._download_doc(doc)
+                    doc = self._download_doc(doc)
                 elif doc_format =='txt':
-                    self._convert_doc(doc)                
+                    self._convert_doc(doc)               
                 elif doc_format=='pkl':
                     self._add_vectors(doc)
                 else:
-                    raise NotImplementedError
+                    raise NotImplementedError                
 
                 # if successful, add s3 path to record
                 doc[local_path_key] = local_path
+
             except Exception as e:                
                 # let us know if something doesn't work while adding a document
                 print('document manager: unable to add {} format for {}'.format(doc_format, doc['doc_id']))
                 print(e)
                 break
-
+           
         # clean up
         for ext in self.doc_formats:
             tmp_path = self._get_tmp_path(doc, ext)
             if os.path.exists(tmp_path):
-                os.remove(tmp_path)
+                os.remove(tmp_path)                
 
         # add record to metadata and index            
         self._add_doc_to_db(doc, batch)        
