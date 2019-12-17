@@ -163,7 +163,7 @@ class S3DocumentManager(DocumentManager):
             s3_path_txt = self._get_s3_path('txt')
         except KeyError:
             print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
-            return
+            
         try:
             args = [tmp_path_pdf, '-o', tmp_path_txt]
             pdf2txt(args)
