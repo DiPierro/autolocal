@@ -169,7 +169,7 @@ class S3DocumentManager(DocumentManager):
             s3_path_pdf = doc['local_path_pdf']
             self._load_doc_from_s3(s3_path_pdf, tmp_path_pdf)
             args = [tmp_path_pdf, '-o', tmp_path_txt]
-            pdf2txt(args)
+            pdf2txt.pdf2txt(args)
         except Exception as e:
             print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
             print(e)
