@@ -43,6 +43,7 @@ class S3DocumentManager(DocumentManager):
         local_tmp_dir=os.path.join(AUTOLOCAL_HOME, 'data', 'scraping', 'tmp'),
         tokenizer_args={},
         doc_formats=FORMATS,
+        metadata_vars=METADATA_VARS,
         ):
 
         # store arguments
@@ -70,7 +71,7 @@ class S3DocumentManager(DocumentManager):
             )
 
         # load metadata from file if it exists
-        self.metadata_vars = METADATA_VARS
+        self.metadata_vars = metadata_vars
         pass
 
 
