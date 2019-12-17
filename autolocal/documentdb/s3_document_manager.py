@@ -162,7 +162,7 @@ class S3DocumentManager(DocumentManager):
             tmp_path_txt = self._get_tmp_path(doc, 'txt')
             if os.path.exists(tmp_path_txt):
                 os.remove(tmp_path_txt)
-            s3_path_txt = self._get_s3_path('txt')
+            s3_path_txt = self._get_s3_path(doc, 'txt')
         except KeyError:
             print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
             return
@@ -188,8 +188,8 @@ class S3DocumentManager(DocumentManager):
         return
 
     def _add_vectors(self, doc):
-      s3_txt_path = self.get_s3_path(doc, 'txt')
-      s3_pkl_path = self.get_s3_path(doc, 'pdf')
+      s3_txt_path = self._get_s3_path(doc, 'txt')
+      s3_pkl_path = self._get_s3_path(doc, 'pdf')
       tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
 
       doc_string = self.get_doc_text(doc)
@@ -229,8 +229,7 @@ class S3DocumentManager(DocumentManager):
     """
 
     def get_doc_text(self, doc):
-      if 'local_path_txt' in doc:
-        s3_path_txt = doc['local_path_txt']
+        s3_path_txt = self._get_s3_path(doc, 'txt')
         autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
         doc_string = autolocal_docs_bucket.Object(s3_path_txt).get()['Body'].read()
         # clear difficult characters
@@ -265,8 +264,8 @@ class S3DocumentManager(DocumentManager):
             local_path_key = 'local_path_{}'.format(doc_format)
             try:                
                 # don't proceed if this doc format already exists on S3
-                if self._s3_object_exists(s3_path):
-                    doc[local_path_key] = s3_path
+                if self._s3_object_exists(local_path):
+                    doc[local_path_key] = local_path
                     continue
 
                 # do the right thing with this doc format
