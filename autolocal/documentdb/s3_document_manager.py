@@ -242,7 +242,7 @@ class S3DocumentManager(DocumentManager):
         self._add_doc_to_db(doc, batch)        
         
         # done
-        print('dynamodb: added document: {}'.format(doc_id))
+        print('dynamodb: added document: {}'.format(doc['doc_id']))
         
         pass
 
