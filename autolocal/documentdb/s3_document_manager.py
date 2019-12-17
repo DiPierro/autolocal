@@ -202,7 +202,7 @@ class S3DocumentManager(DocumentManager):
         except:
             return False
 
-    def _vectorize_doc(doc):
+    def _add_vectors(self, doc):
         txt_path = doc['local_path_txt']
         pkl_path = "vectors"+ txt_path[4:-3] +"pkl"
         local_pkl_path = os.path.join("../data/pkls/", os.path.basename(txt_path))
@@ -254,28 +254,31 @@ class S3DocumentManager(DocumentManager):
         # don't add the document if we already have it
         doc_id = self._get_doc_id(doc)
         doc['doc_id'] = doc_id
-        if self._query_db_by_doc_id(doc_id):
-            print('dynamodb: document already in database: {}'.format(doc_id))
-        else:
-            # get local paths to document        
-            doc_paths = self._get_doc_paths(doc)
-            doc.update(doc_paths)
+        #if self._query_db_by_doc_id(doc_id):
+        #    print('dynamodb: document already in database: {}'.format(doc_id))
+        #    return
 
-            # download doc from url
-            doc = self._download_doc(doc)
+        # get local paths to document        
+        doc_paths = self._get_doc_paths(doc)
+        #doc.update(doc_paths)
 
-            # add to metadata and index
-            self._add_doc_to_db(doc, batch)   
+        if not self._s3_object_exists(doc_paths['local_path_pdf']):
+          # download doc from url
+          doc = self._download_doc(doc_paths)          
+          doc['local_path_pdf'] = doc_paths['local_path_pdf']
+            
+        if not self._s3_object_exists(doc_paths['local_path_txt']):
+          # convert to txt        
+          self._convert_doc(doc_paths)
+          doc['local_path_txt'] = doc_paths['local_path_txt']
 
-            # done
-            print('dynamodb: added document: {}'.format(doc_id))  
-        
-        if not self._text_file_is_on_s3(doc):
-            # convert to txt
-            self._convert_doc(doc)
-        
-        if not self._vectors_file_is_on_s3(doc):
-            self._vectorize_doc(doc)
+        if not self._s3_object_exists(doc_paths['local_path_pkl']):
+          self._add_vectors(doc_paths)
+          doc['local_path_pkl'] = doc_paths['local_path_pkl']
+
+        # add to metadata and index
+        if not self._query_db_by_doc_id(doc_id):
+          self._add_doc_to_db(doc, batch)
         
         pass
 

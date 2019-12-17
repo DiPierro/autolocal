@@ -1,7 +1,7 @@
-SENDER_NAME = "CityCouncilor Agenda Bot"
+SENDER_NAME = "Agenda Watch Bot"
 SENDER_ADDRESS = 'agendabot@citycouncilor.com'
-SUBJECT = 'Welcome to CityCouncilor!'
-BODY_TEXT = ("Welcome to CityCouncilor!\r\n"
+SUBJECT = 'Welcome to Agenda Watch!'
+BODY_TEXT = ("Welcome to Agenda Watch!\r\n"
              "This email was sent from send_test_email.py with Amazon SES using the "
              "AWS SDK for Python (Boto)."
             )
@@ -9,7 +9,7 @@ BODY_TEXT = ("Welcome to CityCouncilor!\r\n"
 BODY_HTML = """<html>
 <head></head>
 <body>
-  <h1>Welcome to CityCouncilor!</h1>
+  <h1>Welcome to Agenda Watch!</h1>
   <p>This email was sent from send_test_email.py with
     <a href='https://aws.amazon.com/ses/'>Amazon SES</a> using the
     <a href='https://aws.amazon.com/sdk-for-python/'>
