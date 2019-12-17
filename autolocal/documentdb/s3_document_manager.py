@@ -128,14 +128,14 @@ class S3DocumentManager(DocumentManager):
             print('warning: could not retrieve url: {}'.format(url))
 
 
-    def _download_doc(self, doc):
+    def _download_doc(self, doc, doc_paths):
         # download a document from given url to designated local location
         try:
             self._get_doc_id(doc)
             tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
             if os.path.exists(tmp_path_pdf):
                 os.remove(tmp_path_pdf)
-            s3_path_pdf = doc['local_path_pdf']
+            s3_path_pdf = doc_paths['local_path_pdf']
             url = doc['url']
         except KeyError:
             print('warning: could not load path(s): {}'.format(doc['doc_id']))
@@ -150,7 +150,7 @@ class S3DocumentManager(DocumentManager):
             os.remove(tmp_path_pdf)            
         return doc
 
-    def _convert_doc(self, doc):
+    def _convert_doc(self, doc, doc_paths):
         # convert a pdf to txt and save in designated location
         if not doc['doc_format']=='pdf':
             print('warning: document format is not PDF:'.format(doc['doc_id']))
@@ -161,7 +161,7 @@ class S3DocumentManager(DocumentManager):
             tmp_path_txt = self._get_tmp_path(doc, 'txt')
             if os.path.exists(tmp_path_txt):
                 os.remove(tmp_path_txt)
-            s3_path_txt = doc['local_path_txt']
+            s3_path_txt = doc_paths['local_path_txt']
         except KeyError:
             print('warning: could not load path(s): {}'.format(doc['doc_id']))
             return
@@ -171,10 +171,15 @@ class S3DocumentManager(DocumentManager):
             return                
         # convert pdf
         try:
+            s3_path_pdf = doc['local_path_pdf']
+            self._load_doc_from_s3(s3_path_pdf, tmp_path_pdf)
             args = [tmp_path_pdf, '-o', tmp_path_txt]
             pdf2txt(args)
-        except:
+            if os.path.exists(tmp_path_pdf):
+                os.remove(tmp_path_pdf)
+        except Exception as e:
             print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
+            print(e)
             return
         # copy to S3        
         self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
@@ -185,15 +190,13 @@ class S3DocumentManager(DocumentManager):
         return
 
     def get_doc_text(self, doc):
-        if 'local_path_txt' in doc:
-            autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
-            doc_string = autolocal_docs_bucket.Object(s3_txt_path).get()['Body'].read()
-            # clear difficult characters
-            doc_string = doc_string.decode("ascii", "ignore")
-            return doc_string
-        else:
-            print("document not found: {}".format(doc['doc_id']))
-            return ""
+      if 'local_path_txt' in doc:
+        s3_path_txt = doc['local_path_txt']
+        autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
+        doc_string = autolocal_docs_bucket.Object(s3_path_txt).get()['Body'].read()
+        # clear difficult characters
+        doc_string = doc_string.decode("ascii", "ignore")
+        return doc_string
 
     def _add_vectors(self, doc, doc_paths):
       s3_txt_path = doc_paths['local_path_txt']
@@ -255,18 +258,18 @@ class S3DocumentManager(DocumentManager):
         doc_id = self._get_doc_id(doc)
         doc['doc_id'] = doc_id
 
-        # get local paths to document        
+        # get local paths to document
         doc_paths = self._get_doc_paths(doc)
         #doc.update(doc_paths)
 
         if not self._s3_object_exists(doc_paths['local_path_pdf']):
           # download doc from url
-          doc = self._download_doc(doc_paths)          
+          doc = self._download_doc(doc, doc_paths)
           doc['local_path_pdf'] = doc_paths['local_path_pdf']
             
         if not self._s3_object_exists(doc_paths['local_path_txt']):
-          # convert to txt        
-          self._convert_doc(doc_paths)
+          # convert to txt
+          self._convert_doc(doc, doc_paths)
           doc['local_path_txt'] = doc_paths['local_path_txt']
 
         if not self._s3_object_exists(doc_paths['local_path_pkl']):
