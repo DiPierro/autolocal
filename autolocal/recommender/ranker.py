@@ -12,7 +12,6 @@ import boto3
 import numpy as np
 import pandas as pd
 from  tqdm import tqdm
-from allennlp.commands.elmo import ElmoEmbedder
 import editdistance
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -35,19 +34,6 @@ def single_vector_per_doc(vectors):
     """
     vectors = np.concatenate([v[2] for v in vectors], 0)
     return vectors
-
-def read_doc(s3_path):
-    s3 = boto3.resource(
-        's3',
-        region_name=aws_config.region_name
-        )
-    autolocal_docs_bucket = s3.Bucket(
-        aws_config.s3_document_bucket_name
-        )
-    try:
-        return autolocal_docs_bucket.Object(s3_path).get()['Body'].read().decode("ascii", "ignore")
-    except:
-        return None
 
 def read_metadata(args):
     # start_date = [int(d) for d in args.start_date.split("-")]
@@ -242,14 +228,15 @@ def set_casing(x, casing="lower_non_acronyms"):
         raise Exception
 
 # TODO: use vectors to find closes words to keywords
-def score_doc_sections(doc_sections, orig_keywords, elmo):
+def score_doc_sections(doc_sections, orig_keywords, vectorizer):
     orig_keywords = [k.strip() for k in orig_keywords]
     keywords = []
     for k in orig_keywords:
         words = k.split(" ")
         for word in words:
             keywords.append(word)
-    keyword_vectors = single_vector_per_doc([elmo.embed_sentence(keywords)])
+    vector_data = vectorizer.vectorize(" ".join(keywords))
+    keyword_vectors = single_vector_per_doc(vector_data["vectors"])
     doc_sections_scores = []
     for s, section in enumerate(doc_sections):
         section_vectors = single_vector_per_doc([s["sentence_vectors"] for s in section["sentences"]])
@@ -338,7 +325,7 @@ def write_results(results, query_id, batch):
         }
     )
 
-def run_queries(elmo, document_manager, input_args):
+def run_queries(document_manager, input_args):
     k = input_args.k 
     start_date, end_date = parse_dates(input_args.start_date, input_args.end_date)
     print("reading queries")
@@ -348,7 +335,7 @@ def run_queries(elmo, document_manager, input_args):
     metadata = read_metadata(input_args)
     print("finding relevant doc_ids")
     relevant_doc_ids = find_relevant_doc_ids(queries, metadata, start_date = start_date, end_date = end_date, agenda_only=input_args.agenda_only)
-    print("reading relevant documents")
+    print("reading {} relevant documents".format(len(relevant_doc_ids)))
     # (not actually *all*, but all the ones we care about for queries)
     all_docs = read_docs(relevant_doc_ids, document_manager)
     print("read {} relevant documents".format(len(all_docs)))
@@ -372,7 +359,7 @@ def run_queries(elmo, document_manager, input_args):
         doc_sections_scores = score_doc_sections(
             doc_sections,
             keywords,
-            elmo
+            document_manager.vectorizer
         )
         top_k_sections = select_top_k(doc_sections, doc_sections_scores, k)
         results = update_with_top_k(results, top_k_sections, query)
@@ -397,8 +384,8 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser(description='Section documents and rank by relevance to queries')
 
-    parser.add_argument('--email', type=str, required=True,
-        help='Who should I send emails to?\nUse `--email P` to send to the actual addresses in the queries.')
+    # parser.add_argument('--email', type=str, required=True,
+    #     help='Who should I send emails to?\nUse `--email P` to send to the actual addresses in the queries.')
 
     parser.add_argument('--start_date', type=str, default=None,
         help="".join([
@@ -430,12 +417,10 @@ if __name__=='__main__':
     args = parser.parse_args()
     print(args)
 
-    elmo = ElmoEmbedder()
     document_manager = S3DocumentManager()
 
     run_queries(
-        elmo=elmo,
-        documents=document_manager,
+        document_manager=document_manager,
         input_args=args
     )
 
