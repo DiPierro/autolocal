@@ -23,9 +23,10 @@ METADATA_VARS = [
     'url',
     'local_path_pdf',
     'local_path_txt',
-    'doc_format',
     'download_timestamp'
 ]
+
+FORMATS = ['pdf', 'txt', 'pkl']
 
 class S3DocumentManager(DocumentManager):
     """
@@ -36,14 +37,15 @@ class S3DocumentManager(DocumentManager):
         s3_bucket_name=aws_config.s3_document_bucket_name,
         db_name=aws_config.db_document_table_name,
         region_name=aws_config.region_name,
-        document_base_dir='docs',
         local_tmp_dir=os.path.join(AUTOLOCAL_HOME, 'data', 'scraping', 'tmp'),
         tokenizer_args={},
+        doc_formats=FORMATS,
         ):
 
         # store arguments
+        
         self.s3_bucket_name = s3_bucket_name
-        self.document_base_dir = 'docs'    
+        self.doc_formats = doc_formats   
         self.local_tmp_dir = os.path.expanduser(local_tmp_dir)
         if not os.path.exists(self.local_tmp_dir):
             os.mkdir(self.local_tmp_dir)            
@@ -64,15 +66,22 @@ class S3DocumentManager(DocumentManager):
 
         # load metadata from file if it exists
         self.metadata_vars = METADATA_VARS
-
         pass
 
-    """
-    "Public" methods for reading and writing info from documents
-    """
 
-    def _get_tmp_path(self, doc, ext):
-        return os.path.join(self.local_tmp_dir, '{}.{}'.format(self._get_doc_id(doc), ext))
+    def _get_s3_path(self, doc, doc_format):                
+        doc_path = os.path.join(
+            doc_format,
+            '{}.{}'.format(self._compute_doc_id(doc), doc_format)
+        )
+        return doc_path
+
+    def _get_tmp_path(self, doc, doc_format):
+        tmp_path = os.path.join(
+            self.local_tmp_dir,
+            '{}.{}'.format(self._compute_doc_id(doc), doc_format)
+            )
+        return tmp_path
 
     def _save_doc_to_s3(self, local_path, s3_path):
         return self.s3_client.upload_file(local_path, self.s3_bucket_name, s3_path)
@@ -90,7 +99,7 @@ class S3DocumentManager(DocumentManager):
             else:
                 raise e
 
-    def _add_doc_to_db(self, doc, batch=None):        
+    def _add_doc_to_db(self, doc, batch=None):
         doc = dict(doc)
         item = {}
         for k,v in doc.items():
@@ -106,17 +115,6 @@ class S3DocumentManager(DocumentManager):
     def _query_db_by_doc_id(self, doc_id):
         return self.table.query(KeyConditionExpression=Key('doc_id').eq(doc_id))['Items']
 
-    def _get_doc_paths(self, doc, formats=['pdf', 'txt']):
-        doc_paths = {'local_path_' + s: '' for s in formats}
-        if doc['url']:
-            for s in formats:
-                k = 'local_path_' + s
-                doc_paths[k] = os.path.join(
-                    self.document_base_dir,
-                    self._lower(doc['city']),
-                    '{}.{}'.format(self._get_doc_id(doc), s)
-                )
-        return doc_paths
 
     def _retrieve_url(self, url, local_path):
         try:
@@ -124,62 +122,72 @@ class S3DocumentManager(DocumentManager):
         except:
             print('warning: could not retrieve url: {}'.format(url))
 
+    def _create_doc(self, new_doc):
+        # initialize empty document
+        doc = {k: np.nan for k in self.metadata_vars}        
+        # add new data
+        new_doc = {k: str(v) for k, v in new_doc.items()}        
+        doc.update(new_doc)        
+        # add doc id, now we're done
+        doc['doc_id'] = self._compute_doc_id(doc)        
+        return doc
 
     def _download_doc(self, doc):
         # download a document from given url to designated local location
         try:
-            self._get_doc_id(doc)
+            self._compute_doc_id(doc)
             tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
             if os.path.exists(tmp_path_pdf):
                 os.remove(tmp_path_pdf)
-            s3_path_pdf = doc['local_path_pdf']
+            s3_path_pdf = self._get_s3_path(doc, 'pdf')
             url = doc['url']
         except KeyError:
-            print('warning: could not load path(s): {}'.format(doc['doc_id']))
+            print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
             return doc
-        if self._s3_object_exists(s3_path_pdf):
-            print('s3: object already exists: {}'.format(s3_path_pdf))
-            return doc
-        else:        
+        try:
             doc['download_timestamp'] = datetime.utcnow().isoformat()
             self._retrieve_url(url, tmp_path_pdf)            
             self._save_doc_to_s3(tmp_path_pdf, s3_path_pdf)
+        except:
+            print('document manager: could not download and save document: {}'.format(doc['doc_id']))
+        finally:
             os.remove(tmp_path_pdf)            
         return doc
 
     def _convert_doc(self, doc):
-        # convert a pdf to txt and save in designated location
-        if not doc['doc_format']=='pdf':
-            print('warning: document format is not PDF:'.format(doc['doc_id']))
-            return
-        # get paths
         try:
             tmp_path_pdf = self._get_tmp_path(doc, 'pdf')
             tmp_path_txt = self._get_tmp_path(doc, 'txt')
             if os.path.exists(tmp_path_txt):
                 os.remove(tmp_path_txt)
-            s3_path_txt = doc['local_path_txt']
+            s3_path_txt = self._get_s3_path('txt')
         except KeyError:
-            print('warning: could not load path(s): {}'.format(doc['doc_id']))
+            print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
             return
-        # check to see if txt already exists
-        if self._s3_object_exists(s3_path_txt):
-            print('s3: object already exists: {}'.format(s3_path_txt))
-            return                
-        # convert pdf
         try:
             args = [tmp_path_pdf, '-o', tmp_path_txt]
             pdf2txt(args)
         except:
-            print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
+            print('document manager: was not able to convert PDF: {}'.format(doc['doc_id']))
             return
         # copy to S3        
-        self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
-        if os.path.exists(tmp_path_txt):
-            os.remove(tmp_path_txt)
-        if os.path.exists(tmp_path_pdf):
-            os.remove(tmp_path_pdf)
+        try:
+            self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
+        except:
+            print('document manager: unable to save to s3: {}.txt'.format(doc['doc_id']))        
+        finally:
+            if os.path.exists(tmp_path_txt):
+                os.remove(tmp_path_txt)
+            if os.path.exists(tmp_path_pdf):
+                os.remove(tmp_path_pdf)
         return
+
+    def _add_vectors(self, doc):
+        pass
+
+    """
+    "Public" methods for reading and writing info from documents
+    """
 
     def add_doc(
         self,
@@ -192,42 +200,46 @@ class S3DocumentManager(DocumentManager):
         # and optionally, if you want to download and index the document, 
         # url 
 
-        new_doc = {k: str(v) for k, v in new_doc.items()}        
-        doc = {k: np.nan for k in self.metadata_vars}
-        doc.update(new_doc)
+        # create doc dict
+       doc = self._create_doc(new_doc)
 
         # do not add document if no url
-        if not isinstance(doc['url'], str):
-            return
+        try:
+            assert(isinstance(doc['url'], str))
+        except:
+            print('document manager: no URL provided in document {}'.format(doc['doc_id']))
+            return 
+        
+        # try to add every type of document format in turn
+        for doc_format in self.doc_formats:            
+            # compute the "local path" (actually path on s3)
+            local_path = self._get_s3_path(doc, doc_format)
+            local_path_key = 'local_path_{}'.format(doc_format)
+            try:                
+                # don't proceed if this doc format already exists on S3
+                if self._s3_object_exists(s3_path):
+                    doc[local_path_key] = s3_path
+                    continue
 
-        # don't add the document if we already have it
-        doc_id = self._get_doc_id(doc)
-        doc['doc_id'] = doc_id
-        #if self._query_db_by_doc_id(doc_id):
-        #    print('dynamodb: document already in database: {}'.format(doc_id))
-        #    return
+                # do the right thing with this doc format
+                if doc_format=='pdf':
+                    self._download_doc(doc_paths)
+                elif doc_format =='txt':
+                    self._convert_doc(doc_paths)                
+                elif doc_format=='pkl':
+                    self._add_vectors(doc_paths)
+                else:
+                    raise NotImplementedError
 
-        # get local paths to document        
-        doc_paths = self._get_doc_paths(doc)
-        #doc.update(doc_paths)
-
-        if not self._s3_object_exists(doc_paths['local_path_pdf']):
-          # download doc from url
-          doc = self._download_doc(doc_paths)          
-          doc['local_path_pdf'] = doc_paths['local_path_pdf']
+                # if successful, add s3 path to record
+                doc[local_path_key] = s3_path
+            except Exception as e:                
+                # let us know if something doesn't work while adding a document
+                print('document manager: unable to add {} format for {}'.format(doc_format, doc['doc_id']))
+                break
             
-        if not self._s3_object_exists(doc_paths['local_path_txt']):
-          # convert to txt        
-          self._convert_doc(doc_paths)
-          doc['local_path_txt'] = doc_paths['local_path_txt']
-
-        if not self._s3_object_exists(doc_paths['local_path_pkl']):
-          self._add_vectors(doc_paths)
-          doc['local_path_pkl'] = doc_paths['local_path_pkl']
-
-        # add to metadata and index
-        if not self._query_db_by_doc_id(doc_id):
-          self._add_doc_to_db(doc, batch)
+        # add record to metadata and index            
+        self._add_doc_to_db(doc, batch)        
         
         # done
         print('dynamodb: added document: {}'.format(doc_id))
