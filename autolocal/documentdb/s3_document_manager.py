@@ -203,9 +203,9 @@ class S3DocumentManager(DocumentManager):
       s3_path = self._get_s3_path(doc, 'pkl')
       if not self._s3_object_exists(s3_path):
         self.add_doc(doc)
-      tmp_path = self._get_tmp_path(doc, 'pkl')
-      self._load_doc_from_s3(s3_path, tmp_path)
-      vector_data = pickle.load(open(tmp_path, 'rb'))
+      tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
+      self._load_doc_from_s3(s3_path, tmp_pkl_path)
+      vector_data = pickle.load(open(tmp_pkl_path, 'rb'))
       if os.path.exists(tmp_pkl_path):
         os.remove(tmp_pkl_path)
       return vector_data
