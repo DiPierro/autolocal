@@ -13,6 +13,7 @@ import botocore
 from autolocal import AUTOLOCAL_HOME
 from autolocal.documentdb import pdf2txt, DocumentManager
 from autolocal.aws import aws_config
+from autolocal.parser.nlp import Vectorizer
 
 METADATA_VARS = [
     'city',
@@ -48,7 +49,9 @@ class S3DocumentManager(DocumentManager):
         self.doc_formats = doc_formats   
         self.local_tmp_dir = os.path.expanduser(local_tmp_dir)
         if not os.path.exists(self.local_tmp_dir):
-            os.mkdir(self.local_tmp_dir)            
+            os.mkdir(self.local_tmp_dir) 
+
+        self.vectorizer = Vectorizer()           
 
         # init resources
         self.table = boto3.resource(
@@ -115,7 +118,6 @@ class S3DocumentManager(DocumentManager):
     def _query_db_by_doc_id(self, doc_id):
         return self.table.query(KeyConditionExpression=Key('doc_id').eq(doc_id))['Items']
 
-
     def _retrieve_url(self, url, local_path):
         try:
             urlretrieve(url.replace(' ', '%20'), local_path)
@@ -163,12 +165,15 @@ class S3DocumentManager(DocumentManager):
             s3_path_txt = self._get_s3_path('txt')
         except KeyError:
             print('document manager: could not setup local path(s): {}'.format(doc['doc_id']))
-            return
+            
         try:
+            s3_path_pdf = doc['local_path_pdf']
+            self._load_doc_from_s3(s3_path_pdf, tmp_path_pdf)
             args = [tmp_path_pdf, '-o', tmp_path_txt]
             pdf2txt(args)
-        except:
-            print('document manager: was not able to convert PDF: {}'.format(doc['doc_id']))
+        except Exception as e:
+            print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
+            print(e)
             return
         # copy to S3        
         try:
@@ -183,11 +188,54 @@ class S3DocumentManager(DocumentManager):
         return
 
     def _add_vectors(self, doc):
-        pass
+      s3_txt_path = self.get_s3_path(doc, 'txt')
+      s3_pkl_path = self.get_s3_path(doc, 'pdf')
+      tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
+
+      doc_string = self.get_doc_text(doc)
+      if doc_string:
+        print("vectorizing doc")
+        vectors_data = self.vectorizer.vectorize(doc_string)
+        pickle.dump(data_to_write, open(tmp_pkl_path, 'wb'))
+        print("uploading doc")
+        self.s3.meta.client.upload_file(tmp_pkl_path, self.s3_bucket_name, s3_pkl_path)
+      if os.path.exists(tmp_pkl_path):
+        os.remove(tmp_pkl_path)
+
+    def get_doc_vectors(self, doc):
+      # add document vectors if we don't already have them
+      if not 'local_path_pkl' in doc:
+        self.add_doc(doc)
+      s3_path = doc['local_path_pkl']
+      tmp_path = self._get_tmp_path(doc, 'pkl')
+      self._load_doc_from_s3(s3_path, tmp_path)
+      vector_data = pickle.load(open(tmp_path, 'rb'))
+      if os.path.exists(tmp_pkl_path):
+        os.remove(tmp_pkl_path)
+      return vector_data
+
+    def get_doc_by_id(self, doc_id):
+      matching_docs = self._query_db_by_doc_id(doc_id)
+      if len(matching_docs) == 0:
+        print("no documents on s3 matching {}".format(doc_id))
+        return None
+      else:
+        if len(matching_docs) > 1:
+          print("more than one document on s3 matches {}. returning the first.".format(doc_id))
+        return matching_docs.pop()
 
     """
     "Public" methods for reading and writing info from documents
     """
+
+    def get_doc_text(self, doc):
+      if 'local_path_txt' in doc:
+        s3_path_txt = doc['local_path_txt']
+        autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
+        doc_string = autolocal_docs_bucket.Object(s3_path_txt).get()['Body'].read()
+        # clear difficult characters
+        doc_string = doc_string.decode("ascii", "ignore")
+        return doc_string
 
     def add_doc(
         self,
@@ -208,8 +256,8 @@ class S3DocumentManager(DocumentManager):
             assert(isinstance(doc['url'], str))
         except:
             print('document manager: no URL provided in document {}'.format(doc['doc_id']))
-            return 
-        
+            return
+
         # try to add every type of document format in turn
         for doc_format in self.doc_formats:            
             # compute the "local path" (actually path on s3)
@@ -223,11 +271,11 @@ class S3DocumentManager(DocumentManager):
 
                 # do the right thing with this doc format
                 if doc_format=='pdf':
-                    self._download_doc(doc_paths)
+                    self._download_doc(doc)
                 elif doc_format =='txt':
-                    self._convert_doc(doc_paths)                
+                    self._convert_doc(doc)                
                 elif doc_format=='pkl':
-                    self._add_vectors(doc_paths)
+                    self._add_vectors(doc)
                 else:
                     raise NotImplementedError
 
@@ -236,6 +284,7 @@ class S3DocumentManager(DocumentManager):
             except Exception as e:                
                 # let us know if something doesn't work while adding a document
                 print('document manager: unable to add {} format for {}'.format(doc_format, doc['doc_id']))
+                print(e)
                 break
             
         # add record to metadata and index            
@@ -243,8 +292,6 @@ class S3DocumentManager(DocumentManager):
         
         # done
         print('dynamodb: added document: {}'.format(doc['doc_id']))
-        
-        pass
 
     def add_docs_from_csv(
         self,

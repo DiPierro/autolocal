@@ -2,6 +2,32 @@
 
 import re
 
+class Vectorizer(object):
+
+    def __init__(self):
+        self.elmo = ElmoEmbedder()
+
+    def sentence_split(self, s):
+        sentences = re.split('[.\n!?"\f]', s)
+        return [s for s in sentences if len(s.strip())>0]
+
+    def tokenize(self, s):
+        tokens = re.findall(r'\w+', s)
+        return tokens
+
+    def vectorize(self, string):
+
+        print("vectorizing doc")
+        sentences = self.sentence_split(doc_string)
+        vectors = []
+        for sentence in sentences:
+            sentence_tokens = tokenize(sentence)
+            sentence_vectors = self.elmo.embed_sentence(sentence_tokens)
+            vectors.append(sentence_vectors)
+        vectors_data = {"sentences": sentences, "vectors": vectors}
+
+        return vectors_data
+
 class Tokenizer(object):
     """
     A simple, fast, regular expression based tokenizer.
