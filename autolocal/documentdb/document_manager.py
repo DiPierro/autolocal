@@ -2,9 +2,6 @@ import os
 from datetime import datetime
 
 import pandas as pd
-from urllib.request import urlretrieve
-
-from autolocal.documentdb import pdf2txt
 
 INDEX_VARS = ['keyword']
 METADATA_VARS = [
