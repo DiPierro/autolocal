@@ -201,7 +201,7 @@ class S3DocumentManager(DocumentManager):
         # url 
 
         # create doc dict
-       doc = self._create_doc(new_doc)
+        doc = self._create_doc(new_doc)
 
         # do not add document if no url
         try:
