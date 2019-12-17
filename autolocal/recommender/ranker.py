@@ -17,11 +17,9 @@ import editdistance
 from sklearn.metrics.pairwise import cosine_similarity
 
 from autolocal.aws import aws_config
+from autolocal.documentdb import S3DocumentManager
 
 from autolocal import AUTOLOCAL_HOME
-
-def get_local_pkl_path(s3_path):
-    return os.path.join(AUTOLOCAL_HOME, "data/pkls", os.path.basename(s3_path))
 
 def single_vector_per_doc(vectors):
     # vectors is a list of np arrays where:
@@ -75,46 +73,7 @@ def read_metadata(args):
 
     metadata = pd.DataFrame(data)
     metadata["date"] = [datetime.strptime(d, '%Y-%m-%d') for d in metadata["date"]]
-    metadata['local_path_pkl'] = metadata['local_path_txt'].apply(lambda x: "vectors"+x[4:-3]+"pkl")
     return metadata
-
-def read_vectors(pkl_filename):
-    local_pkl_path = get_local_pkl_path(pkl_filename)
-    try:
-        return pickle.load(open(local_pkl_path, 'rb'))
-    except Exception as e:
-        print("failed to load local vectors")
-        print(e)
-        s3 = boto3.resource('s3')
-        s3.meta.client.download_file(
-            aws_config.s3_document_bucket_name,
-            pkl_filename,
-            local_pkl_path)
-        return pickle.load(open(local_pkl_path, 'rb'))
-
-def write_local(array, s3_path):
-        pickle.dump(array, open(os.path.join(AUTOLOCAL_HOME, "data/pkls/", os.path.basename(s3_path)), 'wb'))
-
-def write_vectors(array, s3_path):
-    pickle.dump(array, open(os.path.join(AUTOLOCAL_HOME, "data/pkls", os.path.basename(s3_path)), 'wb'))
-
-def get_elmo_vectors(s3_path):
-    local_path = get_local_pkl_path(s3_path)
-  
-    txt_filename = 'docs' + s3_path[7:-3] + 'txt'
-    doc_string = read_doc(txt_filename)
-    if doc_string:
-      sentences = sentence_split(doc_string)
-      vectors = []
-      for sentence in sentences:
-        sentence_tokens = tokenize(sentence)
-        sentence_vectors = elmo.embed_sentence(sentence_tokens)
-        vectors.append(sentence_vectors)
-      print("writing local pkl file")
-      write_local({"sentences": sentences, "vectors": vectors}, local_path)
-      print("uploading doc")
-      s3 = boto3.resource('s3')
-      s3.meta.client.upload_file(local_path, 'autolocal-documents', s3_path)
 
 def sentence_split(s):
     sentences = re.split('[.\n!?"\f]', s)
@@ -154,7 +113,7 @@ def parse_dates(start_date, end_date):
       assert(start_date <= end_date)
     return start_date, end_date
 
-def find_relevant_filenames(queries, metadata, start_date=None, end_date=None, agenda_only=False):
+def find_relevant_doc_ids(queries, metadata, start_date=None, end_date=None, agenda_only=False):
 
     cities = set()
     
@@ -175,55 +134,30 @@ def find_relevant_filenames(queries, metadata, start_date=None, end_date=None, a
     if agenda_only:
         potential_documents = potential_documents[potential_documents["doc_type"]=="Agenda"]
 
-    return list(potential_documents['local_path_txt'])
+    return list(potential_documents['doc_id'])
 
-def read_docs(s3_paths):
-    log_every = 100
+def read_docs(doc_ids, document_manager):
+  log_every = 100
 
-    documents = {}
-    n_docs_total = len(s3_paths)
+  documents = {}
+  n_docs_total = len(doc_ids)
 
-    i = 0
-    n_docs_read = 0
-    for s3_path in s3_paths:
-        pkl_path = "vectors" + s3_path[4:-3] + "pkl"
-        try:
-            doc_string = read_doc(s3_path)
-            if doc_string:
-                doc_sentences = sentence_split(doc_string)
-                doc_tokens = []
-                for sentence in doc_sentences:
-                    sentence_tokens = tokenize(sentence)
-                    doc_tokens.append(sentence_tokens)
-                try:
-                  vectors = read_vectors(pkl_path)
-                except:
-                  try:
-                    print("vectorizing: {}".format(pkl_path))
-                    get_elmo_vectors(pkl_path)
-                    vectors = read_vectors(pkl_path)
-                  except Exception as e:
-                    vectors = None
-                    print('missing vectors for: {}'.format(pkl_path))
-                    print(e)
-                if vectors:
-                  documents[s3_path] = {
-                     "original_text": doc_string,
-                     "sentences": doc_sentences,
-                     "vectors": vectors
-                   }
-        except Exception as e:
-            if i < 10:
-                print("Key not found in S3: {}".format(s3_path))
-                print(e)
-            elif i == 10:
-                print("More than 10 keys not found")
-                print(e)
-                break
-            i+=1
-        if n_docs_read % log_every == 0:
-            print("{} of {} documents read".format(n_docs_read, n_docs_total))
-        n_docs_read+=1
+  i = 0
+  n_docs_read = 0
+  for doc_id in doc_ids:
+    doc = document_manager.get_doc_by_id(doc_id)
+    doc_string = document_manager.get_doc_text(doc)
+    if doc_string:
+      vector_data = document_manager.get_doc_vectors(doc)
+      if vector_data:
+        documents[doc_id] = {
+          "original_text": doc_string,
+          "sentences": vector_data["sentences"],
+          "vectors": vector_data["vectors"]
+        }
+    n_docs_read+=1
+    if n_docs_read % log_every == 0:
+        print("{} of {} documents read".format(n_docs_read, n_docs_total))
 
     return documents
 
@@ -237,14 +171,14 @@ def select_relevant_docs(municipalities, all_docs, metadata, start_date=None, en
         potential_documents = potential_documents[potential_documents["date"] >= end_date]
     potential_documents = potential_documents[[(c in municipalities) for c in potential_documents["city"]]]
     # filter all docs to only filenames in subset of metadata
-    filenames = list(potential_documents['local_path_txt'])
+    doc_ids = list(potential_documents['doc_id'])
     urls = list(potential_documents['url'])
     docs_to_return = []
-    for i in range(len(filenames)):
-        f = filenames[i]
+    for i in range(len(doc_ids)):
+        f = doc_ids[i]
         u = urls[i]
         if f in all_docs:
-            docs_to_return.append({**all_docs[f], 'filename':f, 'url':u})
+            docs_to_return.append({**all_docs[f], 'doc_id':f, 'url':u})
         else:
             print(f)
     # return [{**all_docs[f], 'filename':f, 'url':"example.com"} for f in potential_documents['local_path_txt'] if f in all_docs]
@@ -404,7 +338,7 @@ def write_results(results, query_id, batch):
         }
     )
 
-def run_queries(elmo, input_args):
+def run_queries(elmo, document_manager, input_args):
     k = input_args.k 
     start_date, end_date = parse_dates(input_args.start_date, input_args.end_date)
     print("reading queries")
@@ -412,11 +346,11 @@ def run_queries(elmo, input_args):
     queries = [q for q in queries if ('subscription_status' in q and q['subscription_status'] == 'subscribed')]
     print("reading metadata")
     metadata = read_metadata(input_args)
-    print("finding relevant filenames")
-    relevant_filenames = find_relevant_filenames(queries, metadata, start_date = start_date, end_date = end_date, agenda_only=input_args.agenda_only)
+    print("finding relevant doc_ids")
+    relevant_doc_ids = find_relevant_doc_ids(queries, metadata, start_date = start_date, end_date = end_date, agenda_only=input_args.agenda_only)
     print("reading relevant documents")
     # (not actually *all*, but all the ones we care about for queries)
-    all_docs = read_docs(relevant_filenames)
+    all_docs = read_docs(relevant_doc_ids, document_manager)
     print("read {} relevant documents".format(len(all_docs)))
     
     for q, query in enumerate(queries):
@@ -497,9 +431,11 @@ if __name__=='__main__':
     print(args)
 
     elmo = ElmoEmbedder()
+    document_manager = S3DocumentManager()
 
     run_queries(
         elmo=elmo,
+        documents=document_manager,
         input_args=args
     )
 

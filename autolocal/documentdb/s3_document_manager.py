@@ -13,6 +13,7 @@ import botocore
 from autolocal import AUTOLOCAL_HOME
 from autolocal.documentdb import pdf2txt, DocumentManager
 from autolocal.aws import aws_config
+from autolocal.parser.nlp import Vectorizer
 
 METADATA_VARS = [
     'city',
@@ -46,7 +47,9 @@ class S3DocumentManager(DocumentManager):
         self.document_base_dir = 'docs'    
         self.local_tmp_dir = os.path.expanduser(local_tmp_dir)
         if not os.path.exists(self.local_tmp_dir):
-            os.mkdir(self.local_tmp_dir)            
+            os.mkdir(self.local_tmp_dir) 
+
+        self.vectorizer = Vectorizer()           
 
         # init resources
         self.table = boto3.resource(
@@ -106,7 +109,7 @@ class S3DocumentManager(DocumentManager):
     def _query_db_by_doc_id(self, doc_id):
         return self.table.query(KeyConditionExpression=Key('doc_id').eq(doc_id))['Items']
 
-    def _get_doc_paths(self, doc, formats=['pdf', 'txt']):
+    def _get_doc_paths(self, doc, formats=['pdf', 'txt', 'pkl']):
         doc_paths = {'local_path_' + s: '' for s in formats}
         if doc['url']:
             for s in formats:
@@ -147,11 +150,6 @@ class S3DocumentManager(DocumentManager):
             os.remove(tmp_path_pdf)            
         return doc
 
-    def _make_vectors(self, s3_path_txt):
-        local_pkl_path = os.path.join("../data/pkls/", os.path.basename(s3_path_txt[:-3]+"pkl"))
-        s3_pkl_path = "vectors"+s3_path_txt[4:-3]+"pkl"
-        pass
-
     def _convert_doc(self, doc):
         # convert a pdf to txt and save in designated location
         if not doc['doc_format']=='pdf':
@@ -179,58 +177,60 @@ class S3DocumentManager(DocumentManager):
             print('warning: was not able to convert PDF: {}'.format(doc['doc_id']))
             return
         # copy to S3        
-        self._save_doc_to_s3(tmp_path_txt, s3_path_txt)
-        self._make_vectors(s3_path_txt)     
+        self._save_doc_to_s3(tmp_path_txt, s3_path_txt)        
         if os.path.exists(tmp_path_txt):
             os.remove(tmp_path_txt)
         if os.path.exists(tmp_path_pdf):
             os.remove(tmp_path_pdf)
         return
 
-    def _text_file_is_on_s3(doc):
-        try:
-            self.s3.Object('autolocal-documents', doc['local_path_txt']).load()
-            True
-        except:
-            return False
+    def get_doc_text(self, doc):
+        if 'local_path_txt' in doc:
+            autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
+            doc_string = autolocal_docs_bucket.Object(s3_txt_path).get()['Body'].read()
+            # clear difficult characters
+            doc_string = doc_string.decode("ascii", "ignore")
+            return doc_string
+        else:
+            print("document not found: {}".format(doc['doc_id']))
+            return ""
 
-    def _vectors_file_is_on_s3(doc):
-        pkl_path = "vectors"+ (doc['local_path_txt'])[4:-3] +"pkl"
-        try:
-            self.s3.Object('autolocal-documents', pkl_path).load()
-            True
-        except:
-            return False
+    def _add_vectors(self, doc, doc_paths):
+      s3_txt_path = doc_paths['local_path_txt']
+      s3_pkl_path = doc_paths['local_path_pkl']
+      tmp_pkl_path = self._get_tmp_path(doc, 'pkl')
 
-    def _add_vectors(self, doc):
-        txt_path = doc['local_path_txt']
-        pkl_path = "vectors"+ txt_path[4:-3] +"pkl"
-        local_pkl_path = os.path.join("../data/pkls/", os.path.basename(txt_path))
-
-        def sentence_split(s):
-            sentences = re.split('[.\n!?"\f]', s)
-            return [s for s in sentences if len(s.strip())>0]
-
-        def tokenize(s):
-            tokens = re.findall(r'\w+', s)
-            return tokens
-
+      doc_string = self.get_doc_text(doc)
+      if doc_string:
         print("vectorizing doc")
-        autolocal_docs_bucket = self.s3.Bucket(self.s3_bucket_name)
-        doc_string = autolocal_docs_bucket.Object(txt_path).get()['Body'].read()
-        # clear difficult characters
-        doc_string = doc_string.decode("ascii", "ignore")
-        if doc_string:
-            sentences = sentence_split(doc_string)
-            vectors = []
-            for sentence in sentences:
-                sentence_tokens = tokenize(sentence)
-                sentence_vectors = self.elmo.embed_sentence(sentence_tokens)
-                vectors.append(sentence_vectors)
-            data_to_write = {"sentences": sentences, "vectors": vectors}
-            pickle.dump(data_to_write, open(local_pkl_path, 'wb'))
+        vectors_data = self.vectorizer.vectorize(doc_string)
+        pickle.dump(data_to_write, open(tmp_pkl_path, 'wb'))
         print("uploading doc")
-        self.s3.meta.client.upload_file(local_pkl_path, self.s3_bucket_name, pkl_path)
+        self.s3.meta.client.upload_file(tmp_pkl_path, self.s3_bucket_name, s3_pkl_path)
+      if os.path.exists(tmp_pkl_path):
+        os.remove(tmp_pkl_path)
+
+    def get_doc_vectors(self, doc):
+      # add document vectors if we don't already have them
+      if not 'local_path_pkl' in doc:
+        self.add_doc(doc)
+      s3_path = doc['local_path_pkl']
+      tmp_path = self._get_tmp_path(doc, 'pkl')
+      self._load_doc_from_s3(s3_path, tmp_path)
+      vector_data = pickle.load(open(tmp_path, 'rb'))
+      if os.path.exists(tmp_pkl_path):
+        os.remove(tmp_pkl_path)
+      return vector_data
+
+    def get_doc_by_id(self, doc_id):
+      matching_docs = self._query_db_by_doc_id(doc_id)
+      if len(matching_docs) == 0:
+        print("no documents on s3 matching {}".format(doc_id))
+        return None
+      else:
+        if len(matching_docs) > 1:
+          print("more than one document on s3 matches {}. returning the first.".format(doc_id))
+        return matching_docs.pop()
 
     def add_doc(
         self,
@@ -254,9 +254,6 @@ class S3DocumentManager(DocumentManager):
         # don't add the document if we already have it
         doc_id = self._get_doc_id(doc)
         doc['doc_id'] = doc_id
-        #if self._query_db_by_doc_id(doc_id):
-        #    print('dynamodb: document already in database: {}'.format(doc_id))
-        #    return
 
         # get local paths to document        
         doc_paths = self._get_doc_paths(doc)
@@ -273,7 +270,7 @@ class S3DocumentManager(DocumentManager):
           doc['local_path_txt'] = doc_paths['local_path_txt']
 
         if not self._s3_object_exists(doc_paths['local_path_pkl']):
-          self._add_vectors(doc_paths)
+          self._add_vectors(doc, doc_paths)
           doc['local_path_pkl'] = doc_paths['local_path_pkl']
 
         # add to metadata and index
