@@ -1,6 +1,7 @@
 # tools for natural language processing
 
 import re
+from allennlp.commands.elmo import ElmoEmbedder
 
 class Vectorizer(object):
 
@@ -18,10 +19,10 @@ class Vectorizer(object):
     def vectorize(self, string):
 
         print("vectorizing doc")
-        sentences = self.sentence_split(doc_string)
+        sentences = self.sentence_split(string)
         vectors = []
         for sentence in sentences:
-            sentence_tokens = tokenize(sentence)
+            sentence_tokens = self.tokenize(sentence)
             sentence_vectors = self.elmo.embed_sentence(sentence_tokens)
             vectors.append(sentence_vectors)
         vectors_data = {"sentences": sentences, "vectors": vectors}
