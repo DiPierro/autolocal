@@ -2,7 +2,6 @@ from .mailers import SESMailer
 from urllib.parse import urlencode
 from autolocal.aws import aws_config
 from datetime import datetime
-from bs4 import BeautifulSoup
 
 class Email(object):
 
@@ -214,9 +213,13 @@ class RecommendationEmail(Email):
         <head></head>
         <body>
         <h1>Your recommendations for {}</h1>
+
         <h3>Keywords: {}</h3>
+
         <h3>Municipalities: {}</h3>
+
         <div>{}</div>
+
         <p>If you would like to unsubscribe from Agenda Watch, please visit
         <a href='http://agendawatch.org/unsubscribe'>agendawatch.org/unsubscribe</a>.
         Feel free to email us with any questions at 
@@ -237,8 +240,9 @@ class RecommendationEmail(Email):
         self.sender_address = aws_config.email_addresses['list_manager']
 
     def _html_to_txt(body_html):
-        soup = BeautifulSoup(body_html)
-        return soup.text
+        # soup = BeautifulSoup(body_html)
+        # return soup.text
+        return re.sub(body_html, "<.*>", "")
 
     def _format_recommendation(self, recommendation):
         doc_id = recommendation['doc_id']
@@ -247,8 +251,11 @@ class RecommendationEmail(Email):
         doc = self._get_doc_data(doc_id)
         return """
         <h3>{}</h3>
+
         <h4>{}, {}</h4>
+
         <p>"{}..." (page {})</p>
+
         <a href="{}">Link to original document.</a>
         """.format(
                 doc['committee'],
