@@ -209,24 +209,46 @@ class RecommendationEmail(Email):
         self.recipient_address = email_address
         self.subject = 'Agenda Watch: Your recommendations'
         self.body_html = """
-        <html>
-        <head></head>
-        <body>
-        <h1>Your recommendations for {}</h1>
+            <html>
+            <head>
+              <link rel="stylesheet" href="http://agendawatch.org/css/main.css"/>
+              <style>
+                #wrapper {padding-right: 0px;}
+              </style>
+            </head>
+            <body>
+              <div id="wrapper">
+                <div id="main">
+                  <div class="container">
+                    <section id="first">
+                      <header class="major">
+                        <h2>Your recommendations for {}</h2>
 
-        <h3>Keywords: {}</h3>
+                        <h5>Keywords: {}</h5>
 
-        <h3>Municipalities: {}</h3>
+                        <h5>Municipalities: {}</h5>
+                      </header>
 
-        <div>{}</div>
+                      {}
 
-        <p>If you would like to unsubscribe from Agenda Watch, please visit
-        <a href='http://agendawatch.org/unsubscribe'>agendawatch.org/unsubscribe</a>.
-        Feel free to email us with any questions at 
-        <a href="mailto:{}:">{}</a>.
-        </p>
-        </body>
-        </html>
+                    </div>
+                  </section>
+
+                  <section id="footer">
+                    <div class="container">
+                      <p>
+                        If you would like to unsubscribe from Agenda Watch, please visit
+                        <a href='http://agendawatch.org/unsubscribe'>agendawatch.org/unsubscribe</a>.
+                        Feel free to email us with any questions at 
+                        <a href="mailto:{}:">{}</a>.
+                      </p>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </body>
+            </html>
+
         """.format(
             datetime.strptime(datetime.now(), '%Y-%m-%d'),
             ", ".join(keywords),
@@ -250,13 +272,14 @@ class RecommendationEmail(Email):
         page = recommendation['start_page']
         doc = self._get_doc_data(doc_id)
         return """
-        <h3>{}</h3>
-
-        <h4>{}, {}</h4>
-
-        <p>"{}..." (page {})</p>
-
-        <a href="{}">Link to original document.</a>
+            <header class="minor">
+                <h2>{}</h2>
+                <p> {}, {} </p>
+            </header>
+            <p>
+             "...{}..." (page {})
+            </p>
+            <p><a href="{}">Link to original document</a></p>
         """.format(
                 doc['committee'],
                 doc['doc_type'],
@@ -267,7 +290,7 @@ class RecommendationEmail(Email):
             )
 
     def _format_date(self, date_string):
-        datetime.strptime(d, '%Y-%m-%d').strftime("%B %d, %Y")
+        datetime.strptime(date_string, '%Y-%m-%d').strftime("%B %d, %Y")
 
     def _format_recommendations(self, recommendations):
         return "/n/n".join([self._format_recommendation(r) for r in recommendations])
