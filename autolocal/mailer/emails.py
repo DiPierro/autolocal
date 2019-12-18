@@ -1,6 +1,8 @@
 from .mailers import SESMailer
 from urllib.parse import urlencode
-from autolocal.aws import aws_config 
+from autolocal.aws import aws_config
+from datetime import datetime
+from bs4 import BeautifulSoup
 
 class Email(object):
 
@@ -195,8 +197,89 @@ class UnsubscribeEmail(Email):
 
 class RecommendationEmail(Email):
     def _custom_init(self, **kwargs):
-        # Implement ME
-        pass
+        # get information from recommendations
+        recommender_output = kwargs['recommendations']
+        query_id = recommender_output['query_id']
+        query_data = self._get_query_data(query_id)
+        email_address = query_data['email_address']
+        keywords = query_data['keywords']
+        municipalities = query_data['municipalities']
+        recommendations = recommender_output['recommendations']
+
+        # specify email contents
+        self.recipient_address = email_address
+        self.subject = 'Agenda Watch: Your recommendations'
+        self.body_html = """
+        <html>
+        <head></head>
+        <body>
+        <h1>Your recommendations for {}</h1>
+        <h3>Keywords: {}</h3>
+        <h3>Municipalities: {}</h3>
+        <div>{}</div>
+        <p>If you would like to unsubscribe from Agenda Watch, please visit
+        <a href='http://agendawatch.org/unsubscribe'>agendawatch.org/unsubscribe</a>.
+        Feel free to email us with any questions at 
+        <a href="mailto:{}:">{}</a>.
+        </p>
+        </body>
+        </html>
+        """.format(
+            datetime.strptime(datetime.now(), '%Y-%m-%d'),
+            ", ".join(keywords),
+            ", ".join(municipalities),
+            self._format_recommendations(recommendations),
+            aws_config.email_addresses['contact'],
+            aws_config.email_addresses['contact']
+            )
+        self.body_text = self._html_to_txt(body_html)
+        self.sender_name = aws_config.email_addresses['sender_name']
+        self.sender_address = aws_config.email_addresses['list_manager']
+
+    def _html_to_txt(body_html):
+        soup = BeautifulSoup(body_html)
+        return soup.text
+
+    def _format_recommendation(self, recommendation):
+        doc_id = recommendation['doc_id']
+        text = recommendation['section_text']
+        page = recommendation['start_page']
+        doc = self._get_doc_data(doc_id)
+        return """
+        <h3>{}</h3>
+        <h4>{}, {}</h4>
+        <p>"{}..." (page {})</p>
+        <a href="{}">Link to original document.</a>
+        """.format(
+                doc['committee'],
+                doc['doc_type'],
+                self._format_date(doc['date']),
+                text,
+                page,
+                doc['url']
+            )
+
+    def _format_date(self, date_string):
+        datetime.strptime(d, '%Y-%m-%d').strftime("%B %d, %Y")
+
+    def _format_recommendations(self, recommendations):
+        return "/n/n".join([self._format_recommendation(r) for r in recommendations])
+
+    def _get_query_data(self, query_id):
+        table = boto3.resource(
+            'dynamodb',
+            region_name=aws_config.region_name,
+            ).Table(aws_config.db_query_table_name)
+        query = table.query(KeyConditionExpression=Key('query_id').eq(query_id))['Items']
+        return query
+
+    def _get_doc_data(self, doc_id):
+        table = boto3.resource(
+            'dynamodb',
+            region_name=aws_config.region_name,
+            ).Table(aws_config.db_document_table_name)
+        doc = table.query(KeyConditionExpression=Key('doc_id').eq(query_id))['Items']
+        return doc
 
 
 

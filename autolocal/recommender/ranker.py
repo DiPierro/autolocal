@@ -330,7 +330,7 @@ def write_results(results, query_id, batch):
             'id': "{}_{}".format(query_id, datetime.now()),
             'email_address': result['email_address'],
             'query_id': result['id'],
-            'recommendataions': results_to_return,
+            'recommendations': results_to_return,
             'keywords': result['keywords'],
             'municipalities': result['municipalities']
         }
