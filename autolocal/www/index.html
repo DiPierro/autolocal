@@ -7,7 +7,7 @@
 <html>
 	<head>		
 		<title>Agenda Watch</title>
-		<link rel="stylesheet" href="main.css" />
+		<link rel="stylesheet" href="css/main.css" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -18,7 +18,7 @@
 		  gtag('js', new Date());
 
 		  gtag('config', 'UA-154585109-1');
-		</script>		
+		</script>
 		<script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/knockout-3.4.2.js"></script>
 		<script src="js/agendawatch.js"></script>
@@ -33,7 +33,7 @@
 				</header>
 				<nav id="nav">
 					<ul>
-						<li><a href="#signup">Signup</a></li>
+						<li><a href="#signup" class="active">Signup</a></li>
 						<li><a href="#about">About</a></li>
 						<li><a href="#unsubscribe">Unsubscribe</a></li>
 						<li><a href="#contactus">Contact</a></li>
@@ -53,7 +53,7 @@
 					<div id="main">
 
 						<!-- One -->
-							<section id="intro">
+							<section id="first">
 								<div class="image main" data-position="center">
 									<img src="img/Map.png" alt="" />
 								</div>						
@@ -199,7 +199,8 @@
 							</section>
 
 						<!-- Two -->
-							<section id="about">
+							<section id="second">
+								<span id="about"></span>
 								<div class="container">								
 									<h3>Our story</h3>
 									<p>In our conversations with local journalists and data journalists, many of them told us that because local newsrooms must do a lot with little resources, it is difficult to keep track of stories. Important stories can often get lost among the many documents of the several committees within a local government.
@@ -212,7 +213,8 @@
 							</section>
 
 						<!-- Three -->
-							<section id="unsubscribe">
+							<section id="third">
+								<span id="unsubscribe"></span>
 								<div class="container">
 									<form id="contact2" action="" method="post">
 										<h3>Unsubscribe</h3>
@@ -231,7 +233,8 @@
 							</section>
 
 						<!-- Four -->
-							<section id="contactus">
+							<section id="fourth">
+								<span id="contactus"></span>
 								<div class="container">
 									<h3>Contact the Team</h3>
 									<p>
