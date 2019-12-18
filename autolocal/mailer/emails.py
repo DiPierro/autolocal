@@ -221,7 +221,6 @@ class RecommendationEmail(Email):
             <head>
               <link rel="stylesheet" href="http://agendawatch.org/css/main.css"/>
               <style>
-                #wrapper {padding-right: 0px;}
               </style>
             </head>
             <body>
@@ -298,10 +297,10 @@ class RecommendationEmail(Email):
             )
 
     def _format_date(self, date_string):
-        datetime.strptime(date_string, '%Y-%m-%d').strftime("%B %d, %Y")
+        return datetime.strptime(date_string, '%Y-%m-%d').strftime("%B %d, %Y")
 
     def _format_recommendations(self, recommendations):
-        return "/n/n".join([self._format_recommendation(r) for r in recommendations])
+        return "\n\n".join([self._format_recommendation(r) for r in recommendations])
 
     def _get_query_data(self, query_id):
         table = boto3.resource(
