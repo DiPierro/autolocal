@@ -211,53 +211,14 @@ class RecommendationEmail(Email):
         query_data = self._get_query_data(query_id)
         email_address = query_data['email_address']
         keywords = query_data['keywords']
-        municipalities = query_data['municipalities']        
+        municipalities = query_data['municipalities'] 
+        now_date_string = datetime.now().strftime("%B %d, %Y")       
 
         # specify email contents
         self.recipient_address = email_address
-        self.subject = 'Agenda Watch: Your recommendations'
-        self.body_html = """
-            <html>
-            <head>
-              <link rel="stylesheet" href="http://agendawatch.org/css/main.css"/>
-              <style>
-              </style>
-            </head>
-            <body>
-              <div id="wrapper">
-                <div id="main">
-                  <div class="container">
-                    <section id="first">
-                      <header class="major">
-                        <h2>Your recommendations for {}</h2>
-
-                        <h5>Keywords: {}</h5>
-
-                        <h5>Municipalities: {}</h5>
-                      </header>
-
-                      {}
-
-                    </div>
-                  </section>
-
-                  <section id="footer">
-                    <div class="container">
-                      <p>
-                        If you would like to unsubscribe from Agenda Watch, please visit
-                        <a href='http://agendawatch.org/unsubscribe'>agendawatch.org/unsubscribe</a>.
-                        Feel free to email us with any questions at 
-                        <a href="mailto:{}:">{}</a>.
-                      </p>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </body>
-            </html>
-
-        """.format(
-            datetime.now().strftime("%B %d, %Y"),
+        self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now_date_string)
+        self.body_html = (open("email_template_with_inline_styles.html").read()).format(
+            now_date_string,
             ", ".join(keywords),
             ", ".join(municipalities),
             self._format_recommendations(recommendations),
