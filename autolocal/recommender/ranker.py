@@ -140,8 +140,12 @@ def read_docs(doc_ids, document_manager):
       print("adding document")
       document_manager.add_doc(doc)
       print("document added")
-      doc_string = document_manager.get_doc_text(doc)
-      print("document read")
+      try:
+        print("reading document {}".format(doc_id))
+        doc_string = document_manager.get_doc_text(doc)
+        print("document read")
+      except:
+        doc_string = None
     if doc_string:
       vector_data = document_manager.get_doc_vectors(doc)
       if vector_data:
@@ -252,6 +256,7 @@ def score_doc_sections(doc_sections, orig_keywords, vectorizer):
             if bool(re.search("([^\w]|^)" + k + "([^\w]|$)", section_text)):
             # if k in section_text:
             #     TODO: consider casing
+            # TODO: lemmatize!
                 no_keywords_found = False
         for k in orig_keywords:
             if k.islower():
@@ -325,7 +330,7 @@ def write_results(results, query_id, batch):
             'id': "{}_{}".format(query_id, datetime.now()),
             'email_address': result['email_address'],
             'query_id': result['id'],
-            'recommendataions': results_to_return,
+            'recommendations': results_to_return,
             'keywords': result['keywords'],
             'municipalities': result['municipalities']
         }
@@ -380,6 +385,8 @@ def run_queries(document_manager, input_args):
                 ).Table(aws_config.db_recommendation_table_name)
             with table.batch_writer() as batch:
                 write_results(results, query_id, batch)
+
+        # DEBUG
         
     # print("sending emails")
     # this will be handled by dynamodb/lambda function
