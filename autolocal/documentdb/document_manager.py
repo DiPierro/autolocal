@@ -47,7 +47,6 @@ class DocumentManager():
     def _get_doc_id(self, doc):
         # produce the file name which the document will be known by locally.
         # `doc` variable must contain fields:  city, date, committee
-        strip_punctuation = 
         transform = lambda s: s.title().translate(str.maketrans('', '', string.punctuation)).replace(' ', '-')
         date = pd.to_datetime(doc['date']).strftime('%Y-%m-%d')
         city = transform(doc['city'])
