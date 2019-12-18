@@ -2,6 +2,7 @@ from .mailers import SESMailer
 from urllib.parse import urlencode
 from autolocal.aws import aws_config
 from datetime import datetime
+import re
 
 class Email(object):
 
