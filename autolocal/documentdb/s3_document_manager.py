@@ -249,6 +249,7 @@ class S3DocumentManager(DocumentManager):
             if self._s3_object_exists(local_path):
                 print('document manager: found object, will not recreate it: {}'.format(local_path))
                 doc[local_path_key] = local_path
+                self._add_doc_to_db(doc, batch) 
                 continue
 
             try:                    
@@ -264,6 +265,7 @@ class S3DocumentManager(DocumentManager):
 
                 # if successful, add s3 path to record
                 doc[local_path_key] = local_path
+                self._add_doc_to_db(doc, batch) 
 
             except Exception as e:                
                 # let us know if something doesn't work while adding a document

@@ -1,6 +1,6 @@
 import os
 from datetime import datetime
-
+import string
 import pandas as pd
 
 INDEX_VARS = ['keyword']
@@ -46,15 +46,17 @@ class DocumentManager():
 
     def _get_doc_id(self, doc):
         # produce the file name which the document will be known by locally.
-        # `doc` variable must contain fields:  city, date, committee        
+        # `doc` variable must contain fields:  city, date, committee
+        strip_punctuation = 
+        transform = lambda s: s.title().translate(str.maketrans('', '', string.punctuation)).replace(' ', '-')
         date = pd.to_datetime(doc['date']).strftime('%Y-%m-%d')
-        city = doc['city'].title().replace(' ', '-')
-        committee = doc['committee'].title().replace(' ', '-')
+        city = transform(doc['city'])
+        committee = transform(doc['committee'])
         if 'meeting_type' in doc and isinstance(doc['meeting_type'], str):
-            meeting_type = doc['meeting_type'].title().replace(' ', '-')
+            meeting_type = transform(doc['meeting_type'])
         else:
             meeting_type = None
-        doc_type = doc['doc_type'].title().replace(' ', '-')
+        doc_type = transform(doc['doc_type'])
         identifiers = ["{}".format(x) for x in [city, date, committee, meeting_type, doc_type] if x]
         return '_'.join(identifiers)
 
