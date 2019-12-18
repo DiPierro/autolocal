@@ -217,7 +217,48 @@ class RecommendationEmail(Email):
         # specify email contents
         self.recipient_address = email_address
         self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now_date_string)
-        self.body_html = (open("email_template_with_inline_styles.html").read()).format(
+        self.body_html = """
+        <html style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; box-sizing:border-box" valign="baseline">
+        <head>
+          <style>
+        @import url("https://fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic|Source+Code+Pro:400");
+        </style>
+
+
+          </head>
+        <body style='border:0; font:inherit; font-size:11pt; margin:0; padding:0; vertical-align:baseline; line-height:1.75em; -webkit-text-size-adjust:none; background:#fff; color:#888; font-family:"Lato", sans-serif; font-weight:400' valign="baseline">
+          <div id="wrapper" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; background:#fff; padding-right:0" valign="baseline">
+            <div id="main" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline" valign="baseline">
+              <div class="container" style="border:0; font:inherit; font-size:100%; margin:0 auto; padding:0; vertical-align:baseline; max-width:calc(100% - 4.5em); width:45em" valign="baseline" width="45em">
+                <section id="first" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; display:block" valign="baseline">
+                  <header class="major" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; display:block" valign="baseline">
+                    <h2 style="border:0; font:inherit; font-size:3.5em; margin:0 0 0.5625em 0; padding:0; vertical-align:baseline; color:#4acaa8; font-weight:700; line-height:1.5em" valign="baseline">Your recommendations for {}</h2>
+
+                    <h5 style="border:0; font:inherit; font-size:0.9em; margin:0 0 0.5625em 0; padding:0; vertical-align:baseline; color:#777; font-weight:700; line-height:1.5em" valign="baseline">Keywords: {}</h5>
+
+                    <h5 style="border:0; font:inherit; font-size:0.9em; margin:0 0 0.5625em 0; padding:0; vertical-align:baseline; color:#777; font-weight:700; line-height:1.5em" valign="baseline">Municipalities: {}</h5>
+                  </header>
+
+                  {}
+
+                </section></div>
+              
+
+              <section id="footer" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; display:block; background:#fafafa; border-top:solid 6px #f4f4f4; color:#c0c0c0; overflow:hidden" valign="baseline">
+                <div class="container" style="border:0; font:inherit; font-size:100%; margin:0 auto; padding:1em 0 1em 0; vertical-align:baseline; max-width:calc(100% - 4.5em); width:45em" valign="baseline" width="45em">
+                  <p style="border:0; font:inherit; font-size:100%; margin:0 0 2.25em 0; padding:0; vertical-align:baseline" valign="baseline">
+                    If you would like to unsubscribe from Agenda Watch, please visit
+                    <a href="http://agendawatch.org/unsubscribe" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; -moz-transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out; -ms-transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out; -webkit-transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out; border-bottom:solid 1px #e4e4e4; color:inherit; text-decoration:none; transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out" valign="baseline">agendawatch.org/unsubscribe</a>.
+                    Feel free to email us with any questions at 
+                    <a href="mailto:%7B%7D:" style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; -moz-transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out; -ms-transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out; -webkit-transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out; border-bottom:solid 1px #e4e4e4; color:inherit; text-decoration:none; transition:color 0.2s ease-in-out, border-color 0.2s ease-in-out" valign="baseline">{}</a>.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </body>
+        </html>
+        """.format(
             now_date_string,
             ", ".join(keywords),
             ", ".join(municipalities),
