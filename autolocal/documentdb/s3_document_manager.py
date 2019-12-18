@@ -85,7 +85,7 @@ class S3DocumentManager(DocumentManager):
     def _get_tmp_path(self, doc, doc_format):
         tmp_path = os.path.join(
             self.local_tmp_dir,
-            '{}.{}'.format(self._get_doc_id(doc), doc_format)
+            '{}.{}'.format(self._get_doc_id(doc).replace("/", "_"), doc_format)
             )
         return tmp_path
 
@@ -124,8 +124,10 @@ class S3DocumentManager(DocumentManager):
     def _retrieve_url(self, url, local_path):
         try:
             urlretrieve(url.replace(' ', '%20'), local_path)
-        except:
+        except Exception as e:
             print('warning: could not retrieve url: {}'.format(url))
+            print(url)
+            print(e)
 
     def _create_doc(self, new_doc):
         # initialize empty document
@@ -178,7 +180,7 @@ class S3DocumentManager(DocumentManager):
         pickle.dump(vectors_data, open(tmp_pkl_path, 'wb'))
         print("uploading doc: {}".format(doc['doc_id']))
         self._save_doc_to_s3(tmp_pkl_path, s3_pkl_path)                
-        print("document manager: saved doc to s3: {}".format(s3_path_txt))
+        print("document manager: saved doc to s3: {}".format(s3_pkl_path))
 
     def get_doc_vectors(self, doc):
       # add document vectors if we don't already have them

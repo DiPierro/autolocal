@@ -8,7 +8,7 @@ $(document).ready(function() {
     self.municipalities = ko.observableArray([]);
     self.unsubscribe = function () {
       var CustomerDetail = {
-            email_address: self.id2(),
+        email_address: self.id2(),
       }
       $.ajax({
         url: 'https://cors-anywhere.herokuapp.com/https://9k2fkcj7pb.execute-api.us-west-1.amazonaws.com/prod/unsubscribeQuery',
@@ -18,7 +18,7 @@ $(document).ready(function() {
         data: ko.toJSON(CustomerDetail),
         success: function (data) {
           self.SuccessMessage(data["body"])
-                 self.id2('');
+          self.id2('');
         }
       }).fail(function(xhr, textStatus, err){
         alert("Error happened "+err);
@@ -46,15 +46,15 @@ $(document).ready(function() {
         data: ko.toJSON(CustomerDetail),
         success: function (data) {
           self.SuccessMessage(data["body"])
-                 self.id('');
-                 self.keywords('');
-                 self.municipalities('');
+          self.id('');
+          self.keywords('');
+          self.municipalities('');
         }
       }).fail(function(xhr, textStatus, err){
         failed = true;
         alert("Error happened "+err);
       });
-        //if(failed==false)window.location.href = "landing.html";
+      //if(failed==false)window.location.href = "landing.html";
     };
   }
   var viewModel = new customerDetailsViewModel();

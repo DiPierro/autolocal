@@ -7,7 +7,7 @@
 <html>
 	<head>		
 		<title>Agenda Watch</title>
-		<link rel="stylesheet" href="main.css" />
+		<link rel="stylesheet" href="css/main.css" />
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<!-- Global site tag (gtag.js) - Google Analytics -->
@@ -21,7 +21,7 @@
 		</script>		
 		<script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/knockout-3.4.2.js"></script>
-		<script src="js/agendawatch.js"></script>
+		<script type="text/javascript" src="js/agendawatch.js"></script>
 	</head>
 	<body class="is-preload">
 
@@ -33,10 +33,10 @@
 				</header>
 				<nav id="nav">
 					<ul>
-						<li><a href="#signup">Signup</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#unsubscribe">Unsubscribe</a></li>
-						<li><a href="#contactus">Contact</a></li>
+						<li><a href="#first">Signup</a></li>
+						<li><a href="#second">About</a></li>
+						<li><a href="#third">Unsubscribe</a></li>
+						<li><a href="#fourth">Contact</a></li>
 					</ul>
 				</nav>
 				<footer>
@@ -55,15 +55,16 @@
 						<!-- One -->
 							<section id="intro">
 								<div class="image main" data-position="center">
-									<img src="img/Map.png" alt="" />
-								</div>						
+									<img src="Map.png" alt="" />
+								</div>
+							</section>						
 								<div class="container">
 									<header class="major">
 										<h2>Welcome to Agenda Watch</h2>
-										<p>A tool to help journalists track and discover public meetings across governmental bodies.</p>
-										<span id="signup"></span>
+										<p>A tool to help journalists track and discover public meetings across governmental bodies. </p>
 									</header>
-									<h3>Sign up</h3>
+									<section id="first">	
+										<h3>Sign up</h3>
 									<form id="contact" action="" method="post">
 								    <h4>Stay informed of upcoming public meetings, agendas, and staff reports. Enter search keywords and geographic regions below to sign up for email alerts. </h4>
 										<form method="post" action="#">
@@ -199,7 +200,7 @@
 							</section>
 
 						<!-- Two -->
-							<section id="about">
+							<section id="second">
 								<div class="container">								
 									<h3>Our story</h3>
 									<p>In our conversations with local journalists and data journalists, many of them told us that because local newsrooms must do a lot with little resources, it is difficult to keep track of stories. Important stories can often get lost among the many documents of the several committees within a local government.
@@ -212,7 +213,7 @@
 							</section>
 
 						<!-- Three -->
-							<section id="unsubscribe">
+							<section id="third">
 								<div class="container">
 									<form id="contact2" action="" method="post">
 										<h3>Unsubscribe</h3>
@@ -226,12 +227,11 @@
 												</ul>
 											</div>
 										</div>
-
 								</div>
 							</section>
 
 						<!-- Four -->
-							<section id="contactus">
+							<section id="fourth">
 								<div class="container">
 									<h3>Contact the Team</h3>
 									<p>
