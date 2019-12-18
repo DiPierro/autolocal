@@ -266,7 +266,7 @@ class RecommendationEmail(Email):
             )
         self.body_text = self._html_to_txt(self.body_html)
         self.sender_name = aws_config.email_addresses['sender_name']
-        self.sender_address = aws_config.email_addresses['list_manager']
+        self.sender_address = aws_config.email_addresses['agenda_bot']
 
     def _html_to_txt(self, body_html):
         # soup = BeautifulSoup(body_html)
