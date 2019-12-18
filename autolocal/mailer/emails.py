@@ -280,7 +280,7 @@ class RecommendationEmail(Email):
         doc = self._get_doc_data(doc_id)
         return """
             <header class="minor">
-                <h2>{}</h2>
+                <h2>{} {}</h2>
                 <p> {}, {} </p>
             </header>
             <p>
@@ -288,6 +288,7 @@ class RecommendationEmail(Email):
             </p>
             <p><a href="{}">Link to original document</a></p>
         """.format(
+                doc['city'],
                 doc['committee'],
                 doc['doc_type'],
                 self._format_date(doc['date']),
