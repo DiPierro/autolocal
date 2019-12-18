@@ -3,6 +3,7 @@ import re
 
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
+import boto3
 
 from datetime import datetime
 from hashlib import sha3_224
@@ -213,14 +214,21 @@ class RecommendationEvent(MailerEvent):
     """    
 
     def _custom_init(self):
-        self.new_records = [r for r in self.event_data['Records'] if r['eventName']=='INSERT']
+        boto3.resource('dynamodb')
+        deserializer = boto3.dynamodb.types.TypeDeserializer()
+        self.new_records = []
+        for r in self.event_data['Records']:
+            if r['eventName']=='INSERT':
+                d = {k: deserializer.deserialize(v) for k,v in r['dynamodb']['NewImage'].items()}
+                self.new_records.append(d)
         pass
 
     def send_recommendation_emails(self):
         # m = RecommendationEmail(recommendation=self.recommendation)        # m.send_email()
         for record in self.new_records:
             # send_test_email('chstock@stanford.edu', recommendation)
-            RecommendationEmail(recommendation=record['dynamodb']['NewImage'])
+            m = RecommendationEmail(record=record)
+            m.send()
         pass
 
 

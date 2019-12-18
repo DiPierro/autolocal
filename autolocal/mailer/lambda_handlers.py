@@ -4,6 +4,7 @@ from .events import SubscribeEvent
 from .events import ConfirmSubscriptionEvent
 from .events import UnsubscribeEvent
 from .events import ConfirmUnsubscribeEvent
+from .events import RecommendationEvent
 
 def lambda_handler_subscribe(aws_event, context):
     try:

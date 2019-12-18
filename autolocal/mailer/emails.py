@@ -4,6 +4,11 @@ from autolocal.aws import aws_config
 from datetime import datetime
 import re
 
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
+
+from autolocal.aws import aws_config
+
 class Email(object):
 
     def __init__(
@@ -197,13 +202,16 @@ class UnsubscribeEmail(Email):
 class RecommendationEmail(Email):
     def _custom_init(self, **kwargs):
         # get information from recommendations
-        recommender_output = kwargs['recommendation']
-        query_id = recommender_output['query_id']
+        record = kwargs['record']
+        recommender_output = record['recommendations']
+        query_id = record['query_id']
+        recommendations = record['recommendations']
+
+
         query_data = self._get_query_data(query_id)
         email_address = query_data['email_address']
         keywords = query_data['keywords']
-        municipalities = query_data['municipalities']
-        recommendations = recommender_output['recommendations']
+        municipalities = query_data['municipalities']        
 
         # specify email contents
         self.recipient_address = email_address
@@ -213,7 +221,6 @@ class RecommendationEmail(Email):
             <head>
               <link rel="stylesheet" href="http://agendawatch.org/css/main.css"/>
               <style>
-                #wrapper {padding-right: 0px;}
               </style>
             </head>
             <body>
@@ -250,18 +257,18 @@ class RecommendationEmail(Email):
             </html>
 
         """.format(
-            datetime.strptime(datetime.now(), '%Y-%m-%d'),
+            datetime.now().strftime("%B %d, %Y"),
             ", ".join(keywords),
             ", ".join(municipalities),
             self._format_recommendations(recommendations),
             aws_config.email_addresses['contact'],
             aws_config.email_addresses['contact']
             )
-        self.body_text = self._html_to_txt(body_html)
+        self.body_text = self._html_to_txt(self.body_html)
         self.sender_name = aws_config.email_addresses['sender_name']
         self.sender_address = aws_config.email_addresses['list_manager']
 
-    def _html_to_txt(body_html):
+    def _html_to_txt(self, body_html):
         # soup = BeautifulSoup(body_html)
         # return soup.text
         return re.sub(body_html, "<.*>", "")
@@ -301,7 +308,7 @@ class RecommendationEmail(Email):
             'dynamodb',
             region_name=aws_config.region_name,
             ).Table(aws_config.db_query_table_name)
-        query = table.query(KeyConditionExpression=Key('query_id').eq(query_id))['Items']
+        query = table.query(KeyConditionExpression=Key('id').eq(query_id))['Items'][0]
         return query
 
     def _get_doc_data(self, doc_id):
@@ -309,7 +316,7 @@ class RecommendationEmail(Email):
             'dynamodb',
             region_name=aws_config.region_name,
             ).Table(aws_config.db_document_table_name)
-        doc = table.query(KeyConditionExpression=Key('doc_id').eq(query_id))['Items']
+        doc = table.query(KeyConditionExpression=Key('doc_id').eq(doc_id))['Items'][0]
         return doc
 
 
