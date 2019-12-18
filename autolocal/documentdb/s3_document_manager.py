@@ -230,7 +230,7 @@ class S3DocumentManager(DocumentManager):
 
         # create doc dict
         doc = self._create_doc(new_doc)
-        print("adding document to database: {}".format(self._get_doc_id(doc)))
+        print("document manager: adding document to database: {}".format(self._get_doc_id(doc)))
 
         # do not add document if no url
         try:
