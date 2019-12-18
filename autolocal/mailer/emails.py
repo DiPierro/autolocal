@@ -198,7 +198,7 @@ class UnsubscribeEmail(Email):
 class RecommendationEmail(Email):
     def _custom_init(self, **kwargs):
         # get information from recommendations
-        recommender_output = kwargs['recommendations']
+        recommender_output = kwargs['recommendation']
         query_id = recommender_output['query_id']
         query_data = self._get_query_data(query_id)
         email_address = query_data['email_address']
