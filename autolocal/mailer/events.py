@@ -10,6 +10,7 @@ from hashlib import sha3_224
 from autolocal.aws import aws_config
 from .emails import ConfirmSubscriptionEmail
 from .emails import ConfirmUnsubscribeEmail
+from .emails import RecommendationEmail
 
 email_re = re.compile(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)')
 
@@ -205,4 +206,22 @@ class ConfirmUnsubscribeEvent(MailerEvent):
     def unsubscribe_queries(self):
         self._update_subscription_status_by_email_address(self.email_address, UNSUBSCRIBED)
         pass
+
+class RecommendationEvent(MailerEvent):
+    """
+    Functions related to a recommendations event
+    """    
+
+    def _custom_init(self):
+        self.new_records = [r for r in self.event_data['Records'] if r['eventName']=='INSERT']
+        pass
+
+    def send_recommendation_emails(self):
+        # m = RecommendationEmail(recommendation=self.recommendation)        # m.send_email()
+        for record in self.new_records:
+            # send_test_email('chstock@stanford.edu', recommendation)
+            RecommendationEmail(recommendation=record['dynamodb']['NewImage'])
+        pass
+
+
 

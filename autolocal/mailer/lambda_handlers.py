@@ -119,4 +119,28 @@ def lambda_handler_confirm_unsubscribe(aws_event, context):
             'Email address has been unsubscribed from all email: {}.'.format(event.email_address)
         ]))
     }
+
+def lambda_handler_send_recommendation(aws_event, context):
+    try:
+        event = RecommendationEvent(aws_event)
+    except Exception as e:
+        return {
+                'statusCode': 400,
+                'body': json.dumps('Error while processing event data: {}.'.format(e))
+        } 
+    try:
+        event.send_recommendation_emails()
+    except Exception as e:
+        return {
+                'statusCode': 500,
+                'body': json.dumps(
+                    'Error while attempting to send recommendation emails: {}.'.format(e)
+                    )
+        }         
+    return {
+        'statusCode': 200,
+        'body': json.dumps(''.join([
+            'Successfully sent recommendation emails.'
+        ]))
+    }
         
