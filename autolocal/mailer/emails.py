@@ -273,7 +273,7 @@ class RecommendationEmail(Email):
         doc = self._get_doc_data(doc_id)
         return """
             <header class="minor">
-                <h2>{}</h2>
+                <h2>{} {}</h2>
                 <p> {}, {} </p>
             </header>
             <p>
@@ -281,6 +281,7 @@ class RecommendationEmail(Email):
             </p>
             <p><a href="{}">Link to original document</a></p>
         """.format(
+                doc['city'],
                 doc['committee'],
                 doc['doc_type'],
                 self._format_date(doc['date']),
@@ -290,10 +291,10 @@ class RecommendationEmail(Email):
             )
 
     def _format_date(self, date_string):
-        datetime.strptime(date_string, '%Y-%m-%d').strftime("%B %d, %Y")
+        return datetime.strptime(date_string, '%Y-%m-%d').strftime("%B %d, %Y")
 
     def _format_recommendations(self, recommendations):
-        return "/n/n".join([self._format_recommendation(r) for r in recommendations])
+        return "\n\n".join([self._format_recommendation(r) for r in recommendations])
 
     def _get_query_data(self, query_id):
         table = boto3.resource(
