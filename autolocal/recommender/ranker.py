@@ -341,7 +341,8 @@ def write_results(results, query_id, batch):
             'query_id': result['id'],
             'recommendations': results_to_return,
             'keywords': result['keywords'],
-            'municipalities': result['municipalities']
+            'municipalities': result['municipalities'],
+            'time': datetime.now()
         }
     )
 
@@ -368,7 +369,10 @@ def run_queries(document_manager, input_args):
         results = []
         print("running query {} of {}".format(q, len(queries)))
         query_id = query["id"]
-        email_address = query["email_address"]
+        if args.emails == "production":
+            email_address = query["email_address"]
+        else:
+            email_address = args.emails
         print("email address: {}".format(email_address))
         keywords = query["keywords"]
         print("keywords: {}".format(keywords))
@@ -450,7 +454,12 @@ if __name__=='__main__':
 
     parser.add_argument('--production', action='store_true',
         help="".join([
-            'By default, run only test queries. But if this flag is sent, send the actual emails to the actual users'
+            "By default, run only queries labeled 'testing'."
+        ]))
+
+    parser.add_argument('--emails', type=str, default=None,
+        help="".join([
+            'Send only to these emails. If the flag is "production", send the actual emails to the actual users'
         ]))
 
     args = parser.parse_args()
