@@ -325,6 +325,15 @@ def write_results(results, query_id, batch):
         }
         results_to_return.append(new_result)
 
+    print({
+            'id': "{}_{}".format(query_id, datetime.now()),
+            'email_address': result['email_address'],
+            'query_id': result['id'],
+            'recommendations': results_to_return,
+            'keywords': result['keywords'],
+            'municipalities': result['municipalities']
+        })
+
     batch.put_item(
        Item={
             'id': "{}_{}".format(query_id, datetime.now()),
@@ -382,6 +391,7 @@ def run_queries(document_manager, input_args):
         if len(results) == 0:
             print("no results found")
         else:
+            print("sending email")
             # update dynamo db table
             table = boto3.resource(
                 'dynamodb',
@@ -405,12 +415,19 @@ if __name__=='__main__':
     #     help='Who should I send emails to?\nUse `--email P` to send to the actual addresses in the queries.')
 
     parser.add_argument('--start_date', type=str, default=None,
+        # TODO implement this
+        # help="".join([
+        #     'Documents have dates associated with them. ',
+        #     'What is the earliest date of the documents that we should return?\n',
+        #     'Format is YYYY-MM-DD, e.g. 2019-12-4 for December 4, 2019.\n',
+        #     'Default is to include Minutes from meetings that took place this ',
+        #     'past week and Agendas for upcoming meetings'
+        # ]))
         help="".join([
             'Documents have dates associated with them. ',
             'What is the earliest date of the documents that we should return?\n',
             'Format is YYYY-MM-DD, e.g. 2019-12-4 for December 4, 2019.\n',
-            'Default is to include Minutes from meetings that took place this ',
-            'past week and Agendas for upcoming meetings'
+            'Default is to include only upcoming meetings'
         ]))
 
     parser.add_argument('--end_date', type=str, default=None,
