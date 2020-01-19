@@ -351,10 +351,7 @@ def run_queries(document_manager, input_args):
     start_date, end_date = parse_dates(input_args.start_date, input_args.end_date)
     print("reading queries")
     queries = read_queries()
-    if input_args.production:
-        desired_subscription_status = 'subscribed'
-    else:
-        desired_subscription_status = 'testing'
+    desired_subscription_status = input_args.query_type
     queries = [q for q in queries if ('subscription_status' in q and q['subscription_status'] == desired_subscription_status)]
     print("reading metadata")
     metadata = read_metadata(input_args)
@@ -452,14 +449,14 @@ if __name__=='__main__':
             "If this flag is included, return only agenda documents, no minutes."
         ]))
 
-    parser.add_argument('--production', action='store_true',
+    parser.add_argument('--query_type', type=str, default='testing',
         help="".join([
-            "By default, run only queries labeled 'testing'."
+            "Queries have a type, e.g. 'subscribed'. By default, run only queries labeled 'testing'."
         ]))
 
     parser.add_argument('--emails', type=str, default=None,
         help="".join([
-            'Send only to these emails. If the flag is "production", send the actual emails to the actual users'
+            'Send only to these emails. If the flag is set to "production", send the actual emails to the actual users'
         ]))
 
     args = parser.parse_args()
