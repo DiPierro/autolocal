@@ -342,7 +342,7 @@ def write_results(results, query_id, batch):
             'recommendations': results_to_return,
             'keywords': result['keywords'],
             'municipalities': result['municipalities'],
-            'time': datetime.now()
+            'time': "{}".format(datetime.now())
         }
     )
 
@@ -365,14 +365,14 @@ def run_queries(document_manager, input_args):
     all_docs = read_docs(relevant_doc_ids, document_manager)
     print("read {} relevant documents".format(len(all_docs)))
     
-    for q, query in enumerate(queries):
+    for q, orig_query in enumerate(queries):
+        query = orig_query
         results = []
         print("running query {} of {}".format(q, len(queries)))
         query_id = query["id"]
-        if args.emails == "production":
-            email_address = query["email_address"]
-        else:
-            email_address = args.emails
+        if input_args.emails != "production":
+            query["email_address"] = input_args.emails
+        email_address = query["email_address"]
         print("email address: {}".format(email_address))
         keywords = query["keywords"]
         print("keywords: {}".format(keywords))
