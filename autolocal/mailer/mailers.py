@@ -1,5 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError       
+
 from autolocal.aws import aws_config 
 
 class Mailer(object):

@@ -1,17 +1,11 @@
-import json
 import re
-
-import boto3
-from boto3.dynamodb.conditions import Key, Attr
-import boto3
-
 from datetime import datetime
 from hashlib import sha3_224
 
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
+
 from autolocal.aws import aws_config
-from .emails import ConfirmSubscriptionEmail
-from .emails import ConfirmUnsubscribeEmail
-from .emails import RecommendationEmail
 
 email_re = re.compile(r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)')
 
@@ -130,105 +124,6 @@ class MailerEvent(object):
         query_ids = self._get_qids_by_attr_value('email_address', email_address)        
         for qid in query_ids:                        
             self._update_subscription_status_by_qid(qid, new_status)
-        pass
-
-
-class SubscribeEvent(MailerEvent):
-    """
-    Functions related to a subscription event
-
-    """
-    def _custom_init(self):
-        # scrub inputs and create unique query ID
-        self.form_data = {k: self._scrub_data(k) for k in SUBSCRIBE_FORM_KEYS}
-        self.qid = self._compute_qid(self.form_data)
-        self.form_data['id'] = self.qid
-        self.email_address = self.form_data['email_address']
-        pass
-
-    def write_record_to_db(self):
-        timestamps = {
-            'subscribed_timestamp': self.event_timestamp,
-            'most_recent_digest_timestamp': 'none',
-        }
-        subscription_status = self._timestamp_subscription_status(PENDING)
-        self.form_data.update(timestamps)
-        self.form_data.update(subscription_status)
-        self._put_query(self.form_data)
-        pass        
-
-    def send_confirmation_email(self):
-        m = ConfirmSubscriptionEmail(query=self.form_data)
-        m.send()
-        pass
-
-
-class ConfirmSubscriptionEvent(MailerEvent):
-    """
-    Functions related to a confirm subscription event
-    """
-    def _custom_init(self):                
-        self.query_id = self._scrub_data('qid')
-        self.query = self._get_query_by_id(self.query_id)
-        self.email_address = self.query['email_address']
-        pass
-
-    def subscribe_query(self):
-        # updates subscription_status to 'subscribed'
-        self._update_subscription_status_by_qid(self.query_id, SUBSCRIBED)
-        pass
-
-
-class UnsubscribeEvent(MailerEvent):
-    """
-    Functions related to an unsubscribe event
-    """       
-    def _custom_init(self):
-        self.email_address = self._scrub_data('email_address')
-
-    def get_query_ids(self):
-        # scan signup table to get queries that contain email                
-        qids = self._get_qids_by_attr_value('email_address', self.email_address)
-        return qids
-
-    def send_confirmation_email(self):
-        m = ConfirmUnsubscribeEmail(email_address=self.email_address)
-        m.send()
-        pass
-
-class ConfirmUnsubscribeEvent(MailerEvent):
-    """
-    Functions related to a confirm subscription event
-    """    
-    def _custom_init(self):                     
-        self.email_address = self._scrub_data('email_address')
-        pass
-
-    def unsubscribe_queries(self):
-        self._update_subscription_status_by_email_address(self.email_address, UNSUBSCRIBED)
-        pass
-
-class RecommendationEvent(MailerEvent):
-    """
-    Functions related to a recommendations event
-    """    
-
-    def _custom_init(self):
-        boto3.resource('dynamodb')
-        deserializer = boto3.dynamodb.types.TypeDeserializer()
-        self.new_records = []
-        for r in self.event_data['Records']:
-            if r['eventName']=='INSERT':
-                d = {k: deserializer.deserialize(v) for k,v in r['dynamodb']['NewImage'].items()}
-                self.new_records.append(d)
-        pass
-
-    def send_recommendation_emails(self):
-        # m = RecommendationEmail(recommendation=self.recommendation)        # m.send_email()
-        for record in self.new_records:
-            # send_test_email('chstock@stanford.edu', recommendation)
-            m = RecommendationEmail(record=record)
-            m.send()
         pass
 
 
