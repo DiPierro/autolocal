@@ -211,12 +211,12 @@ class RecommendationEmail(Email):
         query_data = self._get_query_data(query_id)
         email_address = query_data['email_address']
         keywords = query_data['keywords']
-        municipalities = query_data['municipalities'] 
-        now_date_string = datetime.now().strftime("%B %d, %Y")       
+        municipalities = query_data['municipalities']
+        now = datetime.now().strftime("%B %d, %Y")
 
         # specify email contents
         self.recipient_address = email_address
-        self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now_date_string)
+        self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now)
         self.body_html = """
         <html style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; box-sizing:border-box" valign="baseline">
         <head>
@@ -259,7 +259,7 @@ class RecommendationEmail(Email):
         </body>
         </html>
         """.format(
-            now_date_string,
+            now,
             ", ".join(keywords),
             ", ".join(municipalities),
             self._format_recommendations(recommendations),
@@ -273,7 +273,7 @@ class RecommendationEmail(Email):
     def _html_to_txt(self, body_html):
         # soup = BeautifulSoup(body_html)
         # return soup.text
-        return re.sub(body_html, "<.*>", "")
+        return re.sub("<.*>", "", body_html)
 
     def _format_recommendation(self, recommendation):
         doc_id = recommendation['doc_id']
