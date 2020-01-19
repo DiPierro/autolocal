@@ -342,7 +342,7 @@ def write_results(results, query_id, batch):
             'recommendations': results_to_return,
             'keywords': result['keywords'],
             'municipalities': result['municipalities'],
-            'time': datetime.now()
+            'time': "{}".format(datetime.now())
         }
     )
 
@@ -351,11 +351,10 @@ def run_queries(document_manager, input_args):
     start_date, end_date = parse_dates(input_args.start_date, input_args.end_date)
     print("reading queries")
     queries = read_queries()
-    if input_args.production:
-        desired_subscription_status = 'subscribed'
-    else:
-        desired_subscription_status = 'testing'
+    desired_subscription_status = input_args.query_type
     queries = [q for q in queries if ('subscription_status' in q and q['subscription_status'] == desired_subscription_status)]
+    if input_args.filter:
+        queries = [q for q in queries if ('email_address' == input_args.filter)]
     print("reading metadata")
     metadata = read_metadata(input_args)
     print("finding relevant doc_ids")
@@ -365,14 +364,14 @@ def run_queries(document_manager, input_args):
     all_docs = read_docs(relevant_doc_ids, document_manager)
     print("read {} relevant documents".format(len(all_docs)))
     
-    for q, query in enumerate(queries):
+    for q, orig_query in enumerate(queries):
+        query = orig_query
         results = []
         print("running query {} of {}".format(q, len(queries)))
         query_id = query["id"]
-        if args.emails == "production":
-            email_address = query["email_address"]
-        else:
-            email_address = args.emails
+        if input_args.emails != "production":
+            query["email_address"] = input_args.emails
+        email_address = query["email_address"]
         print("email address: {}".format(email_address))
         keywords = query["keywords"]
         print("keywords: {}".format(keywords))
@@ -452,14 +451,19 @@ if __name__=='__main__':
             "If this flag is included, return only agenda documents, no minutes."
         ]))
 
-    parser.add_argument('--production', action='store_true',
+    parser.add_argument('--query_type', type=str, default='testing',
         help="".join([
-            "By default, run only queries labeled 'testing'."
+            "Queries have a type, e.g. 'subscribed'. By default, run only queries labeled 'testing'."
         ]))
 
     parser.add_argument('--emails', type=str, default=None,
         help="".join([
-            'Send only to these emails. If the flag is "production", send the actual emails to the actual users'
+            'Send all results to this one email address. If the flag is set to "production", send the actual emails to the actual users'
+        ]))
+
+    parser.add_argument('--filter', type=str, default=None,
+        help="".join([
+            'Filter queries to only those with this email address set. If empty, run all queries of this type.'
         ]))
 
     args = parser.parse_args()
