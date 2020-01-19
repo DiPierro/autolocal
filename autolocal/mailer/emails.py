@@ -9,11 +9,18 @@ from boto3.dynamodb.conditions import Key, Attr
 
 from autolocal.aws import aws_config
 
+def list_if_str(x):
+    if isinstance(x, str):
+        return [x]
+    else:
+        return x
+
+
 class Email(object):
 
     def __init__(
         self,
-        recipient_address=None,
+        recipient_addresses=None,
         subject=None,        
         body_html=None,
         body_text=None,
@@ -22,7 +29,7 @@ class Email(object):
         **kwargs     
         ):
         
-        self.recipient_address = recipient_address
+        self.recipient_addresses = list_if_str(recipient_addresses)
         self.subject = subject        
         self.body_html = body_html
         self.body_text = body_text
@@ -67,7 +74,7 @@ class ConfirmSubscriptionEmail(Email):
         municipalities = ', '.join(query['municipalities'])
 
         # specify email contents
-        self.recipient_address = query['email_address']
+        self.recipient_address = list_if_str(query['email_address'])
         self.subject = 'Agenda Watch: Please Confirm Subscription'
         self.body_html = """
         <html>
@@ -123,7 +130,7 @@ class ConfirmUnsubscribeEmail(Email):
         url = '{}?{}'.format(api_url, get_params)
 
         # specify email contents
-        self.recipient_address = email_address
+        self.recipient_address = list_if_str(email_address)
         self.subject = 'Agenda Watch: Please Confirm Unsubscribe Request'
         self.body_html = """
         <html>
@@ -167,7 +174,7 @@ class UnsubscribeEmail(Email):
         email_address = kwargs['email_address']
         
         # specify email contents
-        self.recipient_address = email_address
+        self.recipient_address = list_if_str(email_address)
         self.subject = 'Agenda Watch: You are unsubscribed'
         self.body_html = """
         <html>
@@ -215,7 +222,7 @@ class RecommendationEmail(Email):
         now = datetime.now().strftime("%B %d, %Y")
 
         # specify email contents
-        self.recipient_address = email_address
+        self.recipient_address = list_if_str(email_address)
         self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now)
         self.body_html = """
         <html style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; box-sizing:border-box" valign="baseline">

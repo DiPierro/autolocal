@@ -40,7 +40,7 @@ class SESMailer(Mailer):
         ):
         try:
             # specify recipients
-            destination = {'ToAddresses': [email.recipient_address]}
+            destination = {'ToAddresses': email.recipient_addresses}
 
             # specify message
             message = {
