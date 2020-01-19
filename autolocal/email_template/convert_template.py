@@ -4,7 +4,7 @@ import toronado
 import re
 import requests
 
-email = open("email_template.html").read()
+email = open("input_email_template.html").read()
 
 style_links = re.findall("<link rel=\"stylesheet\" href=\"(.*)\"/>", email)
 new_style_stuff = ""
@@ -54,10 +54,7 @@ email = re.sub("\n[/][*] Small [*][/]\n\n\t\@media screen and \(max-width: [0-9]
 email = re.sub("\n[/][*] XSmall [*][/]\n\n\t\@media screen and \(max-width: [0-9]*px\) \{((.[^*].*\n|\n)*)\t\}", "\1", email)
 
 
-open("email_template_one_page.html", "w").write(email)
-
-
-email = open("email_template_one_page.html").read()
+# At this point, we have the full email template in one page, including css
 
 
 email = re.sub("\n.*~.*\{\n([^}]*\n)*[^}]*\}\n", "\n\n", email)
@@ -71,5 +68,5 @@ email = re.sub("  <style>.*\n(.*\n)*.*</style>", "  <style>\n"+"\n".join(import_
 
 # # # print(email)
 
-
+# This is what should be copied into autolocal/autolocal/mailer/emails.py
 open("email_template_with_inline_styles.html", "w").write(email)
