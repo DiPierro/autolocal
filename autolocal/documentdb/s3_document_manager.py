@@ -107,7 +107,10 @@ class S3DocumentManager(DocumentManager):
 
     def _add_doc_to_db(self, doc, batch=None):
         doc = dict(doc)
-        item = {}
+        try:
+            item = self._query_db_by_doc_id(self._get_doc_id(doc))
+        except:
+            item = {}
         for k,v in doc.items():
             if isinstance(v, str):
                 item[k] = v
