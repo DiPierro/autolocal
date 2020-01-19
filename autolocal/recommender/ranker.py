@@ -353,6 +353,8 @@ def run_queries(document_manager, input_args):
     queries = read_queries()
     desired_subscription_status = input_args.query_type
     queries = [q for q in queries if ('subscription_status' in q and q['subscription_status'] == desired_subscription_status)]
+    if input_args.filter:
+        queries = [q for q in queries if ('email_address' == input_args.filter)]
     print("reading metadata")
     metadata = read_metadata(input_args)
     print("finding relevant doc_ids")
@@ -456,7 +458,12 @@ if __name__=='__main__':
 
     parser.add_argument('--emails', type=str, default=None,
         help="".join([
-            'Send only to these emails. If the flag is set to "production", send the actual emails to the actual users'
+            'Send all results to this one email address. If the flag is set to "production", send the actual emails to the actual users'
+        ]))
+
+    parser.add_argument('--filter', type=str, default=None,
+        help="".join([
+            'Filter queries to only those with this email address set. If empty, run all queries of this type.'
         ]))
 
     args = parser.parse_args()
