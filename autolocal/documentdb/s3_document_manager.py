@@ -113,6 +113,7 @@ class S3DocumentManager(DocumentManager):
             item = {}
         for k,v in doc.items():
             if isinstance(v, str):
+                import pdb; pdb.set_trace()
                 item[k] = v
             else:
                 pass
