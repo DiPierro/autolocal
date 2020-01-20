@@ -2,10 +2,8 @@ import json
 from urllib.parse import urlencode
 
 from autolocal.aws import aws_config
-from autolocal.events import MailerEvent
-from autolocal.emails import Email, UNSUBSCRIBED, SUBSCRIBED, PENDING, SUBSCRIBE_FORM_KEYS
-
-
+from autolocal.mailer.events import MailerEvent, SUBSCRIBED, PENDING, SUBSCRIBE_FORM_KEYS
+from autolocal.mailer.emails import Email, list_if_str
 
 class ConfirmUnsubscribeEmail(Email):
 
@@ -18,7 +16,7 @@ class ConfirmUnsubscribeEmail(Email):
         url = '{}?{}'.format(api_url, get_params)
 
         # specify email contents
-        self.recipient_address = list_if_str(email_address)
+        self.recipient_addresses = list_if_str(email_address)
         self.subject = 'Agenda Watch: Please Confirm Unsubscribe Request'
         self.body_html = """
         <html>

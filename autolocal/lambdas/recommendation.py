@@ -6,8 +6,8 @@ import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
 from autolocal.aws import aws_config
-from autolocal.events import MailerEvent
-from autolocal.emails import Email
+from autolocal.mailer.events import MailerEvent
+from autolocal.mailer.emails import Email, list_if_str
 
 class RecommendationEmail(Email):
     def _custom_init(self, **kwargs):
@@ -17,7 +17,6 @@ class RecommendationEmail(Email):
         query_id = record['query_id']
         recommendations = record['recommendations']
 
-
         query_data = self._get_query_data(query_id)
         email_address = query_data['email_address']
         keywords = query_data['keywords']
@@ -25,7 +24,7 @@ class RecommendationEmail(Email):
         now = datetime.now().strftime("%B %d, %Y")
 
         # specify email contents
-        self.recipient_address = list_if_str(email_address)
+        self.recipient_addresses = list_if_str(email_address)
         self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now)
         self.body_html = """
         <html style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; box-sizing:border-box" valign="baseline">

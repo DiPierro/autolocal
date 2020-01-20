@@ -1,4 +1,4 @@
-from autolocal.mailers import SESMailer
+from .mailers import SESMailer
 
 def list_if_str(x):
     if isinstance(x, str):

@@ -1,6 +1,6 @@
 import json
 
-from autolocal.events import MailerEvent
+from autolocal.mailer.events import MailerEvent, SUBSCRIBED, PENDING, SUBSCRIBE_FORM_KEYS
 
 class SubscribeEvent(MailerEvent):
     """

@@ -1,6 +1,7 @@
 import json
 
-from autolocal.events import MailerEvent
+from autolocal.mailer.events import MailerEvent, SUBSCRIBED, PENDING, SUBSCRIBE_FORM_KEYS
+from autolocal.mailer.emails import Email, list_if_str
 
 class ConfirmUnsubscribeEvent(MailerEvent):
     """

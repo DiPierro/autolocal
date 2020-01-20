@@ -2,8 +2,8 @@ import json
 from urllib.parse import urlencode
 
 from autolocal.aws import aws_config
-from autolocal.events import MailerEvent
-from autolocal.emails import Email
+from autolocal.mailer.events import MailerEvent, SUBSCRIBED, PENDING, SUBSCRIBE_FORM_KEYS
+from autolocal.mailer.emails import Email, list_if_str
 
 class UnsubscribeEmail(Email):
 
@@ -13,7 +13,7 @@ class UnsubscribeEmail(Email):
         email_address = kwargs['email_address']
         
         # specify email contents
-        self.recipient_address = list_if_str(email_address)
+        self.recipient_addresses = list_if_str(email_address)
         self.subject = 'Agenda Watch: You are unsubscribed'
         self.body_html = """
         <html>
