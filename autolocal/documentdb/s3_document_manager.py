@@ -6,6 +6,8 @@ import numpy as np
 from urllib.request import urlretrieve
 from tqdm import tqdm
 
+import pdb
+
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
 import botocore
@@ -111,9 +113,10 @@ class S3DocumentManager(DocumentManager):
             item = self._query_db_by_doc_id(self._get_doc_id(doc))
         except:
             item = {}
+        if isinstance(item, list):
+            item = {}
         for k,v in doc.items():
             if isinstance(v, str):
-                import pdb; pdb.set_trace()
                 item[k] = v
             else:
                 pass
