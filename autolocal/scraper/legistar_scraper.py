@@ -75,8 +75,12 @@ class LegistarScraper(object):
     def _wait_for_table_load(self, page_signature, max_wait=None):
         sig_match = True
         expired = False
+        i = 0
         while sig_match and not expired:
             try:
+                i += 1
+                if i > 100:
+                   return "timeout" 
                 time.sleep(0.1)
                 new_sig = self._get_page_signature()
                 sig_match = new_sig in [page_signature, '']         
@@ -84,7 +88,7 @@ class LegistarScraper(object):
                 sig_match = False    
             except NoSuchElementException:
                 sig_match = False
-        return
+        return "loaded"
 
     def scrape_all_pages(self, **filter_args):
 
@@ -166,7 +170,11 @@ class LegistarScraper(object):
                 break
 
             #  wait for page to load
-            self._wait_for_table_load(page_signature)                
+            timeout = self._wait_for_table_load(page_signature)
+            if timeout == "timeout":
+                break
+            else:
+                pass
 
         return page_data
 
