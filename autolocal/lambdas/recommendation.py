@@ -25,7 +25,7 @@ class RecommendationEmail(Email):
 
         # specify email contents
         self.recipient_addresses = list_if_str(email_address)
-        self.subject = 'Agenda Watch: Your recommendations -- {}'.format(now)
+        self.subject = 'Agenda Watch: Your recommendations for {}'.format(now)
         self.body_html = """
         <html style="border:0; font:inherit; font-size:100%; margin:0; padding:0; vertical-align:baseline; box-sizing:border-box" valign="baseline">
         <head>
