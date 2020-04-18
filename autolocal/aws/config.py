@@ -1,4 +1,5 @@
-#  private conifg file
+# this conifg file contains instance-specific information,
+# like API URLs, email addresses, and AWS constants
 
 supported_municipalities = [
     "Alameda",

@@ -1,3 +1,6 @@
+# This is the Python script that scrapes a Legistar webpage for new documents.
+# It is called by legistar_scrapers.sh and can be run locally or on EC2
+
 import time
 from datetime import datetime
 import os

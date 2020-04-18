@@ -1,4 +1,5 @@
 # AWS config
+# this makes configuration constants available to other parts of the code base
 
 try:
     from autolocal.aws.config import config

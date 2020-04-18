@@ -1,3 +1,7 @@
+# this script is used to convert an HTML document with separate CSS into an
+# HTML document with inline styles. Used as a utility to generate the 
+# email template. Not used in production.
+
 from premailer import transform
 import pynliner
 import toronado
