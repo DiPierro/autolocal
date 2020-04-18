@@ -1,6 +1,6 @@
 # autolocal
 ## Automated Local News
-This repository contains the code which runs [CityCouncilor](http://www.citycouncilor.com), an app which sends personalized email alerts about relevant upcoming public meetings. 
+This repository contains the code which runs [AgendaWatch](http://www.agendawatch.org), an app which sends personalized email alerts about relevant upcoming public meetings. 
 
 It also contains various other code used for prototyping and analysis.
 
