@@ -1,16 +1,311 @@
-Hayward,https://hayward.legistar.com/Calendar.aspx
-Santa Clara,https://santaclara.legistar.com/Calendar.aspx
-Mountain View,https://mountainview.legistar.com/Calendar.aspx
-Sunnyvale,https://sunnyvaleca.legistar.com/Calendar.aspx
-San Jose,https://sanjose.legistar.com/Calendar.aspx
-Cupertino,https://cupertino.legistar.com/Calendar.aspx
-San Mateo County,https://sanmateocounty.legistar.com/Calendar.aspx
-Burlingame,https://burlingameca.legistar.com/Calendar.aspx
-San Leandro,https://sanleandro.legistar.com/Calendar.aspx
-Alameda,https://alameda.legistar.com/Calendar.aspx
-Oakland,https://oakland.legistar.com/Calendar.aspx
-San Francisco,https://sfgov.legistar.com/Calendar.aspx
-Hercules,https://hercules.legistar.com/Calendar.aspx
-Stockton,https://stockton.legistar.com/Calendar.aspx
-South San Francisco,https://ci-ssf-ca.legistar.com/Calendar.aspx
-MTC,https://mtc.legistar.com/Calendar.aspx
+subdomains,type,name,state,country
+a2gov.legistar.com,municipality,Ann Arbor,MI,United States
+abcwua.legistar.com,water,Albuquerque Bernalillo County Water Utility Authority,NM,United States
+accessfayetteville.legistar.com,municipality,Fayetteville,AR,United States
+actransit.legistar.com,transportation,Alameda-Contra Costa Transit District,CA,United States
+adcogov.legistar.com,county,Adams,CO,United States
+alachua.legistar.com,county,Alachua,FL,United States
+alameda.legistar.com,municipality,Alameda,CA ,United States
+albemarle.legistar.com,county,Albemarle,VA,United States
+alexandria.legistar.com,municipality,Alexandria,VA,United States
+alleghenycounty.legistar.com,county,Allegheny,PA,United States
+allentownpa.legistar.com,municipality,Allentown,PA,United States
+annapolismd.legistar.com,municipality,Annapolis,MD,United States
+apachejunction.legistar.com,municipality,Apache Junction,AZ,United States
+ashecounty.legistar.com,county,Ashe,NC,United States
+aurora-il.legistar.com,municipality,Aurora,IL,United States
+austintexas.legistar.com,municipality,Austin,TX,United States
+baldwincountyal.legistar.com,county,Baldwin,AL,United States
+baltimore.legistar.com,municipality,Baltimore,MD,United States
+barrie.ca.legistar.com,municipality,Barrie,ON,Canada
+bart.legistar.com,transportation,San Francisco Bay Area Rapid Transit District,CA,United States
+belleairfl.legistar.com,municipality,Belleair,FL,United States
+bellevue.legistar.com,municipality,Bellevue,WA,United States
+blaine.legistar.com,municipality,Blaine,MN,United States
+blounttn.legistar.com,county,Blount,TN,United States
+boerne.legistar.com,municipality,Bouerne,TX,United States
+brevardfl.legistar.com,county,Brevard,FL,United States
+brightonco.legistar.com,municipality,Brighton,CO,United States
+brokenarrow.legistar.com,municipality,Broken Arrow,OK,United States
+broward.legistar.com,county,Broward,FL,United States
+brunswickcounty.legistar.com,county,Brunswick,VA,United States
+burlingameca.legistar.com,municipality,Burlingame,CA,United States
+cabq.legistar.com,municipality,Albuquerque,NM,United States
+camas.legistar.com,municipality,Camas,WA,United States
+campo.legistar.com,regional transportation planning organization,NC Capital Area Metropolitan Planning Organization,NC,United States
+canton.legistar.com,municipality,Canton,GA,United States
+carrboro.legistar.com,municipality,Carrboro,NC,United States
+carrolltontx.legistar.com,municipality,Carrollton,TX,United States
+carson.legistar.com,municipality,Carson,CA,United States
+castlerock-co.legistar.com,municipality,Castle Rock,CO,United States
+cathedralcity.legistar.com,municipality,Cathedral City,CA,United States
+chapelhill.legistar.com,municipality,Chapel Hill,NC,United States
+charlottenc.legistar.com,municipality,Charlotte,NC,United States
+chathamnc.legistar.com,county,Chatham,NC,United States
+cherokee.legistar.com,tribal council,Cherokee,OK,United States
+chicago.legistar.com,municipality,Chicago,IL,United States
+chicagoparkdistrict.legistar.com,park district,Chicago Park District,IL,United States
+chulavista.legistar.com,municipality,Chula Vista,CA,United States
+ci-ssf-ca.legistar.com,municipality,South San Francisco,CA,United States
+cityfortbragg.legistar.com,municipality,Fort Bragg,CA,United States
+cityofappleton.legistar.com,municipality,Appleton,WI,United States
+cityofbrookings.legistar.com,municipality,Brookings,SD,United States
+cityofcleveland.legistar.com,municipality,Cleveland,OH,United States
+cityofcommerce.legistar.com,municipality,Commerce,CA,United States
+cityofdallas.legistar.com,municipality,Dallas,TX,United States
+cityofdeerpark.legistar.com,municipality,Deer Park,TX,United States
+cityofedgewater.legistar.com,municipality,Edgewater,FL,United States
+cityoffayetteville.legistar.com,municipality,Fayetteville,NC,United States
+cityoffoley.legistar.com,municipality,Foley,AL,United States
+cityofgreen.legistar.com,municipality,Green,OH,United States
+cityofkeller.legistar.com,municipality,Keller,TX,United States
+cityoflacrosse.legistar.com,municipality,La Crosse,WI,United States
+cityoflewisville.legistar.com,municipality,Lewisville,TX,United States
+cityofmalden.legistar.com,municipality,Malden,MA,United States
+cityofmerced.legistar.com,municipality,Merced,CA,United States
+cityofnorthport.legistar.com,municipality,Northport,FL,United States
+cityofracine.legistar.com,municipality,Racine,WI,United States
+cityofseguintx.legistar.com,municipality,Seguin,TX,United States
+cityoftacoma.legistar.com,municipality,Tacoma,WA,United States
+clearwater.legistar.com,municipality,Clearwater,FL,United States
+cobergennj.legistar.com,county,Bergen,NJ,United States
+coconutcreek.legistar.com,municipality,Coconut Creek,FL,United States
+collinsville.legistar.com,municipality,Collinsville,IL,United States
+coloradosprings.legistar.com,municipality,Colorado Springs,CO,United States
+columbus.legistar.com,municipality,Columbus,OH,United States
+commerce.legistar.com,municipality,Commerce City,CO,United States
+concordnh.legistar.com,municipality,Concord,NH,United States
+cook-county.legistar.com,county,Cook,IL,United States
+coppell.legistar.com,municipality,Coppell,TX,United States
+coralgables.legistar.com,municipality,Coral Gables,FL,United States
+corona.legistar.com,municipality,Corona,CA,United States
+corpuschristi.legistar.com,municipality,Corpus Christi,TX,United States
+countyoflake.legistar.com,county,Lake,CA,United States
+crd.ca.legistar.com,regional district,Capital Regional District,BC,Canada
+crossvilletn.legistar.com,municipality,Crossville,TN,United States
+css.legistar.com,county,"Los Angeles Workforce Development, Aging and Community Services",CA,United States
+culver-city.legistar.com,municipality,Culver City,CA,United States
+cupertino.legistar.com,municipality,Cupertino,CA,United States
+cutlerbay.legistar.com,municipality,Cutler Bay,FL,United States
+dane.legistar.com,county,Dane,WI,United States
+dchcmpo.legistar.com,metropolitan planning organization,DCHC Metropolitan Planning Organization,NC,United States
+dekalbcountyga.legistar.com,county,Dekalb,GA,United States
+delraybeach.legistar.com,municipality,Delray Beach,FL,United States
+deltona.legistar.com,municipality,Deltona,FL,United States
+denton-tx.legistar.com,municipality,Denton,TX,United States
+dentoncounty.legistar.com,county,Denton,TX,United States
+denver.legistar.com,municipality,Denver,CO,United States
+detroit.legistar.com,municipality,Detroit,MI,United States
+doral.legistar.com,municipality,Doral,FL,United States
+douglasville.legistar.com,municipality,Douglasville,GA,United States
+duluth-mn.legistar.com,municipality,Duluth,MN,United States
+durhamcounty.legistar.com,county,Durham,NC,United States
+dwsd.legistar.com,water and sewer,Detroit Water and Sewage Department,MI,United States
+easternband.legistar.com,tribal council,Eastern Band of the Cherokee Nation,NC,United States
+edwardsaquifer.legistar.com,aquifer authority,Edwards Aquifer Authority,TX,United States
+eldorado.legistar.com,county,El Dorado,CA,United States
+emeryville.legistar.com,municipality,Emeryville,CA,United States
+erie.legistar.com,municipality,Erie,CO,United States
+esquimalt.ca.legistar.com,municipality,Esquimalt,BC,Canada
+farmersbranch.legistar.com,municipality,Farmers Branch,TX,United States
+fortlauderdale.legistar.com,municipality,Fort Lauderdale,FL,United States
+fortworthgov.legistar.com,municipality,Fort Worth,TX,United States
+fpdcc.legistar.com,forest preserves,Forest Preserves of Cook County,IL,United States
+franklintn.legistar.com,municipality,Franklin,TN,United States
+fresno.legistar.com,municipality,Fresno,CA,United States
+fresnocounty.legistar.com,county,Fresno,CA,United States
+fullerton.legistar.com,municipality,Fullerton,CA,United States
+gahanna.legistar.com,municipality,Gahanna,OH,United States
+gainesville.legistar.com,municipality,Gainesville,FL,United States
+gaston.legistar.com,county,Gaston,NC,United States
+glwater.legistar.com,water,Great Lakes Water Authority,MI,United States
+gocolumbiamo.legistar.com,municipality,Columbia,MO,United States
+goleta.legistar.com,municipality,Goleta,CA,United States
+goodyear.legistar.com,municipality,Goodyear,AZ,United States
+grandrapids.legistar.com,municipality,Grand Rapids,MN,United States
+greensboro.legistar.com,municipality,Greensboro,NC,United States
+groveport.legistar.com,municipality,Groveport,OH,United States
+guilford.legistar.com,county,Guilford,NC,United States
+hallandalebeach.legistar.com,municipality,Hallandale Beach,FL,United States
+hampton.legistar.com,county,Hampton,VA,United States
+harrisonburg-va.legistar.com,municipality,Harrisonburg,VA,United States
+harrisoncounty.legistar.com,county,Harrison,MS,United States
+hattiesburg.legistar.com,municipality,Hattiesburg,MS,United States
+hayward.legistar.com,municipality,Hayward,CA,United States
+hercules.legistar.com,municipality,Hercules,CA,United States
+hermosabeach.legistar.com,municipality,Hermosa Beach,CA,United States
+hesperia.legistar.com,municipality,Hesperia,CA,United States
+highpoint.legistar.com,municipality,High Point,NC,United States
+hollywoodfl.legistar.com,municipality,Hollywood,FL,United States
+hudson.legistar.com,municipality,Hudson,OH,United States
+humboldt.legistar.com,county,Humboldt,CA,United States
+huntingtonbeach.legistar.com,municipality,Huntington Beach,CA,United States
+indianwells.legistar.com,municipality,Indian Wells,CA,United States
+ircgov.legistar.com,county,Indian River County,FL,United States
+jacksonco.legistar.com,county,Jackson County,MS,United States
+jaxcityc.legistar.com,municipality,Jacksonville,FL,United States
+jcc.legistar.com,judicial county,Judicial Council of California,CA,United States
+jonesboro.legistar.com,municipality,Jonesboro,AR,United States
+keywest.legistar.com,municipality,Key West,FL,United States
+killeen.legistar.com,municipality,Killeen,TX,United States
+kingcounty.legistar.com,county,King,WA,United States
+kpb.legistar.com,municipality,Kenai Peninsula Borough,AK,United States
+lackawanna.legistar.com,county,Lackawanna,PA,United States
+lake-elsinore.legistar.com,municipality,Lake Elsinore,CA,United States
+lakecounty.legistar.com,county,Lake County,IL,United States
+lakehavasucity.legistar.com,municipality,Lake Havasu,AZ,United States
+laramiecounty.legistar.com,county,Laramie,WY,United States
+lassen.legistar.com,county,Lassen,CA,United States
+lauderhill-fl.legistar.com,municipality,Lauderhill,FL,United States
+laurelms.legistar.com,municipality,Laurel,MS,United States
+leaguecity.legistar.com,municipality,League City,TX,United States
+lexington.legistar.com,county,Lexington-Fayette Urban County Government,KY,United States
+littletongov.legistar.com,municipality,Littleton,CO,United States
+lombard.legistar.com,municipality,Lombard,IL,United States
+longbeach.legistar.com,municipality,Longbeach,CA,United States
+longview.legistar.com,municipality,Longview,WA,United States
+losalamos.legistar.com,county,Los Alamos,NM,United States
+lossan.legistar.com,rail corridor agency,Los Angeles-San Diego-San Luis Obispo Rail Corridor Agency,CA,United States
+louisville.legistar.com,municipality,Louisville,KY,United States
+lsmo.legistar.com,municipality,Lee's Summit,MO,United States
+madison.legistar.com,municipality,Madison,WI,United States
+manhattanbeach.legistar.com,municipality,Manhattan Beach,CA,United States
+manitowoc.legistar.com,municipality,Manitowoc,WI,United States
+mansfield.legistar.com,municipality,Mansfield,TX,United States
+manteca-ca.legistar.com,municipality,Manteca,CA,United States
+marcoisland.legistar.com,municipality,Marco Island,FL,United States
+margatefl.legistar.com,municipality,Margate,FL,United States
+maricopa.legistar.com,county,Maricopa,AZ,United States
+martin.legistar.com,county,Florida,FL,United States
+matanuska.legistar.com,borough,Matanusk-Susitna Borough,AK,United States
+mauicounty.legistar.com,county,Maui,HI,United States
+mckinney.legistar.com,municipality,McKinney,TX,United States
+mecklenburg.legistar.com,county,Mecklenburg,NC,United States
+mendocino.legistar.com,county,Mendocino,CA,United States
+mesa.legistar.com,municipality,Mesa,AZ,United States
+mesquite.legistar.com,municipality,Mesquite,TX,United States
+metro.legistar.com,transportation,Metro (Los Angeles),CA,United States
+milwaukee.legistar.com,municipality,Milwaukee,WI,United States
+milwaukeecounty.legistar.com,county,Milwaukee,WI,United States
+minnesotapuc.legistar.com,public utilities commission,Minnesota Public Uitlities Commission,MN,United States
+miramar.legistar.com,municipality,Miramar,FL,United States
+mmsd.legistar.com,sewerage district,Milwaukee Metropolitan Sewerage District,WI,United States
+monroe-k12.legistar.com,school district,Monroe County School District,FL,United States
+monterey.legistar.com,county,Monterey County,CA,United States
+morgan-hill.legistar.com,municipality,Morgan Hill,CA,United States
+mountainview.legistar.com,municipality,Mountain View,CA,United States
+mtc.legistar.com,transportation,Metropolitan Transportation Commission,CA,United States
+mwrd.legistar.com,water,Metropolitan Water Reclamation District of Greater Chicago,IL,United States
+mysanibel.legistar.com,municipality,Sanibel,FL,United States
+napacity.legistar.com,municipality,Napa,CA,United States
+naperville.legistar.com,municipality,Naperville,IL,United States
+nctpa.legistar.com,transportation,Napa Valley Transportation Authority,CA,United States
+nevco.legistar.com,county,Nevada,CA,United States
+newark.legistar.com,municipality,Newark,NJ,United States
+newbraunfels.legistar.com,municipality,New Braunfels,TX,United States
+newhaven-ct.legistar.com,municipality,New Haven,CT,United States
+newportbeach.legistar.com,municipality,Newport Beach,CA,United States
+norman.legistar.com,municipality,Norman,OK,United States
+northfield.legistar.com,municipality,Northfield,MN,United States
+npfmc.legistar.com,fishery management council,North Pacific Fishery Management Council,AK,United States
+nrhtx.legistar.com,municipality,North Richland Hills,TX,United States
+nyc.legistar.com,municipality,New York City,NY,United States
+oak-park.legistar.com,municipality,Oak Park,IL,United States
+oakland.legistar.com,municipality,Oakland,CA,United States
+occompt.legistar.com,county,Orange,FL,United States
+ocsd.legistar.com,sanitation district,Orange County Sanitation District,CA,United States
+octa.legistar.com,transportation,Orange County Transportation Authority,CA,United States
+oklahomacounty.legistar.com,county,Oklahoma,OK,United States
+olatheks.legistar.com,municipality,Olathe,KS,United States
+olympia.legistar.com,municipality,Olympia,WA,United States
+oregon-city.legistar.com,municipality,Oregon City,OR,United States
+oregonmetro.legistar.com,transportation,Metro (Oregon),OR,United States
+orlandpark.legistar.com,municipality,Orland Park,IL,United States
+ousd.legistar.com,school district,Oakland Unified,CA,United States
+paradisevalleyaz.legistar.com,municipality,Paradise Valley,AZ,United States
+parkland.legistar.com,county,Parkland,AB,Canada
+pec.legistar.com,electric cooperative,Pedernales Electric Cooperative,TX,United States
+pensacola.legistar.com,municipality,Pensacola,FL,United States
+peoriail.legistar.com,municipality,Peoria,IL,United States
+petersburg.legistar.com,borough,Petersburg,AK,United States
+pflugerville.legistar.com,municipality,Pflugerville,TX,United States
+phila.legistar.com,municipality,Philadelphia,PA,United States
+phoenix.legistar.com,municipality,Phoenix,AZ,United States
+pima.legistar.com,county,Pima,AZ,United States
+pinecrest.legistar.com,municipality,Pinecrest,FL,United States
+pinellas.legistar.com,county,Pinellas,FL,United States
+pinellaspark.legistar.com,municipality,Pinellas Park,FL,United States
+pittsburgh.legistar.com,municipality,Pittsburgh,PA,United States
+pomona.legistar.com,municipality,Pomona,CA,United States
+pompano.legistar.com,municipality,Pompano Beach,FL,United States
+portofoakland.legistar.com,port,Port of Oakland,CA,United States
+portofsandiego.legistar.com,port,Port of San Diego,CA,United States
+ppines.legistar.com,municipality,Pembroke Pines,FL,United States
+princegeorgescountymd.legistar.com,county,Prince George's County,MD,United States
+psl.legistar.com,municipality,Port St. Lucie,FL,United States
+randolphma.legistar.com,municipality,Randolph,MA,United States
+redmond.legistar.com,municipality,Redmond,WA,United States
+redondo.legistar.com,municipality,Redondo Beach,CA,United States
+rialto.legistar.com,municipality,Rialto,CA,United States
+richmondva.legistar.com,municipality,Richmond,VA,United States
+riversideca.legistar.com,municipality,Riverside,CA,United States
+roch.legistar.com,municipality,Rochester Hills,MI,United States
+romeoville.legistar.com,municipality,Romeoville,IL,United States
+roswell.legistar.com,municipality,Roswell,GA,United States
+roundrock.legistar.com,municipality,Round Rock,TX,United States
+rutherfordcountync.legistar.com,county,Rutherford,NC,United States
+sacramento.legistar.com,municipality,Sacramento,CA,United States
+salem.legistar.com,municipality,Salem,OR,United States
+salinas.legistar.com,municipality,Salinas,CA,United States
+san-marcos-tx.legistar.com,municipality,San Marcos,TX,United States
+sanantonio.legistar.com,municipality,San Antonio,TX,United States
+sanbernardino.legistar.com,county,San Bernardino,CA,United States
+sandyutah.legistar.com,municipality,Sandy,UT,United States
+sanjose.legistar.com,municipality,San Jose,CA,United States
+sanleandro.legistar.com,municipality,San Leandro,CA,United States
+sanmateocounty.legistar.com,county,San Mateo,CA,United States
+sanpablo.legistar.com,municipality,San Pablo,CA,United States
+santa-rosa.legistar.com,municipality,Santa Rosa,CA,United States
+santabarbara.legistar.com,county,Santa Barbara,CA,United States
+santaclara.legistar.com,municipality,Santa Clara,CA,United States
+sbcera.legistar.com,retirement,San Bernardino County Employees' Retirement Assoc.,CA,United States
+scvwd.legistar.com,water,Santa Clara Valley Water District,CA,United States
+seattle.legistar.com,municipality,Seattle,WA,United States
+sedgwickcounty.legistar.com,county,Sedgewick,KS,United States
+seminolecounty.legistar.com,county,Seminole,FL,United States
+sfgov.legistar.com,county and municipal,San Francisco,CA,United States
+sitka.legistar.com,borough,Sitka,AK,United States
+sjcog.legistar.com,council of governments,San Joaquin Council of Governments,CA,United States
+sjrs.legistar.com,retirement,The Retirement Services Department City of San Jose,CA,United States
+slco.legistar.com,county,Salt Lake,UT,United States
+smyrnacity.legistar.com,municipality,Smyrna,GA,United States
+solano.legistar.com,county,Solano,CA,United States
+sonoma-county.legistar.com,county,Sonoma,CA,United States
+stalbert.ca.legistar.com,municipality,St. Albert,AB,Canada
+stcharles.legistar.com,parish,St. Charles,LA,United States
+stockton.legistar.com,municipality,Stockton,CA,United States
+stpaul.legistar.com,municipality,St. Paul,MN,United States
+sturgeoncounty.ca.legistar.com,county,Sturgeon,AB,Canada
+sunnyvaleca.legistar.com,municipality,Sunnyvale,CA,United States
+temeculaca.legistar.com,municipality,Temecula,CA,United States
+tol.ca.legistar.com,municipality,Langley,BC,Canada
+toledo.legistar.com,municipality,Toledo,OH,United States
+townofyountville.legistar.com,municipality,Yountville,CA,United States
+trophyclub.legistar.com,municipality,Trophy Club,TX,United States
+trotwood-oh.legistar.com,municipality,Trotwood,OH,United States
+uptexas.legistar.com,municipality,University Park,TX,United States
+valdez.legistar.com,municipality,Valdez,AK,United States
+venice.legistar.com,municipality,Venice,FL,United States
+vicksburg-ms.legistar.com,municipality,Vicksburg,MS,United States
+vienna-va.legistar.com,municipality,Vienna,VA,United States
+villageoftequesta.legistar.com,municipality,Tequesta,FL,United States
+wake.legistar.com,county,Wake,NC,United States
+washoe-nv.legistar.com,county,Washoe,NV,United States
+watsonville.legistar.com,municipality,Watsonville,CA,United States
+waukesha.legistar.com,municipality,Waukesha,WI,United States
+wellington.legistar.com,municipality,Wellington,FL,United States
+westalliswi.legistar.com,municipality,Westallis,WI,United States
+whatcom.legistar.com,municipality,Whatcom,WA,United States
+windhamweb.legistar.com,municipality,Windham,ME,United States
+winston-salem.legistar.com,municipality,Winston-Salem,NC,United States
+yuma-az.legistar.com,municipality,Yuma,AZ,United States
